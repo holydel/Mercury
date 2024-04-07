@@ -1,7 +1,8 @@
-#include <iostream>
+#include <stdio.h>
+import mercury;
 
 int main()
 {
-	printf("hello world");
+	mercury::Run();
 	return 0;
 }

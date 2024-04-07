@@ -24,6 +24,7 @@ endif()
 add_library(Engine STATIC
     ${PLATFORM_SOURCES}
     src/engine.cpp
+    src/mercury.ixx
 )
 
 # Include headers
