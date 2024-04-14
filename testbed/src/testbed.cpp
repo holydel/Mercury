@@ -1,5 +1,5 @@
 import mercury;
-import std.core;
+import mercury.system;
 
 class TestBedApplication : public mercury::Application
 {
@@ -13,7 +13,7 @@ public:
 
 	virtual bool Update() override;
 
-	virtual std::string_view GetName() override
+	virtual const char* GetName() override
 	{
 		return "TestBed Application";
 	}
@@ -31,6 +31,7 @@ TestBedApplication::~TestBedApplication()
 
 bool TestBedApplication::Initialize()
 {
+	mercury::system::DebugOutput("foo:%d\n",100);
 	return true;
 }
 

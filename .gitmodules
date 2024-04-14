@@ -43,3 +43,12 @@
 [submodule "third_party/imgui"]
 	path = third_party/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "third_party/bullet3"]
+	path = third_party/bullet3
+	url = https://github.com/bulletphysics/bullet3
+[submodule "third_party/box2d"]
+	path = third_party/box2d
+	url = https://github.com/erincatto/box2d
+[submodule "third_party/spine-runtimes"]
+	path = third_party/spine-runtimes
+	url = https://github.com/EsotericSoftware/spine-runtimes
