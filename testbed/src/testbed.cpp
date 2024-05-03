@@ -1,5 +1,4 @@
-import mercury;
-import mercury.system;
+#include "mercury.h"
 
 class TestBedApplication : public mercury::Application
 {
@@ -31,7 +30,6 @@ TestBedApplication::~TestBedApplication()
 
 bool TestBedApplication::Initialize()
 {
-	mercury::system::DebugOutput("foo:%d\n",100);
 	return true;
 }
 
