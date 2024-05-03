@@ -52,3 +52,15 @@
 [submodule "third_party/spine-runtimes"]
 	path = third_party/spine-runtimes
 	url = https://github.com/EsotericSoftware/spine-runtimes
+[submodule "third_party/libjpeg-turbo"]
+	path = third_party/libjpeg-turbo
+	url = https://github.com/libjpeg-turbo/libjpeg-turbo
+[submodule "third_party/OpenGL-Registry"]
+	path = third_party/OpenGL-Registry
+	url = https://github.com/KhronosGroup/OpenGL-Registry
+[submodule "third_party/D3D12MemoryAllocator"]
+	path = third_party/D3D12MemoryAllocator
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator
+[submodule "third_party/VulkanMemoryAllocator"]
+	path = third_party/VulkanMemoryAllocator
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
