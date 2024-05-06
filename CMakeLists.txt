@@ -25,9 +25,13 @@ set(CMAKE_SHARED_LINKER_FLAGS_PROFILE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE}" CAC
 # Optionally set global compiler options
 add_compile_options(-Wall)
 
+add_subdirectory(third_party/glm)
+
 # Include subdirectories
 add_subdirectory(engine)
 add_subdirectory(solar_baker)
 add_subdirectory(testbed)
+
+
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT TestBed)
