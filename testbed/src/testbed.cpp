@@ -48,3 +48,16 @@ bool TestBedApplication::Update()
 
 static TestBedApplication myApp;
 
+
+#include "mercury.h"
+
+
+#include <stdio.h>
+#include <android/native_activity.h>
+
+JNIEXPORT void ANativeActivity_onCreate2(ANativeActivity* activity,
+	void* savedState, size_t savedStateSize)
+{
+	const char* info = mercury::platform::GetInfo();
+	printf("bbb");
+}

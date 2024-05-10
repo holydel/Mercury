@@ -13,21 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\platforms">
+      <UniqueIdentifier>{28564520-a862-46b1-90b7-baef4796fd65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\platforms\windows">
+      <UniqueIdentifier>{304a52ea-6b92-488a-97bf-71e4be6985b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\platforms\android">
+      <UniqueIdentifier>{f9c0768b-6a94-4c01-a29d-adb2b8909039}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="..\engine\src\application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\platform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\android\system_android.cpp">
+      <Filter>Source Files\platforms\android</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\windows\system_windows.cpp">
+      <Filter>Source Files\platforms\windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mercury.cpp">
+    <ClInclude Include="..\engine\src\application.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
+    </ClInclude>
+    <ClInclude Include="..\engine\src\platform.h">
       <Filter>Source Files</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

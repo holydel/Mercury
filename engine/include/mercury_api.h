@@ -1,3 +1,4 @@
+#pragma once
 //configure engine
 
 //uncomment one for configure graphics API
@@ -19,7 +20,6 @@
 #define MERCURY_PLATFORM_LINUX
 #endif
 #endif
-
 
 
 #ifdef __APPLE__
