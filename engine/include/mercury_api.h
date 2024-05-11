@@ -13,12 +13,10 @@
 #define MERCURY_PLATFORM_WINDOWS
 #endif
 
-#ifdef linux
 #ifdef __ANDROID__
 #define MERCURY_PLATFORM_ANDROID
 #else
 #define MERCURY_PLATFORM_LINUX
-#endif
 #endif
 
 

@@ -48,16 +48,16 @@ bool TestBedApplication::Update()
 
 static TestBedApplication myApp;
 
+#ifdef MERCURY_PLATFORM_ANDROID
 
-#include "mercury.h"
-
-
-#include <stdio.h>
 #include <android/native_activity.h>
 
-JNIEXPORT void ANativeActivity_onCreate2(ANativeActivity* activity,
-	void* savedState, size_t savedStateSize)
+void DummyLinkerExportFunctionForAndroidMain()
 {
-	const char* info = mercury::platform::GetInfo();
-	printf("bbb");
+	ANativeActivity* activity = nullptr;
+	void* savedState = nullptr;
+	size_t savedStateSize = 0;
+	ANativeActivity_onCreate(activity, savedState, savedStateSize);
 }
+
+#endif

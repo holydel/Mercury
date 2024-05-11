@@ -54,6 +54,7 @@
     <CppLanguageStandard>cpp17</CppLanguageStandard>
     <AndroidMinSdkVersion>30</AndroidMinSdkVersion>
     <AndroidNdkVersion>25.2.9519653</AndroidNdkVersion>
+    <LinkTimeOptimization>LinkTimeOptimization</LinkTimeOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
