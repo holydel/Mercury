@@ -5,7 +5,44 @@
 
 #include <stdio.h>
 #include <android/native_activity.h>
+#include <android/native_window.h>
 #include <string>
+#include <thread>
+#include <atomic>
+using namespace std::chrono_literals;
+
+std::atomic_bool is_running = false;
+std::atomic_bool need_to_stop = false;
+
+
+
+void platformInitialize()
+{
+
+}
+
+void platformShutdown()
+{
+
+}
+
+void MainLoop()
+{
+	is_running = true;
+
+	gApplication->Initialize();
+
+	while (gApplication->Update() && !need_to_stop)
+	{
+		std::this_thread::sleep_for(1ms);
+	}
+
+	gApplication->Shutdown();
+
+	is_running = false;
+}
+
+std::thread* mainThread = nullptr;
 
 /**
 	 * NativeActivity has started.  See Java documentation for Activity.onStart()
@@ -14,6 +51,9 @@
 void onStart(ANativeActivity* activity)
 {
 	printf("onStart");
+	//ANativeActivity_setWindowFlags(activity, ana, 0);
+
+	mainThread = new std::thread(MainLoop);
 }
 
 /**
@@ -67,6 +107,14 @@ void onStop(ANativeActivity* activity)
  */
 void onDestroy(ANativeActivity* activity)
 {
+
+	need_to_stop = true;
+
+	while (is_running)
+	{
+		std::this_thread::sleep_for(16ms);
+	}
+
 	printf("onDestroy");
 }
 
@@ -84,7 +132,7 @@ void onWindowFocusChanged(ANativeActivity* activity, int hasFocus)
  * can use the given native window object to start drawing.
  */
 void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window)
-{
+{	
 	printf("onNativeWindowCreated");
 }
 

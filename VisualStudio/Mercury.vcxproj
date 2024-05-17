@@ -29,6 +29,7 @@
     <ClInclude Include="..\engine\include\mercury.h" />
     <ClInclude Include="..\engine\include\mercury_api.h" />
     <ClInclude Include="..\engine\include\mercury_application.h" />
+    <ClInclude Include="..\engine\include\mercury_entrypoint.h" />
     <ClInclude Include="..\engine\src\application.h" />
     <ClInclude Include="..\engine\src\platform.h" />
   </ItemGroup>
@@ -52,7 +53,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <CppLanguageStandard>cpp17</CppLanguageStandard>
-    <AndroidMinSdkVersion>30</AndroidMinSdkVersion>
+    <AndroidMinSdkVersion>28</AndroidMinSdkVersion>
     <AndroidNdkVersion>25.2.9519653</AndroidNdkVersion>
     <LinkTimeOptimization>LinkTimeOptimization</LinkTimeOptimization>
   </PropertyGroup>

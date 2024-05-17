@@ -23,3 +23,9 @@
 #ifdef __APPLE__
 #define MERCURY_PLATFORM_MACOS
 #endif
+
+#if defined(MERCURY_PLATFORM_ANDROID) || defined(MERCURY_PLATFORM_IOS)
+#define MERCURY_MOBILE
+#else
+#define MERCURY_DESKTOP
+#endif

@@ -15,7 +15,8 @@ public:
 
 TestBedApplication::TestBedApplication()
 {
-	config.appName = "TestBed Application";	
+	config.appName = "TestBed Application";
+	config.outputMode = mercury::OutputMode::VR;
 }
 
 TestBedApplication::~TestBedApplication()
@@ -35,7 +36,10 @@ bool TestBedApplication::Shutdown()
 
 bool TestBedApplication::Update()
 {
-	return true;
+	static int a = 0;
+	a++;
+
+	return a < 5;
 }
 
 static TestBedApplication myApp;

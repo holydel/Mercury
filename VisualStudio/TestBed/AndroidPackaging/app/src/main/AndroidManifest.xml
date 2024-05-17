@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="android.app.NativeActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:exported="true">
           <meta-data android:name="android.app.lib_name"
         android:value="TestBed" />

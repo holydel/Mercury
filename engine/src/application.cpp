@@ -1,4 +1,5 @@
 #include "application.h"
+#include "platform.h"
 
 mercury::Application* gApplication = nullptr;
 
@@ -27,17 +28,24 @@ bool mercury::Application::Update()
 	return true;
 }
 
-const char* mercury::Application::GetName()
-{
-	return "Please Spcify mercury::Application child class";
-}
-
 void ApplicationRun()
 {
+	platformInitialize();
+
+#ifdef MERCURY_DESKTOP
+	platformCreateMainWindow();
+#endif
+
 	gApplication->Initialize();
 	while (gApplication->Update())
 	{
-
+		platformUpdate();
 	}
 	gApplication->Shutdown();
+
+#ifdef MERCURY_DESKTOP
+	platformDestroyMainWindow();
+#endif
+
+	platformShutdown();
 }

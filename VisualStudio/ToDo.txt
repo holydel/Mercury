@@ -1,0 +1,15 @@
+2) Create LLRI Instacne (Vulkan / Windows) VkInstance
+3) Create LLRI Instacne (Vulkan / Android)
+4) Create LLRI Instacne (D3D12 / Windows) IDXGIFactory
+
+1) Create Window (Windows)
+
+5) Create Window (Linux)
+6) Create Instacne Abstraction (Vulkan / Linux)
+
+7) Create Window (MacOS)
+8) Create Instacne Abstraction (Vulkan (MoltenVK) / MacOS)
+
+9) Create Window (iOS)
+10) Create Instacne Abstraction (Vulkan (MoltenVK) / iOS)
+

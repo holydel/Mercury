@@ -37,7 +37,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>Clang</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidMinSdkVersion>30</AndroidMinSdkVersion>
+    <AndroidMinSdkVersion>28</AndroidMinSdkVersion>
     <AndroidNdkVersion>25.2.9519653</AndroidNdkVersion>
     <CppLanguageStandard>cpp17</CppLanguageStandard>
   </PropertyGroup>
