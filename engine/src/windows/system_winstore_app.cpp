@@ -1,3 +1,4 @@
+#ifdef MERCURY_WINSTORE
 #include <wrl.h>
 #include <wrl/client.h>
 #include <dxgi1_4.h>
@@ -237,3 +238,4 @@ void MercuryWinStoreApp::OnDisplayContentsInvalidated(DisplayInformation^ sender
 {
 	//GetDeviceResources()->ValidateDevice();
 }
+#endif //MERCURY_WINSTORE

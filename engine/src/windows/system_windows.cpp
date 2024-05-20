@@ -1,29 +1,30 @@
 #include "mercury_api.h"
 
 #ifdef MERCURY_PLATFORM_WINDOWS
-#pragma comment (lib,"Winmm.lib")
+#pragma comment(lib,"Winmm.lib")
 #pragma comment(lib, "Shell32.lib")
 #pragma comment(lib, "Ole32.lib")
 
 #define NOMINMAX
+
 #include <Windows.h>
 #include <ShlObj.h>
 #include <intrin.h>
 #include <map>
 #include <Psapi.h>
 
-#include <Windows.h>
-
 #include "../application.h"
 #include "../platform.h"
 
-HWND gMainWindow = 0;
-HINSTANCE gWinSystemInstance = 0;
+using namespace mercury;
+
+HWND gMainWindow = nullptr;
+HINSTANCE gWinSystemInstance = nullptr;
 
 void platformInitialize()
 {
 	timeBeginPeriod(1);
-	SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+	//SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
 }
 
 void platformShutdown()
@@ -34,7 +35,7 @@ void platformShutdown()
 //console main
 int main()
 {
-	gWinSystemInstance = GetModuleHandle(NULL);
+	gWinSystemInstance = GetModuleHandle(nullptr);
 	ApplicationRun();
 	return 0;
 }
@@ -46,7 +47,6 @@ int WINAPI WinMain([[maybe_unused]] HINSTANCE hInstance,    // HANDLE TO AN INST
 	[[maybe_unused]] int iCmdShow)          // Start window maximized, minimized, etc.
 {
 	gWinSystemInstance = hInstance;
-
 	ApplicationRun();
 	return 0;
 }
@@ -60,7 +60,7 @@ void platformCreateMainWindow()
 	auto& config = gApplication->config.output;
 
 	const char* utf8WinCaption = gApplication->config.GetWindowTitle();
-	bool is_maximized = false;
+	bool is_maximized = config.mode != WindowConfig::WindowMode::Windowed;
 
 	WNDCLASSEXW windowClass = {};
 
@@ -71,9 +71,9 @@ void platformCreateMainWindow()
 	windowClass.cbWndExtra = 0;
 	windowClass.hInstance = gWinSystemInstance;
 	windowClass.hIcon = ::LoadIcon(gWinSystemInstance, IDI_APPLICATION);
-	windowClass.hCursor = ::LoadCursor(NULL, IDC_ARROW);
+	windowClass.hCursor = ::LoadCursor(nullptr, IDC_ARROW);
 	windowClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-	windowClass.lpszMenuName = NULL;
+	windowClass.lpszMenuName = nullptr;
 	windowClass.lpszClassName = winClassName;
 	windowClass.hIconSm = ::LoadIcon(gWinSystemInstance, IDI_APPLICATION);
 
@@ -96,7 +96,7 @@ void platformCreateMainWindow()
 	utf8ToWide(utf8WinCaption, winTitleBuff,256);
 
 	HWND hWnd = ::CreateWindowExW(
-		NULL,
+		0,
 		winClassName,
 		winTitleBuff,
 		WS_OVERLAPPEDWINDOW,
@@ -104,8 +104,8 @@ void platformCreateMainWindow()
 		windowY,
 		windowWidth,
 		windowHeight,
-		NULL,
-		NULL,
+		nullptr,
+		nullptr,
 		gWinSystemInstance,
 		nullptr
 	);
@@ -149,8 +149,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case VK_ESCAPE:
 			::PostQuitMessage(0);
 			break;
-		case VK_RETURN:
+        default:
 			break;
+
 		}
 	}
 	break;
@@ -176,7 +177,7 @@ void platformUpdate()
 {
 	MSG msg = {};
 
-	if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	if (::PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
 		::TranslateMessage(&msg);
 		::DispatchMessage(&msg);

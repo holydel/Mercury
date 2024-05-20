@@ -23,6 +23,7 @@ namespace mercury
 		int width = 800;
 		int height = 600;
 		const char* title = nullptr; //when nullptr - get name from AppConfig
+        WindowMode mode = WindowMode::Windowed;
 		
 	};
 
