@@ -58,7 +58,6 @@ constexpr const wchar_t* winClassName = L"MercuryWindow";
 void platformCreateMainWindow()
 {
 	auto& config = gApplication->config.output;
-
 	const char* utf8WinCaption = gApplication->config.GetWindowTitle();
 	bool is_maximized = config.mode != WindowConfig::WindowMode::Windowed;
 

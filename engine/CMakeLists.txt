@@ -9,7 +9,8 @@ add_library(MercuryEngine STATIC src/application.cpp
         src/platform.cpp
         src/windows/system_windows.cpp
         src/windows/system_winstore_app.cpp
-        src/android/system_android.cpp)
+        src/android/system_android.cpp
+        src/linux/system_linux.cpp)
 
 if(WIN32)
 target_link_libraries(MercuryEngine winmm.lib)
