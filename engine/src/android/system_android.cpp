@@ -26,6 +26,11 @@ void platformShutdown()
 
 }
 
+void platformUpdate()
+{
+	std::this_thread::sleep_for(1ms);
+}
+
 void MainLoop()
 {
 	is_running = true;
@@ -34,7 +39,7 @@ void MainLoop()
 
 	while (gApplication->Update() && !need_to_stop)
 	{
-		std::this_thread::sleep_for(1ms);
+		platformUpdate();
 	}
 
 	gApplication->Shutdown();
@@ -50,10 +55,13 @@ std::thread* mainThread = nullptr;
 	 */
 void onStart(ANativeActivity* activity)
 {
-	printf("onStart");
+	mercury::log("onStart");
 	//ANativeActivity_setWindowFlags(activity, ana, 0);
 
-	mainThread = new std::thread(MainLoop);
+	if (mainThread == nullptr)
+	{
+		mainThread = new std::thread(MainLoop);
+	}	
 }
 
 /**
@@ -62,7 +70,7 @@ void onStart(ANativeActivity* activity)
  */
 void onResume(ANativeActivity* activity)
 {
-	printf("onResume");
+	mercury::log("onResume");
 }
 
 /**
@@ -76,7 +84,7 @@ void onResume(ANativeActivity* activity)
  */
 void* onSaveInstanceState(ANativeActivity* activity, size_t* outSize)
 {
-	printf("onSaveInstanceState");
+	mercury::log("onSaveInstanceState");
 
 	void* savedData = malloc(64);
 	*outSize = 64;
@@ -89,7 +97,7 @@ void* onSaveInstanceState(ANativeActivity* activity, size_t* outSize)
  */
 void onPause(ANativeActivity* activity)
 {
-	printf("onPause");
+	mercury::log("onPause");
 }
 
 /**
@@ -98,7 +106,7 @@ void onPause(ANativeActivity* activity)
  */
 void onStop(ANativeActivity* activity)
 {
-	printf("onStop");
+	mercury::log("onStop");
 }
 
 /**
@@ -115,7 +123,9 @@ void onDestroy(ANativeActivity* activity)
 		std::this_thread::sleep_for(16ms);
 	}
 
-	printf("onDestroy");
+	delete mainThread;
+
+	mercury::log("onDestroy");
 }
 
 /**
@@ -124,7 +134,7 @@ void onDestroy(ANativeActivity* activity)
  */
 void onWindowFocusChanged(ANativeActivity* activity, int hasFocus)
 {
-	printf("onWindowFocusChanged");
+	mercury::log("onWindowFocusChanged");
 }
 
 /**
@@ -133,7 +143,7 @@ void onWindowFocusChanged(ANativeActivity* activity, int hasFocus)
  */
 void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window)
 {	
-	printf("onNativeWindowCreated");
+	mercury::log("onNativeWindowCreated");
 }
 
 /**
@@ -143,7 +153,7 @@ void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window)
  */
 void onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window)
 {
-	printf("onNativeWindowResized");
+	mercury::log("onNativeWindowResized");
 }
 
 /**
@@ -154,7 +164,7 @@ void onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window)
  */
 void onNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window)
 {
-	printf("onNativeWindowRedrawNeeded");
+	mercury::log("onNativeWindowRedrawNeeded");
 }
 
 /**
@@ -167,7 +177,7 @@ void onNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
  */
 void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window)
 {
-	printf("onNativeWindowDestroyed");
+	mercury::log("onNativeWindowDestroyed");
 }
 /**
  * The input queue for this native activity's window has been created.
@@ -175,7 +185,7 @@ void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window)
  */
 void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue)
 {
-	printf("onInputQueueCreated");
+	mercury::log("onInputQueueCreated");
 }
 
 /**
@@ -185,7 +195,7 @@ void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue)
  */
 void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue)
 {
-	printf("onInputQueueDestroyed");
+	mercury::log("onInputQueueDestroyed");
 }
 
 /**
@@ -193,7 +203,7 @@ void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue)
  */
 void onContentRectChanged(ANativeActivity* activity, const ARect* rect)
 {
-	printf("onContentRectChanged");
+	mercury::log("onContentRectChanged");
 }
 
 /**
@@ -202,7 +212,7 @@ void onContentRectChanged(ANativeActivity* activity, const ARect* rect)
  */
 void onConfigurationChanged(ANativeActivity* activity)
 {
-	printf("onConfigurationChanged");
+	mercury::log("onConfigurationChanged");
 }
 
 /**
@@ -212,7 +222,7 @@ void onConfigurationChanged(ANativeActivity* activity)
  */
 void onLowMemory(ANativeActivity* activity)
 {
-	printf("onLowMemory");
+	mercury::log("onLowMemory");
 }
 
 extern "C" JNIEXPORT void ANativeActivity_onCreate(ANativeActivity * activity,
@@ -235,7 +245,7 @@ extern "C" JNIEXPORT void ANativeActivity_onCreate(ANativeActivity * activity,
 	activity->callbacks->onStop = onStop;
 	activity->callbacks->onWindowFocusChanged = onWindowFocusChanged;
 
-	printf("ANativeActivity_onCreate");
+	mercury::log("ANativeActivity_onCreate");
 }
 
 

@@ -1,11 +1,10 @@
-#include <cstdlib>
-#include <cstring>
-#include <thread>
-
 #include "mercury_api.h"
 
 #ifdef MERCURY_PLATFORM_LINUX
 #include <xcb/xcb.h>
+#include <cstdlib>
+#include <cstring>
+#include <thread>
 
 #include "../application.h"
 #include "../platform.h"

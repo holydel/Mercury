@@ -1,51 +1,59 @@
 #include "application.h"
 #include "platform.h"
+#include "engine.h"
 
-mercury::Application* gApplication = nullptr;
+using namespace mercury;
 
-mercury::Application::Application()
+Application* gApplication = nullptr;
+
+Application::Application()
 {
 	gApplication = this;
 }
 
-mercury::Application::~Application()
+Application::~Application()
 {
 	gApplication = nullptr;
 }
 
-bool mercury::Application::Initialize()
+bool Application::Initialize()
 {
 	return true;
 }
 
-bool mercury::Application::Shutdown()
+bool Application::Shutdown()
 {
 	return true;
 }
 
-bool mercury::Application::Update()
+bool Application::Update()
 {
 	return true;
+}
+
+void Application::OnApplicationClose()
+{
+
 }
 
 void ApplicationRun()
 {
-	platformInitialize();
+	engine::initialize();
 
 #ifdef MERCURY_DESKTOP
-	platformCreateMainWindow();
+	platform::createMainWindow();
 #endif
 
 	gApplication->Initialize();
 	while (gApplication->Update())
 	{
-		platformUpdate();
+		engine::update();
 	}
 	gApplication->Shutdown();
 
 #ifdef MERCURY_DESKTOP
-	platformDestroyMainWindow();
+	platform::destroyMainWindow();
 #endif
 
-	platformShutdown();
+	engine::shutdown();
 }

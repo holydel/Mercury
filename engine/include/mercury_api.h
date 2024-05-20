@@ -16,7 +16,9 @@
 #ifdef __ANDROID__
 #define MERCURY_PLATFORM_ANDROID
 #else
+#ifdef __linux__
 #define MERCURY_PLATFORM_LINUX
+#endif
 #endif
 
 

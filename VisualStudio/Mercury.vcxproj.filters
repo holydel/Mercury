@@ -22,6 +22,15 @@
     <Filter Include="Source Files\platforms\android">
       <UniqueIdentifier>{f9c0768b-6a94-4c01-a29d-adb2b8909039}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\platforms\linux">
+      <UniqueIdentifier>{c5f0c3e8-8b75-4dd3-aa03-5e55ee6b3fc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\llris">
+      <UniqueIdentifier>{208c4864-869c-4c20-afb5-ab6fc5ec28ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\llris\vulkan">
+      <UniqueIdentifier>{10ccc47c-9033-4fa3-a369-076924b6697f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\engine\src\application.cpp">
@@ -38,6 +47,18 @@
     </ClCompile>
     <ClCompile Include="..\engine\src\windows\system_windows.cpp">
       <Filter>Source Files\platforms\windows</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\linux\system_linux.cpp">
+      <Filter>Source Files\platforms\linux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\vulkan\mercury_vulkan.cpp">
+      <Filter>Source Files\llris\vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\vulkan\vk_llri.cpp">
+      <Filter>Source Files\llris\vulkan</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +78,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\engine\include\mercury_entrypoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\vulkan\mercury_vulkan.h">
+      <Filter>Source Files\llris\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llri.h">
+      <Filter>Source Files\llris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\engine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

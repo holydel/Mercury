@@ -1,6 +1,8 @@
 #include "mercury_api.h"
 
 #ifdef MERCURY_PLATFORM_WINDOWS
+#include "mercury_log.h"
+
 #pragma comment(lib,"Winmm.lib")
 #pragma comment(lib, "Shell32.lib")
 #pragma comment(lib, "Ole32.lib")
@@ -21,14 +23,18 @@ using namespace mercury;
 HWND gMainWindow = nullptr;
 HINSTANCE gWinSystemInstance = nullptr;
 
-void platformInitialize()
+void mercury::platform::initialize()
 {
+	mercury::log("platform WINDOWS initialize");
+
 	timeBeginPeriod(1);
-	//SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+	SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
 }
 
-void platformShutdown()
+void mercury::platform::shutdown()
 {
+	mercury::log("platform WINDOWS shutdown");
+
 	timeEndPeriod(1);
 }
 
@@ -55,7 +61,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 constexpr const wchar_t* winClassName = L"MercuryWindow";
 
-void platformCreateMainWindow()
+void mercury::platform::createMainWindow()
 {
 	auto& config = gApplication->config.output;
 	const char* utf8WinCaption = gApplication->config.GetWindowTitle();
@@ -126,7 +132,7 @@ void platformCreateMainWindow()
 	gMainWindow = hWnd;
 }
 
-void platformDestroyMainWindow()
+void mercury::platform::destroyMainWindow()
 {
 	::DestroyWindow(gMainWindow);
 	::UnregisterClassW(winClassName, gWinSystemInstance);
@@ -146,6 +152,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case VK_ESCAPE:
+			gApplication->OnApplicationClose();
 			::PostQuitMessage(0);
 			break;
         default:
@@ -163,6 +170,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case WM_DESTROY:
+		gApplication->OnApplicationClose();
 		::PostQuitMessage(0);
 		break;
 	default:
@@ -172,7 +180,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void platformUpdate()
+void mercury::platform::update()
 {
 	MSG msg = {};
 
@@ -191,14 +199,50 @@ void platformUpdate()
 
 
 
-int utf8ToWide(const char* utf8Str, wchar_t* outBuff, int buffLen)
+int mercury::platform::utf8ToWide(const char* utf8Str, wchar_t* outBuff, int buffLen)
 {
 	return ::MultiByteToWideChar(CP_UTF8, 0, utf8Str, static_cast<int>(strlen(utf8Str)), outBuff, buffLen);
 }
 
-int wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
+int mercury::platform::wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
 {
 	return ::WideCharToMultiByte(CP_UTF8, 0, wideStr, static_cast<int>(wcslen(wideStr)), outBuff, buffLen,nullptr, nullptr);
+}
+
+long mercury::platform::interlockedAdd32(volatile long* value, long add)
+{
+	return InterlockedAdd(value, add);
+}
+
+void* mercury::platform::alignedMalloc(int size, int align)
+{
+	return _aligned_malloc(size, align);
+}
+
+void mercury::platform::alignedFree(void* ptr)
+{
+	_aligned_free(ptr);
+}
+
+void* mercury::platform::loadSharedLibrary(const char* utf8libname)
+{
+	return LoadLibraryA(utf8libname);
+}
+
+bool mercury::platform::unloadSharedLibrary(void* library)
+{
+	return FreeLibrary(static_cast<HMODULE>(library));
+}
+
+void* mercury::platform::getFuncPtrImpl(void* library, const char* funcName)
+{
+	return GetProcAddress(static_cast<HMODULE>(library), funcName);
+}
+
+void mercury::platform::fatalFail(const char* reason)
+{
+	mercury::log("%s\n", reason);
+	DebugBreak();
 }
 
 #endif

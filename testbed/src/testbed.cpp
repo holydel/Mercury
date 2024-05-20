@@ -2,6 +2,8 @@
 
 class TestBedApplication : public mercury::Application
 {
+	bool isRunning = true;
+
 public:
 	TestBedApplication();
 	virtual ~TestBedApplication() override;
@@ -11,6 +13,8 @@ public:
 	virtual bool Shutdown() override;
 
 	virtual bool Update() override;
+
+	virtual void OnApplicationClose() override;
 };
 
 TestBedApplication::TestBedApplication()
@@ -35,7 +39,12 @@ bool TestBedApplication::Shutdown()
 
 bool TestBedApplication::Update()
 {
-	return true;
+	return isRunning;
+}
+
+void TestBedApplication::OnApplicationClose()
+{
+	isRunning = false;
 }
 
 static TestBedApplication myApp;

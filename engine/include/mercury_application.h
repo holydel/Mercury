@@ -61,5 +61,7 @@ namespace mercury
 		virtual bool Shutdown();
 
 		virtual bool Update();
+
+		virtual void OnApplicationClose();
 	};
 }
