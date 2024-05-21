@@ -1,4 +1,7 @@
 #include "vk_llri.h"
+
+#include <cstring>
+
 #include "vk_swapchain.h"
 
 #include "../application.h"
@@ -144,7 +147,8 @@ static void InitializeInstance()
 	instance_extender.TryAddExtension(VK_KHR_ANDROID_SURFACE_EXTENSION_NAME);
 #endif
 #ifdef MERCURY_PLATFORM_LINUX
-	instance_extender.TryAddExtension(VK_KHR_XCB_SURFACE_EXTENSION_NAME);
+	//VK_KHR_xcb_surface
+	instance_extender.TryAddExtension("VK_KHR_xcb_surface");
 #endif
 
 	instance_extender.TryAddExtension(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
@@ -197,7 +201,7 @@ static void InitializeInstance()
 static i8 ChoosePhysicalDeviceByHeuristics(const std::vector<VkPhysicalDevice>& allDevices)
 {
 	//TODO: selection heuristics
-	return 0;
+	return 1;
 }
 
 static void ChoosePhysicalDevice()
@@ -213,7 +217,7 @@ static void ChoosePhysicalDevice()
 		write_log_message("Found VK device (%d): %s", i, props.deviceName);
 	}
 
-	auto selectedAdapterID = renderCfg.adapterID == -1 ? 0 : renderCfg.adapterID;
+	auto selectedAdapterID = renderCfg.adapterID == -1 ? ChoosePhysicalDeviceByHeuristics(phys_devices) : renderCfg.adapterID;
 	
 	gPhysicalDevice = phys_devices[selectedAdapterID];
 

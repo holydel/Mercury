@@ -1,5 +1,4 @@
 #include "mercury_api.h"
-#include "mercury_log.h"
 
 #ifdef MERCURY_GRAPHICS_API_VULKAN
 
@@ -64,6 +63,10 @@ VK_DEFINE_FUNCTION(vkGetPhysicalDeviceWin32PresentationSupportKHR);
 
 #ifdef MERCURY_PLATFORM_ANDROID
 VK_DEFINE_FUNCTION(vkCreateAndroidSurfaceKHR);
+#endif
+
+#ifdef MERCURY_PLATFORM_LINUX
+VK_DEFINE_FUNCTION(vkCreateXcbSurfaceKHR);
 #endif
 
 //GLOBAL LEVEL
@@ -238,6 +241,10 @@ void LoadVkInstanceLevelFuncs(VkInstance instance)
 
 #ifdef MERCURY_PLATFORM_ANDROID
 	VK_LOAD_INSTANCE_FUNC(vkCreateAndroidSurfaceKHR);
+#endif
+
+#ifdef MERCURY_PLATFORM_LINUX
+	VK_LOAD_INSTANCE_FUNC(vkCreateXcbSurfaceKHR);
 #endif
 }
 

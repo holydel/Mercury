@@ -28,6 +28,13 @@ bool llri::swapchain::create(void* nativeWindowHandle)
 	vkCreateAndroidSurfaceKHR(gInstance, &createInfo, nullptr, &gSurface);
 #endif
 
+#ifdef MERCURY_PLATFORM_LINUX
+	VkXcbSurfaceCreateInfoKHR createInfo {VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR};
+	createInfo.window = *((xcb_window_t*)nativeWindowHandle);
+	createInfo.connection = (xcb_connection_t*)mercury::platform::getAppInstanceHandle();
+
+	vkCreateXcbSurfaceKHR(gInstance, &createInfo, gGlobalAllocationsCallbacks, &gSurface);
+#endif
 	support_formats = EnumerateVulkanObjects(gPhysicalDevice, gSurface, vkGetPhysicalDeviceSurfaceFormatsKHR);
 	support_present_modes = EnumerateVulkanObjects(gPhysicalDevice, gSurface, vkGetPhysicalDeviceSurfacePresentModesKHR);
 

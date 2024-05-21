@@ -11,7 +11,9 @@
 #ifdef MERCURY_PLATFORM_ANDROID
 #define VK_USE_PLATFORM_ANDROID_KHR 1
 #endif
-
+#ifdef MERCURY_PLATFORM_LINUX
+#define VK_USE_PLATFORM_XCB_KHR 1
+#endif
 #define VK_ENABLE_BETA_EXTENSIONS 1
 
 #include <vulkan/vulkan.h>
@@ -73,6 +75,9 @@ VK_DECLARE_FUNCTION(vkGetPhysicalDeviceWin32PresentationSupportKHR);
 VK_DECLARE_FUNCTION(vkCreateAndroidSurfaceKHR);
 #endif
 
+#ifdef MERCURY_PLATFORM_LINUX
+VK_DECLARE_FUNCTION(vkCreateXcbSurfaceKHR);
+#endif
 //DEVICE LEVEL FUNCS
 VK_DECLARE_FUNCTION(vkDestroyDevice);
 VK_DECLARE_FUNCTION(vkDeviceWaitIdle);

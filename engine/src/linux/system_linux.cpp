@@ -1,10 +1,20 @@
+
+
 #include "mercury_api.h"
 
 #ifdef MERCURY_PLATFORM_LINUX
+#include "mercury_log.h"
 #include <xcb/xcb.h>
 #include <cstdlib>
 #include <cstring>
 #include <thread>
+#include <atomic>
+#include <cstdio>
+#include <dlfcn.h>
+#include <unordered_map>
+
+using namespace std::chrono_literals;
+using namespace mercury;
 
 #include "../application.h"
 #include "../platform.h"
@@ -18,11 +28,11 @@ xcb_screen_t *gScreen = nullptr;
 xcb_atom_t gWmProtocols;
 xcb_atom_t gWmDeleteWin;
 
-void platformInitialize()
+void platform::initialize()
 {
 }
 
-void platformShutdown()
+void platform::shutdown()
 {
 
 }
@@ -35,7 +45,7 @@ int main()
 }
 
 
-void platformCreateMainWindow()
+void platform::createMainWindow()
 {
 	auto& config = gApplication->config.output;
 	const char* utf8WinCaption = gApplication->config.GetWindowTitle();
@@ -83,21 +93,21 @@ void platformCreateMainWindow()
 
 }
 
-void platformDestroyMainWindow()
+void platform::destroyMainWindow()
 {
 	xcb_destroy_window(gConnection, gWindow);
 	xcb_disconnect (gConnection);
 }
 
 
-void platformUpdate()
+void platform::update()
 {
 	using namespace std::chrono_literals;
 	
 	xcb_generic_event_t *event;
 	xcb_client_message_event_t *cm;
 
-		event = xcb_wait_for_event(gConnection);
+		//event = xcb_wait_for_event(gConnection);
 
 		// switch (event->response_type & ~0x80) {
 		// 	case XCB_CLIENT_MESSAGE: {
@@ -110,16 +120,90 @@ void platformUpdate()
 		// 	}
 		// }
 
-		free(event);
+		//free(event);
 
 	std::this_thread::sleep_for((1ms));
 }
 
-//int xc_platform::UTF8ToWideChar(const char* utf8string, wchar_t* out_buff)
-//{
-//	int numCharsConverted = MultiByteToWideChar(CP_UTF8, 0, utf8string, -1, out_buff, 65536);
-//	return numCharsConverted;
-//}
+int platform::utf8ToWide(const char* utf8Str, wchar_t* outBuff, int buffLen)
+{
+	return 0;// ::MultiByteToWideChar(CP_UTF8, 0, utf8Str, static_cast<int>(strlen(utf8Str)), outBuff, buffLen);
+}
+
+int platform::wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
+{
+	return 0;// ::WideCharToMultiByte(CP_UTF8, 0, wideStr, static_cast<int>(wcslen(wideStr)), outBuff, buffLen, nullptr, nullptr);
+}
+
+long platform::interlockedAdd32(volatile long* value, long add)
+{
+	return __sync_fetch_and_add(value, add);
+}
+
+void* platform::alignedMalloc(int size, int align)
+{
+	return aligned_alloc(size, align);
+}
+
+void platform::alignedFree(void* ptr)
+{
+	free(ptr);
+}
+
+void* platform::loadSharedLibrary(const char* utf8libname)
+{
+	return dlopen(utf8libname, RTLD_NOW);
+}
+
+bool platform::unloadSharedLibrary(void* library)
+{
+	dlclose(library);
+	return true;
+}
+
+std::unordered_map<void*, void*> ptrToLibHandleMap;
+
+void* platform::getFuncPtrImpl(void* library, const char* funcName)
+{
+	auto result = dlsym(library, funcName);
+
+	ptrToLibHandleMap[library] = result;
+	return result;
+}
+
+void platform::fatalFail(const char* reason)
+{
+	mercury::write_log_message("%s\n", reason);
+	//DebugBreak();
+}
+
+const char* platform::getSharedLibraryFullFilename(void* libHandle)
+{
+	static Dl_info dl_info = {};
+	dladdr(ptrToLibHandleMap[libHandle], &dl_info);
+
+	return dl_info.dli_fname;
+}
+
+void platform::outputToDebugConsole(const char* text)
+{
+	printf("%s", text);
+}
+
+void platform::outputToLogFile(const char* text)
+{
+
+}
+
+void* platform::getMainWindowHandle()
+{
+	return static_cast<void*>(&gWindow);
+}
+
+void* platform::getAppInstanceHandle()
+{
+	return static_cast<void*>(gConnection);
+}
 
 
 
