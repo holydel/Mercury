@@ -60,6 +60,9 @@
     <ClCompile Include="..\engine\src\vulkan\vk_llri.cpp">
       <Filter>Source Files\llris\vulkan</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\vulkan\vk_swapchain.cpp">
+      <Filter>Source Files\llris\vulkan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\src\application.h">
@@ -91,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="..\engine\include\mercury_log.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\vulkan\vk_llri.h">
+      <Filter>Source Files\llris\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\swapchain.h">
+      <Filter>Source Files\llris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\vulkan\vk_swapchain.h">
+      <Filter>Source Files\llris\vulkan</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

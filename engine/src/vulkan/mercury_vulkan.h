@@ -1,13 +1,14 @@
 #pragma once
 
 #include "mercury_api.h"
+#include "../platform.h"
 
 #define VK_NO_PROTOTYPES 1
 
 #ifdef MERCURY_PLATFORM_WINDOWS
 #define VK_USE_PLATFORM_WIN32_KHR 1
 #endif
-#ifdef HEXCELL_PLATFORM_ANDROID
+#ifdef MERCURY_PLATFORM_ANDROID
 #define VK_USE_PLATFORM_ANDROID_KHR 1
 #endif
 
@@ -27,7 +28,7 @@ void ShutdownVK_Library();
 
 const char* VkResultToString(VkResult res);
 
-#define VK_CALL(func) {VkResult res = (func); if(res < 0){ xc_platform::FatalFail( VkResultToString(res) ); } }
+#define VK_CALL(func) {VkResult res = (func); if(res < 0){ mercury::platform::fatalFail( VkResultToString(res) ); } }
 
 #define VK_DECLARE_FUNCTION( fun ) extern PFN_##fun fun;
 
@@ -63,12 +64,12 @@ VK_DECLARE_FUNCTION(vkGetPhysicalDeviceSparseImageFormatProperties);
 VK_DECLARE_FUNCTION(vkGetPhysicalDeviceImageFormatProperties);
 VK_DECLARE_FUNCTION(vkEnumeratePhysicalDeviceGroups);
 
-#ifdef HEXCELL_PLATFORM_WIN32
+#ifdef MERCURY_PLATFORM_WINDOWS
 VK_DECLARE_FUNCTION(vkCreateWin32SurfaceKHR);
 VK_DECLARE_FUNCTION(vkGetPhysicalDeviceWin32PresentationSupportKHR);
 #endif
 
-#ifdef HEXCELL_PLATFORM_ANDROID
+#ifdef MERCURY_PLATFORM_ANDROID
 VK_DECLARE_FUNCTION(vkCreateAndroidSurfaceKHR);
 #endif
 
@@ -160,22 +161,29 @@ VK_DECLARE_FUNCTION(vkCreateQueryPool);
 VK_DECLARE_FUNCTION(vkDestroyQueryPool);
 VK_DECLARE_FUNCTION(vkCreateComputePipelines);
 VK_DECLARE_FUNCTION(vkCmdDispatch);
-VK_DECLARE_FUNCTION(vkGetWinrtDisplayNV);
-VK_DECLARE_FUNCTION(vkAcquireWinrtDisplayNV);
 VK_DECLARE_FUNCTION(vkDestroyDescriptorSetLayout);
 VK_DECLARE_FUNCTION(vkFreeDescriptorSets);
-
 VK_DECLARE_FUNCTION(vkDebugMarkerSetObjectTagEXT);
 VK_DECLARE_FUNCTION(vkDebugMarkerSetObjectNameEXT);
 VK_DECLARE_FUNCTION(vkCmdDebugMarkerBeginEXT);
 VK_DECLARE_FUNCTION(vkCmdDebugMarkerEndEXT);
 VK_DECLARE_FUNCTION(vkCmdDebugMarkerInsertEXT);
-
 VK_DECLARE_FUNCTION(vkCmdBeginQuery);
 VK_DECLARE_FUNCTION(vkCmdEndQuery);
 VK_DECLARE_FUNCTION(vkGetQueryPoolResults);
 VK_DECLARE_FUNCTION(vkCmdResetQueryPool);
 VK_DECLARE_FUNCTION(vkCmdCopyQueryPoolResults);
+
+VK_DECLARE_FUNCTION(vkBindBufferMemory2);
+VK_DECLARE_FUNCTION(vkBindImageMemory2);
+VK_DECLARE_FUNCTION(vkGetBufferMemoryRequirements2);
+VK_DECLARE_FUNCTION(vkGetImageMemoryRequirements2);
+
+#ifdef MERCURY_PLATFORM_WINDOWS
+VK_DECLARE_FUNCTION(vkGetWinrtDisplayNV);
+VK_DECLARE_FUNCTION(vkAcquireWinrtDisplayNV);
+#endif
+
 template <typename HostObj, typename T, typename U>
 std::vector<T> EnumerateVulkanObjects(HostObj host, U object, VkResult(VKAPI_CALL* pfunc) (HostObj host, U object, uint32_t* cnt, T* objs))
 {

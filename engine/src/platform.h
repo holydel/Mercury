@@ -36,6 +36,8 @@ namespace mercury
 		void alignedFree(void* ptr);
 
 		void* loadSharedLibrary(const char* utf8libname);
+        const char* getSharedLibraryFullFilename(void* libHandle);
+
 		bool unloadSharedLibrary(void* library);
 		void* getFuncPtrImpl(void* library, const char* funcName);
 
@@ -47,6 +49,12 @@ namespace mercury
 		}
 
 		void fatalFail(const char* reason);
+
+		void outputToDebugConsole(const char* text);
+		void outputToLogFile(const char* text);
+
+		void* getMainWindowHandle();
+		void* getAppInstanceHandle();
 	}
 }
 

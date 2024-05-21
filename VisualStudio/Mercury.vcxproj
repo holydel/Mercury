@@ -27,6 +27,7 @@
     <ClCompile Include="..\engine\src\platform.cpp" />
     <ClCompile Include="..\engine\src\vulkan\mercury_vulkan.cpp" />
     <ClCompile Include="..\engine\src\vulkan\vk_llri.cpp" />
+    <ClCompile Include="..\engine\src\vulkan\vk_swapchain.cpp" />
     <ClCompile Include="..\engine\src\windows\system_windows.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -39,7 +40,10 @@
     <ClInclude Include="..\engine\src\engine.h" />
     <ClInclude Include="..\engine\src\llri.h" />
     <ClInclude Include="..\engine\src\platform.h" />
+    <ClInclude Include="..\engine\src\swapchain.h" />
     <ClInclude Include="..\engine\src\vulkan\mercury_vulkan.h" />
+    <ClInclude Include="..\engine\src\vulkan\vk_llri.h" />
+    <ClInclude Include="..\engine\src\vulkan\vk_swapchain.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

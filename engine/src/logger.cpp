@@ -1,13 +1,18 @@
 #include "mercury_log.h"
 #include <cstdarg>
-#include <format>
 #include <string>
+#include "platform.h"
 
-void mercury::log(const char* format, ...)
+void mercury::write_log_message(const char* format, ...)
 {
+    char buff[1024];
+
     va_list argptr;
     va_start(argptr, format);
-    vprintf(format, argptr);
-    printf("\n");
+    int pos = std::vsnprintf(buff, 1024, format, argptr);
+    buff[pos] = '\n';
+    buff[pos+1] = 0;
     va_end(argptr);
+
+    platform::outputToDebugConsole(buff);
 }

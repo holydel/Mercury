@@ -34,6 +34,17 @@ namespace mercury
 		bool EnableBulletPhysics = false;
 	};
 
+	struct RendererConfig
+	{
+		i8 adapterID = -1;
+
+#ifdef NDEBUG
+		bool enableDebugLayers = false;
+#else
+		bool enableDebugLayers = true;
+#endif
+	};
+
 	struct AppConfig
 	{
 		const char* appName = "NoName Mercury App";
@@ -41,6 +52,22 @@ namespace mercury
 		OutputMode outputMode = OutputMode::Window;
 		WindowConfig output;
 		EngineConfig engine;
+		RendererConfig render;
+		
+		struct Version
+		{
+			union
+			{
+				struct
+				{
+					u8 major;
+					u8 minor;
+					u16 patch;
+				};
+
+				u32 packed;
+			};
+		} version = Version{ {{0,0,1}} };
 
 		const char* GetWindowTitle()
 		{

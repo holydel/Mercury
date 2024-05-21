@@ -31,3 +31,43 @@
 #else
 #define MERCURY_DESKTOP
 #endif
+
+#ifdef MERCURY_PLATFORM_WINDOWS
+#include <xmmintrin.h>
+#endif
+
+#ifdef MERCURY_PLATFORM_ANDROID
+#include <arm_neon.h>
+#endif
+
+namespace mercury
+{
+	typedef unsigned	long long	u64;
+	typedef signed		long long	i64;
+	typedef unsigned	int			u32;
+	typedef	signed		int			i32;
+	typedef unsigned	short		u16;
+	typedef	signed		short		i16;
+	typedef unsigned	char		u8;
+	typedef	signed		char		i8;
+
+	typedef float					f32;
+	typedef double					f64;
+
+	//TODO: if supported f16
+	typedef	unsigned short			f16;
+
+#ifdef MERCURY_PLATFORM_WINDOWS
+	typedef __m128					f32v4;
+#endif
+
+#ifdef MERCURY_PLATFORM_ANDROID
+	typedef float32x4_t				f32v4;
+#endif
+
+	unsigned long long operator ""_KB(unsigned long long v);
+
+	unsigned long long operator ""_MB(unsigned long long v);
+
+	unsigned long long operator ""_GB(unsigned long long v);
+}

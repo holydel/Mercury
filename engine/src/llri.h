@@ -6,4 +6,6 @@ namespace llri
 {
 	bool initialize();
 	void shutdown();
+
+	bool update();
 }

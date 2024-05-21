@@ -1,8 +1,19 @@
 #include "mercury_api.h"
+#include "mercury_log.h"
 
 #ifdef MERCURY_GRAPHICS_API_VULKAN
 
+#define VMA_IMPLEMENTATION
+
+#pragma GCC diagnostic push 
+#pragma GCC diagnostic ignored "-Wnullability-completeness"
+#pragma GCC diagnostic ignored "-Wunused-function"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #include "mercury_vulkan.h"
+#pragma GCC diagnostic pop
+
+
+
 #include "../platform.h"
 #include "mercury_log.h"
 using namespace mercury;
@@ -46,12 +57,12 @@ VK_DEFINE_FUNCTION(vkEnumeratePhysicalDeviceGroups);
 VK_DEFINE_FUNCTION(vkDestroyDescriptorSetLayout);
 VK_DEFINE_FUNCTION(vkFreeDescriptorSets);
 
-#ifdef _WIN32
+#ifdef MERCURY_PLATFORM_WINDOWS
 VK_DEFINE_FUNCTION(vkCreateWin32SurfaceKHR);
 VK_DEFINE_FUNCTION(vkGetPhysicalDeviceWin32PresentationSupportKHR);
 #endif
 
-#ifdef HEXCELL_PLATFORM_ANDROID
+#ifdef MERCURY_PLATFORM_ANDROID
 VK_DEFINE_FUNCTION(vkCreateAndroidSurfaceKHR);
 #endif
 
@@ -143,20 +154,25 @@ VK_DEFINE_FUNCTION(vkCreateQueryPool);
 VK_DEFINE_FUNCTION(vkDestroyQueryPool);
 VK_DEFINE_FUNCTION(vkCreateComputePipelines);
 VK_DEFINE_FUNCTION(vkCmdDispatch);
-VK_DEFINE_FUNCTION(vkGetWinrtDisplayNV);
-VK_DEFINE_FUNCTION(vkAcquireWinrtDisplayNV);
-
 VK_DEFINE_FUNCTION(vkDebugMarkerSetObjectTagEXT);
 VK_DEFINE_FUNCTION(vkDebugMarkerSetObjectNameEXT);
 VK_DEFINE_FUNCTION(vkCmdDebugMarkerBeginEXT);
 VK_DEFINE_FUNCTION(vkCmdDebugMarkerEndEXT);
 VK_DEFINE_FUNCTION(vkCmdDebugMarkerInsertEXT);
-
 VK_DEFINE_FUNCTION(vkCmdBeginQuery);
 VK_DEFINE_FUNCTION(vkCmdEndQuery);
 VK_DEFINE_FUNCTION(vkGetQueryPoolResults);
 VK_DEFINE_FUNCTION(vkCmdResetQueryPool);
 VK_DEFINE_FUNCTION(vkCmdCopyQueryPoolResults);
+VK_DEFINE_FUNCTION(vkBindBufferMemory2);
+VK_DEFINE_FUNCTION(vkBindImageMemory2);
+VK_DEFINE_FUNCTION(vkGetBufferMemoryRequirements2);
+VK_DEFINE_FUNCTION(vkGetImageMemoryRequirements2);
+
+#ifdef MERCURY_PLATFORM_WINDOWS
+VK_DEFINE_FUNCTION(vkGetWinrtDisplayNV);
+VK_DEFINE_FUNCTION(vkAcquireWinrtDisplayNV);
+#endif
 
 static void* libHandle = nullptr;
 
@@ -181,6 +197,9 @@ void LoadVK_Library()
 	VK_LOAD_GLOBAL_FUNC(vkCreateInstance);
 	VK_LOAD_GLOBAL_FUNC(vkEnumerateInstanceExtensionProperties);
 	VK_LOAD_GLOBAL_FUNC(vkEnumerateInstanceLayerProperties);
+
+	auto libFullName = platform::getSharedLibraryFullFilename(libHandle);
+	write_log_message("Found vulkan loader: %s", libFullName);
 }
 
 void LoadVkInstanceLevelFuncs(VkInstance instance)
@@ -212,12 +231,12 @@ void LoadVkInstanceLevelFuncs(VkInstance instance)
 	VK_LOAD_INSTANCE_FUNC(vkGetPhysicalDeviceImageFormatProperties);
 	VK_LOAD_INSTANCE_FUNC(vkEnumeratePhysicalDeviceGroups);
 
-#ifdef HEXCELL_PLATFORM_WIN32
+#ifdef MERCURY_PLATFORM_WINDOWS
 	VK_LOAD_INSTANCE_FUNC(vkCreateWin32SurfaceKHR);
 	VK_LOAD_INSTANCE_FUNC(vkGetPhysicalDeviceWin32PresentationSupportKHR);
 #endif
 
-#ifdef HEXCELL_PLATFORM_ANDROID
+#ifdef MERCURY_PLATFORM_ANDROID
 	VK_LOAD_INSTANCE_FUNC(vkCreateAndroidSurfaceKHR);
 #endif
 }
@@ -311,8 +330,6 @@ void LoadVkDeviceLevelFuncs(VkDevice device)
 	VK_LOAD_DEVICE_FUNC(vkDestroyQueryPool);
 	VK_LOAD_DEVICE_FUNC(vkCreateComputePipelines);
 	VK_LOAD_DEVICE_FUNC(vkCmdDispatch);
-	VK_LOAD_DEVICE_FUNC(vkGetWinrtDisplayNV);
-	VK_LOAD_DEVICE_FUNC(vkAcquireWinrtDisplayNV);
 	VK_LOAD_DEVICE_FUNC(vkDestroyDescriptorSetLayout);
 	VK_LOAD_DEVICE_FUNC(vkFreeDescriptorSets);
 	VK_LOAD_DEVICE_FUNC(vkDebugMarkerSetObjectTagEXT);
@@ -320,19 +337,27 @@ void LoadVkDeviceLevelFuncs(VkDevice device)
 	VK_LOAD_DEVICE_FUNC(vkCmdDebugMarkerBeginEXT);
 	VK_LOAD_DEVICE_FUNC(vkCmdDebugMarkerEndEXT);
 	VK_LOAD_DEVICE_FUNC(vkCmdDebugMarkerInsertEXT);
-
 	VK_LOAD_DEVICE_FUNC(vkCmdBeginQuery);
 	VK_LOAD_DEVICE_FUNC(vkCmdEndQuery);
 	VK_LOAD_DEVICE_FUNC(vkGetQueryPoolResults);
 	VK_LOAD_DEVICE_FUNC(vkCmdResetQueryPool);
 	VK_LOAD_DEVICE_FUNC(vkCmdCopyQueryPoolResults);
+	VK_LOAD_DEVICE_FUNC(vkBindBufferMemory2);
+	VK_LOAD_DEVICE_FUNC(vkBindImageMemory2);
+	VK_LOAD_DEVICE_FUNC(vkGetBufferMemoryRequirements2);
+	VK_LOAD_DEVICE_FUNC(vkGetImageMemoryRequirements2);
+
+#ifdef MERCURY_PLATFORM_WINDOWS
+	VK_LOAD_DEVICE_FUNC(vkGetWinrtDisplayNV);
+	VK_LOAD_DEVICE_FUNC(vkAcquireWinrtDisplayNV);
+#endif
 }
 
 const char* VkResultToString(VkResult res)
 {
 	if (res != VK_SUCCESS)
 	{
-		mercury::log("err");
+		mercury::write_log_message("err");
 	}
 	return "unimplemented!";
 }

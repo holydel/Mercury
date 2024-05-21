@@ -7,13 +7,16 @@
 #pragma comment(lib, "Shell32.lib")
 #pragma comment(lib, "Ole32.lib")
 
+#ifndef NOMINMAX
 #define NOMINMAX
+#endif
 
 #include <Windows.h>
 #include <ShlObj.h>
 #include <intrin.h>
 #include <map>
 #include <Psapi.h>
+#include <cstdio>
 
 #include "../application.h"
 #include "../platform.h"
@@ -23,17 +26,18 @@ using namespace mercury;
 HWND gMainWindow = nullptr;
 HINSTANCE gWinSystemInstance = nullptr;
 
-void mercury::platform::initialize()
+void platform::initialize()
 {
-	mercury::log("platform WINDOWS initialize");
+	mercury::write_log_message("platform WINDOWS initialize");
 
 	timeBeginPeriod(1);
-	SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+	SetProcessDPIAware();
+	//SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
 }
 
-void mercury::platform::shutdown()
+void platform::shutdown()
 {
-	mercury::log("platform WINDOWS shutdown");
+	mercury::write_log_message("platform WINDOWS shutdown");
 
 	timeEndPeriod(1);
 }
@@ -61,7 +65,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 constexpr const wchar_t* winClassName = L"MercuryWindow";
 
-void mercury::platform::createMainWindow()
+void platform::createMainWindow()
 {
 	auto& config = gApplication->config.output;
 	const char* utf8WinCaption = gApplication->config.GetWindowTitle();
@@ -132,10 +136,20 @@ void mercury::platform::createMainWindow()
 	gMainWindow = hWnd;
 }
 
-void mercury::platform::destroyMainWindow()
+void platform::destroyMainWindow()
 {
 	::DestroyWindow(gMainWindow);
 	::UnregisterClassW(winClassName, gWinSystemInstance);
+}
+
+void* platform::getMainWindowHandle()
+{
+	return static_cast<void*>(gMainWindow);
+}
+
+void* platform::getAppInstanceHandle()
+{
+	return static_cast<void*>(gWinSystemInstance);
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -180,7 +194,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void mercury::platform::update()
+void platform::update()
 {
 	MSG msg = {};
 
@@ -199,50 +213,66 @@ void mercury::platform::update()
 
 
 
-int mercury::platform::utf8ToWide(const char* utf8Str, wchar_t* outBuff, int buffLen)
+int platform::utf8ToWide(const char* utf8Str, wchar_t* outBuff, int buffLen)
 {
 	return ::MultiByteToWideChar(CP_UTF8, 0, utf8Str, static_cast<int>(strlen(utf8Str)), outBuff, buffLen);
 }
 
-int mercury::platform::wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
+int platform::wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
 {
 	return ::WideCharToMultiByte(CP_UTF8, 0, wideStr, static_cast<int>(wcslen(wideStr)), outBuff, buffLen,nullptr, nullptr);
 }
 
-long mercury::platform::interlockedAdd32(volatile long* value, long add)
+long platform::interlockedAdd32(volatile long* value, long add)
 {
 	return InterlockedAdd(value, add);
 }
 
-void* mercury::platform::alignedMalloc(int size, int align)
+void* platform::alignedMalloc(int size, int align)
 {
 	return _aligned_malloc(size, align);
 }
 
-void mercury::platform::alignedFree(void* ptr)
+void platform::alignedFree(void* ptr)
 {
 	_aligned_free(ptr);
 }
 
-void* mercury::platform::loadSharedLibrary(const char* utf8libname)
+void* platform::loadSharedLibrary(const char* utf8libname)
 {
 	return LoadLibraryA(utf8libname);
 }
 
-bool mercury::platform::unloadSharedLibrary(void* library)
+bool platform::unloadSharedLibrary(void* library)
 {
 	return FreeLibrary(static_cast<HMODULE>(library));
 }
 
-void* mercury::platform::getFuncPtrImpl(void* library, const char* funcName)
+void* platform::getFuncPtrImpl(void* library, const char* funcName)
 {
-	return GetProcAddress(static_cast<HMODULE>(library), funcName);
+	return reinterpret_cast<void*>(GetProcAddress(static_cast<HMODULE>(library), funcName));
 }
 
-void mercury::platform::fatalFail(const char* reason)
+void platform::fatalFail(const char* reason)
 {
-	mercury::log("%s\n", reason);
+	mercury::write_log_message("%s\n", reason);
 	DebugBreak();
 }
 
+const char* platform::getSharedLibraryFullFilename(void* libHandle)
+{
+    static char path[MAX_PATH];
+    GetModuleFileNameA(reinterpret_cast<HMODULE>(libHandle), path, MAX_PATH);
+    return path;
+}
+
+void platform::outputToDebugConsole(const char* text)
+{
+    printf("%s",text);
+}
+
+void platform::outputToLogFile(const char* text)
+{
+
+}
 #endif

@@ -3,5 +3,5 @@
 
 namespace mercury
 {
-	void log(const char* mask, ...);
+	void write_log_message(const char* mask, ...);
 }

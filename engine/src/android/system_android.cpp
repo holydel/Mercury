@@ -1,32 +1,43 @@
 #include "mercury_api.h"
 #ifdef MERCURY_PLATFORM_ANDROID
-
+#include "mercury_log.h"
 #include "../application.h"
+#include "../platform.h"
+#include "../engine.h"
 
 #include <stdio.h>
 #include <android/native_activity.h>
 #include <android/native_window.h>
+#include <android/log.h>
+
+#include <android/ndk-version.h>
+
 #include <string>
 #include <thread>
 #include <atomic>
+
+#include <dlfcn.h>
+#include <unordered_map>
+
 using namespace std::chrono_literals;
+using namespace mercury;
 
 std::atomic_bool is_running = false;
 std::atomic_bool need_to_stop = false;
 
+ANativeWindow* gMainWindow = nullptr;
 
-
-void platformInitialize()
+void platform::initialize()
 {
 
 }
 
-void platformShutdown()
+void platform::shutdown()
 {
 
 }
 
-void platformUpdate()
+void platform::update()
 {
 	std::this_thread::sleep_for(1ms);
 }
@@ -34,16 +45,16 @@ void platformUpdate()
 void MainLoop()
 {
 	is_running = true;
-
+	engine::initialize();
 	gApplication->Initialize();
 
 	while (gApplication->Update() && !need_to_stop)
 	{
-		platformUpdate();
+		engine::update();
 	}
 
 	gApplication->Shutdown();
-
+	engine::shutdown();
 	is_running = false;
 }
 
@@ -55,7 +66,7 @@ std::thread* mainThread = nullptr;
 	 */
 void onStart(ANativeActivity* activity)
 {
-	mercury::log("onStart");
+	mercury::write_log_message("onStart");
 	//ANativeActivity_setWindowFlags(activity, ana, 0);
 
 	if (mainThread == nullptr)
@@ -70,7 +81,7 @@ void onStart(ANativeActivity* activity)
  */
 void onResume(ANativeActivity* activity)
 {
-	mercury::log("onResume");
+	mercury::write_log_message("onResume");
 }
 
 /**
@@ -84,7 +95,7 @@ void onResume(ANativeActivity* activity)
  */
 void* onSaveInstanceState(ANativeActivity* activity, size_t* outSize)
 {
-	mercury::log("onSaveInstanceState");
+	mercury::write_log_message("onSaveInstanceState");
 
 	void* savedData = malloc(64);
 	*outSize = 64;
@@ -97,7 +108,7 @@ void* onSaveInstanceState(ANativeActivity* activity, size_t* outSize)
  */
 void onPause(ANativeActivity* activity)
 {
-	mercury::log("onPause");
+	mercury::write_log_message("onPause");
 }
 
 /**
@@ -106,7 +117,7 @@ void onPause(ANativeActivity* activity)
  */
 void onStop(ANativeActivity* activity)
 {
-	mercury::log("onStop");
+	mercury::write_log_message("onStop");
 }
 
 /**
@@ -125,7 +136,7 @@ void onDestroy(ANativeActivity* activity)
 
 	delete mainThread;
 
-	mercury::log("onDestroy");
+	mercury::write_log_message("onDestroy");
 }
 
 /**
@@ -134,7 +145,7 @@ void onDestroy(ANativeActivity* activity)
  */
 void onWindowFocusChanged(ANativeActivity* activity, int hasFocus)
 {
-	mercury::log("onWindowFocusChanged");
+	mercury::write_log_message("onWindowFocusChanged");
 }
 
 /**
@@ -143,7 +154,8 @@ void onWindowFocusChanged(ANativeActivity* activity, int hasFocus)
  */
 void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window)
 {	
-	mercury::log("onNativeWindowCreated");
+	mercury::write_log_message("onNativeWindowCreated");
+	gMainWindow = window;
 }
 
 /**
@@ -153,7 +165,7 @@ void onNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window)
  */
 void onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window)
 {
-	mercury::log("onNativeWindowResized");
+	mercury::write_log_message("onNativeWindowResized");
 }
 
 /**
@@ -164,7 +176,7 @@ void onNativeWindowResized(ANativeActivity* activity, ANativeWindow* window)
  */
 void onNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window)
 {
-	mercury::log("onNativeWindowRedrawNeeded");
+	mercury::write_log_message("onNativeWindowRedrawNeeded");
 }
 
 /**
@@ -177,7 +189,8 @@ void onNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window
  */
 void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window)
 {
-	mercury::log("onNativeWindowDestroyed");
+	mercury::write_log_message("onNativeWindowDestroyed");
+	gMainWindow = nullptr;
 }
 /**
  * The input queue for this native activity's window has been created.
@@ -185,7 +198,7 @@ void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window)
  */
 void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue)
 {
-	mercury::log("onInputQueueCreated");
+	mercury::write_log_message("onInputQueueCreated");
 }
 
 /**
@@ -195,7 +208,7 @@ void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue)
  */
 void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue)
 {
-	mercury::log("onInputQueueDestroyed");
+	mercury::write_log_message("onInputQueueDestroyed");
 }
 
 /**
@@ -203,7 +216,7 @@ void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue)
  */
 void onContentRectChanged(ANativeActivity* activity, const ARect* rect)
 {
-	mercury::log("onContentRectChanged");
+	mercury::write_log_message("onContentRectChanged");
 }
 
 /**
@@ -212,7 +225,7 @@ void onContentRectChanged(ANativeActivity* activity, const ARect* rect)
  */
 void onConfigurationChanged(ANativeActivity* activity)
 {
-	mercury::log("onConfigurationChanged");
+	mercury::write_log_message("onConfigurationChanged");
 }
 
 /**
@@ -222,7 +235,7 @@ void onConfigurationChanged(ANativeActivity* activity)
  */
 void onLowMemory(ANativeActivity* activity)
 {
-	mercury::log("onLowMemory");
+	mercury::write_log_message("onLowMemory");
 }
 
 extern "C" JNIEXPORT void ANativeActivity_onCreate(ANativeActivity * activity,
@@ -245,8 +258,87 @@ extern "C" JNIEXPORT void ANativeActivity_onCreate(ANativeActivity * activity,
 	activity->callbacks->onStop = onStop;
 	activity->callbacks->onWindowFocusChanged = onWindowFocusChanged;
 
-	mercury::log("ANativeActivity_onCreate");
+	mercury::write_log_message("ANativeActivity_onCreate");
 }
 
+int platform::utf8ToWide(const char* utf8Str, wchar_t* outBuff, int buffLen)
+{
+	return 0;// ::MultiByteToWideChar(CP_UTF8, 0, utf8Str, static_cast<int>(strlen(utf8Str)), outBuff, buffLen);
+}
+
+int platform::wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
+{
+	return 0;// ::WideCharToMultiByte(CP_UTF8, 0, wideStr, static_cast<int>(wcslen(wideStr)), outBuff, buffLen, nullptr, nullptr);
+}
+
+long platform::interlockedAdd32(volatile long* value, long add)
+{
+	return __sync_fetch_and_add(value, add);
+}
+
+void* platform::alignedMalloc(int size, int align)
+{
+	return aligned_alloc(size, align);
+}
+
+void platform::alignedFree(void* ptr)
+{
+	free(ptr);
+}
+
+void* platform::loadSharedLibrary(const char* utf8libname)
+{
+	return dlopen(utf8libname, RTLD_NOW);
+}
+
+bool platform::unloadSharedLibrary(void* library)
+{
+	dlclose(library);
+	return true;
+}
+
+std::unordered_map<void*, void*> ptrToLibHandleMap;
+
+void* platform::getFuncPtrImpl(void* library, const char* funcName)
+{
+	auto result = dlsym(library, funcName);
+
+	ptrToLibHandleMap[library] = result;
+	return result;
+}
+
+void platform::fatalFail(const char* reason)
+{
+	mercury::write_log_message("%s\n", reason);
+	//DebugBreak();
+}
+
+const char* platform::getSharedLibraryFullFilename(void* libHandle)
+{	
+	static Dl_info dl_info = {};
+	dladdr(ptrToLibHandleMap[libHandle], &dl_info);
+
+	return dl_info.dli_fname;
+}
+
+void platform::outputToDebugConsole(const char* text)
+{
+	__android_log_write(ANDROID_LOG_DEBUG, "mercury", text);
+}
+
+void platform::outputToLogFile(const char* text)
+{
+
+}
+
+void* platform::getMainWindowHandle()
+{
+	return static_cast<void*>(gMainWindow);
+}
+
+void* platform::getAppInstanceHandle()
+{
+	return static_cast<void*>(0);
+}
 
 #endif

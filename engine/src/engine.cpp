@@ -7,7 +7,7 @@ using namespace mercury;
 
 bool engine::initialize()
 {
-	mercury::log("engine initialize");
+	mercury::write_log_message("engine initialize");
 	platform::initialize();
 	llri::initialize();
 	return true;
@@ -17,11 +17,13 @@ void engine::shutdown()
 {	
 	llri::shutdown();
 	platform::shutdown();
-	mercury::log("engine shutdown");
+	mercury::write_log_message("engine shutdown");
 }
 
 bool engine::update()
 {
 	platform::update();
+	llri::update();
+
 	return true;
 }
