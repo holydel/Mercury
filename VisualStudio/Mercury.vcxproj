@@ -25,6 +25,7 @@
     <ClCompile Include="..\engine\src\linux\system_linux.cpp" />
     <ClCompile Include="..\engine\src\logger.cpp" />
     <ClCompile Include="..\engine\src\platform.cpp" />
+    <ClCompile Include="..\engine\src\rendering.cpp" />
     <ClCompile Include="..\engine\src\vulkan\mercury_vulkan.cpp" />
     <ClCompile Include="..\engine\src\vulkan\vk_llri.cpp" />
     <ClCompile Include="..\engine\src\vulkan\vk_swapchain.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="..\engine\include\mercury_application.h" />
     <ClInclude Include="..\engine\include\mercury_entrypoint.h" />
     <ClInclude Include="..\engine\include\mercury_log.h" />
+    <ClInclude Include="..\engine\include\mercury_rendering.h" />
     <ClInclude Include="..\engine\src\application.h" />
     <ClInclude Include="..\engine\src\engine.h" />
     <ClInclude Include="..\engine\src\llri.h" />
