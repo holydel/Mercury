@@ -185,8 +185,10 @@ static void* libHandle = nullptr;
 
 void LoadVK_Library()
 {
-#ifdef _WIN32
+#ifdef MERCURY_PLATFORM_WINDOWS
 	const char* libName = u8"vulkan-1.dll";
+#elif defined(MERCURY_PLATFORM_MACOS)
+    const char* libName = u8"libvulkan.1.dylib";
 #else
 	const char* libName = u8"libvulkan.so";
 #endif

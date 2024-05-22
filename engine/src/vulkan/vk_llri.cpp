@@ -150,6 +150,13 @@ static void InitializeInstance()
 	//VK_KHR_xcb_surface
 	instance_extender.TryAddExtension("VK_KHR_xcb_surface");
 #endif
+#ifdef MERCURY_PLATFORM_MACOS
+    //Found drivers that contain devices which support the portability subset, but the instance does not enumerate portability drivers!
+    //Applications that wish to enumerate portability drivers must set the VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR bit in the VkInstanceCreateInfo flags
+    //and enable the VK_KHR_portability_enumeration instance extension.
+    instance_extender.TryAddExtension(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+    instance_extender.TryAddExtension("VK_MVK_macos_surface");
+#endif
 
 	instance_extender.TryAddExtension(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);
 
@@ -187,7 +194,9 @@ static void InitializeInstance()
 	createInfo.enabledExtensionCount = instance_extender.NumEnabledExtension();
 
 	createInfo.flags = 0;
-
+#ifdef MERCURY_PLATFORM_MACOS
+    createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+#endif
 	VK_CALL(vkCreateInstance(&createInfo, gGlobalAllocationsCallbacks, &gInstance));
 
 	LoadVkInstanceLevelFuncs(gInstance);
@@ -201,7 +210,7 @@ static void InitializeInstance()
 static i8 ChoosePhysicalDeviceByHeuristics(const std::vector<VkPhysicalDevice>& allDevices)
 {
 	//TODO: selection heuristics
-	return 1;
+	return 0;
 }
 
 static void ChoosePhysicalDevice()
@@ -221,23 +230,39 @@ static void ChoosePhysicalDevice()
 	
 	gPhysicalDevice = phys_devices[selectedAdapterID];
 
-	VkPhysicalDeviceDriverProperties driverProps = {};
-	driverProps.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES;
-	
-	VkPhysicalDeviceProperties2 props = {};
-	props.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2;
-	props.pNext = &driverProps;
+    if(vkGetPhysicalDeviceProperties2)
+    {
+        VkPhysicalDeviceDriverProperties driverProps = {};
+        driverProps.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES;
 
-	vkGetPhysicalDeviceProperties2(gPhysicalDevice, &props);
+        VkPhysicalDeviceProperties2 props = {};
+        props.sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2;
+        props.pNext = &driverProps;
 
-	auto major = VK_API_VERSION_MAJOR(props.properties.apiVersion);
-	auto minor = VK_API_VERSION_MINOR(props.properties.apiVersion);
-	auto patch = VK_API_VERSION_PATCH(props.properties.apiVersion);
+        vkGetPhysicalDeviceProperties2(gPhysicalDevice, &props);
 
-	write_log_message("Selected Physical Device: %s", props.properties.deviceName);
-	write_log_message("Vulkan API: %d.%d.%d", major, minor, patch);
+        auto major = VK_API_VERSION_MAJOR(props.properties.apiVersion);
+        auto minor = VK_API_VERSION_MINOR(props.properties.apiVersion);
+        auto patch = VK_API_VERSION_PATCH(props.properties.apiVersion);
 
-	write_log_message("DRIVER: %s %s", driverProps.driverName, driverProps.driverInfo);
+        write_log_message("Selected Physical Device: %s", props.properties.deviceName);
+        write_log_message("Vulkan API: %d.%d.%d", major, minor, patch);
+
+        write_log_message("DRIVER: %s %s", driverProps.driverName, driverProps.driverInfo);
+    }
+    else
+    {
+        VkPhysicalDeviceProperties props = {};
+        vkGetPhysicalDeviceProperties(gPhysicalDevice, &props);
+
+        auto major = VK_API_VERSION_MAJOR(props.apiVersion);
+        auto minor = VK_API_VERSION_MINOR(props.apiVersion);
+        auto patch = VK_API_VERSION_PATCH(props.apiVersion);
+
+        write_log_message("Selected Physical Device: %s", props.deviceName);
+        write_log_message("Vulkan API: %d.%d.%d", major, minor, patch);
+    }
+
 }
 
 static void CreateDevice()
@@ -356,6 +381,9 @@ static void CreateDevice()
 
 	device_extender.TryAddExtension(VK_KHR_SWAPCHAIN_EXTENSION_NAME); //TODO: fill device info with supported features
 
+#ifdef MERCURY_PLATFORM_MACOS
+device_extender.TryAddExtension(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
+#endif
 	VkDeviceCreateInfo deviceCreateInfo;
 	deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 	deviceCreateInfo.pNext = nullptr;

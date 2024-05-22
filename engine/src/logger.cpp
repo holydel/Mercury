@@ -1,5 +1,5 @@
 #include "mercury_log.h"
-#include <cstdarg>
+#include <stdarg.h>
 #include <string>
 #include "platform.h"
 
