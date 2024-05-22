@@ -300,7 +300,7 @@ bool llri::swapchain::update()
 	vkWaitForFences(gDevice, 1, &frame.fence, VK_TRUE, UINT64_MAX); //UINT64_MAX
 	vkResetFences(gDevice, 1, &frame.fence);
 
-	mercury::write_log_message("frameID: %d imageID: %d", frameIndex, presentedImageIndex);
+	//mercury::write_log_message("frameID: %d imageID: %d", frameIndex, presentedImageIndex);
 	vkResetCommandPool(gDevice,frame.cmdPool,0);
 
 	VkCommandBufferBeginInfo cbuffBegin;
