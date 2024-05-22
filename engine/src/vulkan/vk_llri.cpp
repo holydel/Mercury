@@ -473,5 +473,12 @@ bool llri::update()
 		}		
 	}
 
+	if (nativeWindowHandle != nullptr)
+	{
+		//do render
+
+		llri::swapchain::update();
+	}
+
 	return true;
 }

@@ -63,6 +63,9 @@
     <ClCompile Include="..\engine\src\vulkan\vk_swapchain.cpp">
       <Filter>Source Files\llris\vulkan</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\rendering.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\src\application.h">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="..\engine\src\vulkan\vk_swapchain.h">
       <Filter>Source Files\llris\vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_rendering.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,8 +1,10 @@
 #include "mercury_entrypoint.h"
+#include <cmath>
 
 class TestBedApplication : public mercury::Application
 {
 	bool isRunning = true;
+	float value = 0.0f;
 
 public:
 	TestBedApplication();
@@ -39,6 +41,9 @@ bool TestBedApplication::Shutdown()
 
 bool TestBedApplication::Update()
 {
+	value += 0.1f;
+
+	mercury::rendering::SetBackGroundColor(0.5f, sin(value) * 0.5f + 0.5f, 0.0f, 1.0f);
 	return isRunning;
 }
 

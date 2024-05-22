@@ -8,5 +8,8 @@ namespace llri
 	{
 		bool create(void* nativeWindowHandle);
 		bool destroy();
+
+		void setBackGroundColor(float r, float g, float b, float a);
+		bool update();
 	}	
 }

@@ -19,6 +19,7 @@ add_library(MercuryEngine STATIC src/application.cpp
         src/vulkan/mercury_vulkan.cpp
         src/vulkan/vk_llri.cpp
         src/vulkan/vk_swapchain.cpp
+        src/rendering.cpp
 )
 
 if(WIN32)
