@@ -8,7 +8,7 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
 else()
     if(NOT APPLE)
         find_package(X11 REQUIRED)
-        link_libraries(xcb)
+        link_libraries(xcb xcb-keysyms)
     endif()
 endif()
 

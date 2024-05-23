@@ -67,7 +67,7 @@ void platform::createMainWindow()
 					   gWindow,                        /* window Id           */
 					   gScreen->root,                  /* parent window       */
 					   0, 0,                          /* x, y                */
-					   750, 150,                      /* width, height       */
+					   1750, 950,                      /* width, height       */
 					   10,                            /* border_width        */
 					   XCB_WINDOW_CLASS_INPUT_OUTPUT, /* class               */
 					   gScreen->root_visual,           /* visual              */
@@ -99,6 +99,7 @@ void platform::destroyMainWindow()
 	xcb_disconnect (gConnection);
 }
 
+extern bool ImGui_ImplX11_Event(xcb_generic_event_t *event);
 
 void platform::update()
 {
@@ -107,20 +108,21 @@ void platform::update()
 	xcb_generic_event_t *event;
 	xcb_client_message_event_t *cm;
 
-		//event = xcb_wait_for_event(gConnection);
+		event = xcb_poll_for_event(gConnection);
 
-		// switch (event->response_type & ~0x80) {
-		// 	case XCB_CLIENT_MESSAGE: {
-		// 		cm = (xcb_client_message_event_t *)event;
-		//
-		// 		if (cm->data.data32[0] == wmDeleteWin)
-		// 			running = false;
-		//
-		// 		break;
-		// 	}
-		// }
+		if(event) {
+			switch (event->response_type & ~0x80) {
+				case XCB_CLIENT_MESSAGE: {
+					cm = (xcb_client_message_event_t *)event;
+					ImGui_ImplX11_Event(event);
 
-		//free(event);
+					break;
+				}
+			}
+
+			free(event);
+		}
+
 
 	std::this_thread::sleep_for((1ms));
 }

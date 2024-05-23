@@ -16,7 +16,7 @@
 #include <X11/keysym.h>
 #include <xcb/xcb.h>
 #include <xcb/xcb_keysyms.h>
-#include <xcb/xfixes.h>
+
 #include <time.h>
 #include <stdio.h>
 
@@ -75,7 +75,7 @@ bool    ImGui_ImplX11_Init(xcb_connection_t *connection, xcb_drawable_t *win)
     io.KeyMap[ImGuiKey_Space] = XK_space;
     io.KeyMap[ImGuiKey_Enter] = XK_Return - 0xFF00;
     io.KeyMap[ImGuiKey_Escape] = XK_Escape - 0xFF00;
-    io.KeyMap[ImGuiKey_KeyPadEnter] = XK_KP_Enter - 0xFF00;
+    //io.KeyMap[ImGuiKey_KeyPadEnter] = XK_KP_Enter - 0xFF00;
     io.KeyMap[ImGuiKey_A] = 'A';
     io.KeyMap[ImGuiKey_C] = 'C';
     io.KeyMap[ImGuiKey_V] = 'V';
