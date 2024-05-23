@@ -19,7 +19,7 @@
 #endif
 
 #ifdef MERCURY_PLATFORM_MACOS
-#include "backends/imgui_impl_android.cpp"
+#include "backends/imgui_impl_osx.h"
 #endif
 
 #ifdef MERCURY_GRAPHICS_API_VULKAN

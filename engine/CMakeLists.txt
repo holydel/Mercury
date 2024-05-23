@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories("${CMAKE_CURRENT_LIST_DIR}/../third_party/Vulkan-Headers/include"
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/VulkanMemoryAllocator/include"
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/imgui"
+        "${CMAKE_CURRENT_LIST_DIR}/../third_party/metal-cpp"
+        "${CMAKE_CURRENT_LIST_DIR}/../third_party/metal-cpp-extensions"
 )
 
 add_library(MercuryEngine STATIC src/application.cpp
@@ -24,10 +26,11 @@ add_library(MercuryEngine STATIC src/application.cpp
         ../third_party/imgui/imgui_draw.cpp
         ../third_party/imgui/imgui_tables.cpp
         ../third_party/imgui/imgui_widgets.cpp
+        src/macos/metal_impl.cpp
 )
 
 if(APPLE)
-    target_sources(MercuryEngine PRIVATE src/macos/system_macos.cpp src/macos/cocoa_wrapper.mm src/macos/cocoa_wrapper.h)
+    target_sources(MercuryEngine PRIVATE src/macos/system_macos.mm src/macos/cocoa_wrapper.mm src/macos/cocoa_wrapper.h src/macos/imgui_wrapper.mm)
 else ()
     if(UNIX)
         target_sources(MercuryEngine PRIVATE src/linux/system_linux.cpp)
