@@ -22,14 +22,20 @@
     <ClCompile Include="..\engine\src\android\system_android.cpp" />
     <ClCompile Include="..\engine\src\application.cpp" />
     <ClCompile Include="..\engine\src\engine.cpp" />
+    <ClCompile Include="..\engine\src\llri_vulkan\mercury_vulkan.cpp" />
+    <ClCompile Include="..\engine\src\llri_vulkan\vk_llri.cpp" />
+    <ClCompile Include="..\engine\src\llri_vulkan\vk_swapchain.cpp" />
+    <ClCompile Include="..\engine\src\mercury_imgui.cpp" />
     <ClCompile Include="..\engine\src\linux\system_linux.cpp" />
     <ClCompile Include="..\engine\src\logger.cpp" />
     <ClCompile Include="..\engine\src\platform.cpp" />
     <ClCompile Include="..\engine\src\rendering.cpp" />
-    <ClCompile Include="..\engine\src\vulkan\mercury_vulkan.cpp" />
-    <ClCompile Include="..\engine\src\vulkan\vk_llri.cpp" />
-    <ClCompile Include="..\engine\src\vulkan\vk_swapchain.cpp" />
     <ClCompile Include="..\engine\src\windows\system_windows.cpp" />
+    <ClCompile Include="..\third_party\imgui\imgui.cpp" />
+    <ClCompile Include="..\third_party\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\third_party\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\third_party\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\third_party\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\include\mercury.h" />
@@ -41,11 +47,12 @@
     <ClInclude Include="..\engine\src\application.h" />
     <ClInclude Include="..\engine\src\engine.h" />
     <ClInclude Include="..\engine\src\llri.h" />
+    <ClInclude Include="..\engine\src\llri_vulkan\mercury_vulkan.h" />
+    <ClInclude Include="..\engine\src\llri_vulkan\vk_llri.h" />
+    <ClInclude Include="..\engine\src\llri_vulkan\vk_swapchain.h" />
+    <ClInclude Include="..\engine\src\mercury_imgui.h" />
     <ClInclude Include="..\engine\src\platform.h" />
     <ClInclude Include="..\engine\src\swapchain.h" />
-    <ClInclude Include="..\engine\src\vulkan\mercury_vulkan.h" />
-    <ClInclude Include="..\engine\src\vulkan\vk_llri.h" />
-    <ClInclude Include="..\engine\src\vulkan\vk_swapchain.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -120,7 +127,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -137,7 +144,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -155,7 +162,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -176,7 +183,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

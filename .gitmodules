@@ -43,6 +43,7 @@
 [submodule "third_party/imgui"]
 	path = third_party/imgui
 	url = https://github.com/ocornut/imgui
+	branch = docking
 [submodule "third_party/bullet3"]
 	path = third_party/bullet3
 	url = https://github.com/bulletphysics/bullet3
@@ -67,3 +68,6 @@
 [submodule "third_party/entt"]
 	path = third_party/entt
 	url = https://github.com/skypjack/entt
+[submodule "third_party/metal-cpp-extensions"]
+	path = third_party/metal-cpp-extensions
+	url = https://gitlab.com/mark-grimes/metal-cpp-extensions
