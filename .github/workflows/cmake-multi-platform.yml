@@ -45,7 +45,17 @@ jobs:
             c_compiler: cl
 
     steps:
-    - uses: actions/checkout@v4
+# Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:        
+        submodules: true
+
+    # Update references
+    - name: Git Submodule Update
+      run: |
+        git pull --recurse-submodules
+        git submodule update --remote --recursive
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
