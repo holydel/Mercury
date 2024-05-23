@@ -199,6 +199,13 @@ bool llri::swapchain::create(void* nativeWindowHandle)
 	vkCreateAndroidSurfaceKHR(gInstance, &createInfo, nullptr, &gSurface);
 #endif
 
+#ifdef MERCURY_PLATFORM_LINUX
+	VkXcbSurfaceCreateInfoKHR createInfo {VK_STRUCTURE_TYPE_XCB_SURFACE_CREATE_INFO_KHR};
+	createInfo.window = *((xcb_window_t*)nativeWindowHandle);
+	createInfo.connection = (xcb_connection_t*)mercury::platform::getAppInstanceHandle();
+
+	vkCreateXcbSurfaceKHR(gInstance, &createInfo, gGlobalAllocationsCallbacks, &gSurface);
+#endif
 	VkBool32 is_supported = false;
 
 	vkGetPhysicalDeviceSurfaceSupportKHR(gPhysicalDevice, 0, gSurface, &is_supported);
@@ -293,7 +300,7 @@ bool llri::swapchain::update()
 	vkWaitForFences(gDevice, 1, &frame.fence, VK_TRUE, UINT64_MAX); //UINT64_MAX
 	vkResetFences(gDevice, 1, &frame.fence);
 
-	mercury::write_log_message("frameID: %d imageID: %d", frameIndex, presentedImageIndex);
+	//mercury::write_log_message("frameID: %d imageID: %d", frameIndex, presentedImageIndex);
 	vkResetCommandPool(gDevice,frame.cmdPool,0);
 
 	VkCommandBufferBeginInfo cbuffBegin;

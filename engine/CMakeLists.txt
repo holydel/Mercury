@@ -16,10 +16,13 @@ add_library(MercuryEngine STATIC src/application.cpp
         src/windows/system_winstore_app.cpp
         src/android/system_android.cpp
         src/linux/system_linux.cpp
+        src/macos/system_macos.cpp
         src/vulkan/mercury_vulkan.cpp
         src/vulkan/vk_llri.cpp
         src/vulkan/vk_swapchain.cpp
         src/rendering.cpp
+        src/macos/cocoa_wrapper.mm
+        src/macos/cocoa_wrapper.h
 )
 
 if(WIN32)

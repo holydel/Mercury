@@ -1,6 +1,6 @@
 #pragma once
 #include "mercury_api.h"
-#include <cstddef>
+#include <stdint.h>
 #include <vector>
 
 namespace mercury

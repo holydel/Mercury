@@ -1,15 +1,24 @@
 cmake_minimum_required(VERSION 3.28)
 
 project(Mercury VERSION 0.01 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
 
 if(WIN32)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 else()
-    find_package(X11 REQUIRED)
-    link_libraries(xcb)
+    if(NOT APPLE)
+        find_package(X11 REQUIRED)
+        link_libraries(xcb)
+    endif()
 endif()
 
+
+
 include_directories("${CMAKE_CURRENT_LIST_DIR}/engine/include")
+
+if(APPLE)
+    set(CMAKE_EXE_LINKER_FLAGS "-framework Cocoa -framework AppKit -framework CoreData -framework Foundation")
+endif()
 
 add_subdirectory(engine)
 

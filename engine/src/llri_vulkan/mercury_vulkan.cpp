@@ -1,5 +1,4 @@
 #include "mercury_api.h"
-#include "mercury_log.h"
 
 #ifdef MERCURY_GRAPHICS_API_VULKAN
 
@@ -64,6 +63,10 @@ VK_DEFINE_FUNCTION(vkGetPhysicalDeviceWin32PresentationSupportKHR);
 
 #ifdef MERCURY_PLATFORM_ANDROID
 VK_DEFINE_FUNCTION(vkCreateAndroidSurfaceKHR);
+#endif
+
+#ifdef MERCURY_PLATFORM_LINUX
+VK_DEFINE_FUNCTION(vkCreateXcbSurfaceKHR);
 #endif
 
 //GLOBAL LEVEL
@@ -182,8 +185,10 @@ static void* libHandle = nullptr;
 
 void LoadVK_Library()
 {
-#ifdef _WIN32
+#ifdef MERCURY_PLATFORM_WINDOWS
 	const char* libName = u8"vulkan-1.dll";
+#elif defined(MERCURY_PLATFORM_MACOS)
+    const char* libName = u8"libvulkan.1.dylib";
 #else
 	const char* libName = u8"libvulkan.so";
 #endif
@@ -238,6 +243,10 @@ void LoadVkInstanceLevelFuncs(VkInstance instance)
 
 #ifdef MERCURY_PLATFORM_ANDROID
 	VK_LOAD_INSTANCE_FUNC(vkCreateAndroidSurfaceKHR);
+#endif
+
+#ifdef MERCURY_PLATFORM_LINUX
+	VK_LOAD_INSTANCE_FUNC(vkCreateXcbSurfaceKHR);
 #endif
 }
 
