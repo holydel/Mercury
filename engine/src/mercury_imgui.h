@@ -7,5 +7,10 @@ namespace mercury
 	{
 		void initialize();
 		void shutdown();
+		void update();
+
+
+		void render(void* cbuff);
+
 	}
 }

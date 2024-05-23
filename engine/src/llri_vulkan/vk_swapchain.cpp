@@ -1,5 +1,7 @@
 #include "vk_swapchain.h"
 #include "../platform.h"
+#include "../mercury_imgui.h"
+
 using namespace mercury;
 
 static VkSurfaceKHR gSurface = nullptr;
@@ -9,7 +11,7 @@ static std::vector<VkPresentModeKHR> support_present_modes;
 static VkSurfaceCapabilitiesKHR gSurfaceCaps;
 static VkExtent2D gNativeExtent = { 0,0 };
 
-static VkRenderPass gRenderPass = nullptr;
+VkRenderPass gRenderPass = nullptr;
 static u32 gNumberOfSwapChainFrames = 0;
 static std::vector<VkImage> gSwapChainImages;
 
@@ -257,11 +259,19 @@ bool llri::swapchain::create(void* nativeWindowHandle)
 		vkAllocateCommandBuffers(gDevice, &allocCmdBufferForFrame, &gFrameObjects[i].cmdBuffer);
 	}
 
+	imgui::initialize();
 	return true;
 }
 
 bool llri::swapchain::destroy()
 {
+	if (gRenderPass != nullptr)
+	{
+		vkDestroyRenderPass(gDevice, gRenderPass, gGlobalAllocationsCallbacks);
+		gRenderPass = nullptr;
+	}
+
+	imgui::shutdown();
 	if (gSwapChain != nullptr)
 	{
 		vkDestroySwapchainKHR(gDevice, gSwapChain, gGlobalAllocationsCallbacks);
@@ -341,6 +351,9 @@ bool llri::swapchain::update()
 
 	vkCmdSetScissor(frame.cmdBuffer, 0, 1, &scissorRect);
 	vkCmdSetViewport(frame.cmdBuffer, 0, 1, &viewport);
+
+
+	mercury::imgui::render(frame.cmdBuffer);
 
 	vkCmdEndRenderPass(frame.cmdBuffer);
 

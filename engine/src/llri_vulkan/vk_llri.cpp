@@ -14,6 +14,7 @@ VkPhysicalDevice gPhysicalDevice = nullptr;
 VkDevice gDevice = nullptr;
 VmaAllocator gVMAallocator = nullptr;
 VkQueue gMainQueue = nullptr;
+VkCommandPool gOneTimeSubmitCommandPool;
 
 //local
 static VkDebugUtilsMessengerEXT gVulkanDebugMessenger = nullptr;
@@ -445,6 +446,14 @@ device_extender.TryAddExtension(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
 	allocatorInfo.pVulkanFunctions = &functions;
 
 	vmaCreateAllocator(&allocatorInfo, &gVMAallocator);
+
+	VkCommandPoolCreateInfo poolInfo;
+	poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+	poolInfo.pNext = nullptr;
+	poolInfo.queueFamilyIndex = 0;
+	poolInfo.flags = VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+
+	vkCreateCommandPool(gDevice, &poolInfo, nullptr, &gOneTimeSubmitCommandPool);
 }
 
 static void DestroyDevice()
@@ -498,6 +507,7 @@ bool llri::update()
 		if (nativeWindowHandle == nullptr)
 		{
 			llri::swapchain::destroy();
+			
 		}
 		else
 		{
@@ -513,4 +523,52 @@ bool llri::update()
 	}
 
 	return true;
+}
+
+
+llri::CommandList llri::BeginOneTimeSubmitCommandList()
+{
+	VkCommandBuffer cbuff = VK_NULL_HANDLE;
+
+	VkCommandBufferAllocateInfo allocCmdBufferForFrame;
+	allocCmdBufferForFrame.commandBufferCount = 1;
+	allocCmdBufferForFrame.commandPool = gOneTimeSubmitCommandPool;
+	allocCmdBufferForFrame.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+	allocCmdBufferForFrame.pNext = nullptr;
+	allocCmdBufferForFrame.level = VkCommandBufferLevel::VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+
+	vkAllocateCommandBuffers(gDevice, &allocCmdBufferForFrame, &cbuff);
+
+	VkCommandBufferBeginInfo cbuffBegin;
+	cbuffBegin.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+	cbuffBegin.pNext = nullptr;
+	cbuffBegin.pInheritanceInfo = nullptr;
+	cbuffBegin.flags = VkCommandBufferUsageFlagBits::VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+	vkBeginCommandBuffer(cbuff, &cbuffBegin);
+
+	llri::CommandList clist;
+	clist.impl = cbuff;
+	return clist;
+}
+
+void llri::EndOneTimeSubmitCommandList(llri::CommandList clist)
+{
+	VkCommandBuffer cbuff = static_cast<VkCommandBuffer>(clist.impl);
+
+	vkEndCommandBuffer(cbuff);
+
+	VkSubmitInfo sbmtInfo;
+	sbmtInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+	sbmtInfo.pNext = nullptr;
+	sbmtInfo.commandBufferCount = 1;
+	sbmtInfo.pCommandBuffers = &cbuff;
+	sbmtInfo.pSignalSemaphores = nullptr;
+	sbmtInfo.signalSemaphoreCount = 0;
+	sbmtInfo.pWaitDstStageMask = 0;
+	sbmtInfo.pWaitSemaphores = nullptr;
+	sbmtInfo.waitSemaphoreCount = 0;
+
+
+	vkQueueSubmit(gMainQueue, 1, &sbmtInfo, nullptr); //TODO: fence to free cmdBuff
 }

@@ -8,4 +8,12 @@ namespace llri
 	void shutdown();
 
 	bool update();
+
+	struct CommandList
+	{
+		void* impl;		
+	};
+
+	CommandList BeginOneTimeSubmitCommandList();
+	void EndOneTimeSubmitCommandList(CommandList clist);
 }

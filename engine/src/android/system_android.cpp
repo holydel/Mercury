@@ -9,6 +9,7 @@
 #include <android/native_activity.h>
 #include <android/native_window.h>
 #include <android/log.h>
+#include <android/input.h>
 
 #include <android/ndk-version.h>
 
@@ -42,6 +43,9 @@ void platform::update()
 	std::this_thread::sleep_for(1ms);
 }
 
+extern int32_t ImGui_ImplAndroid_HandleInputEvent(const AInputEvent* input_event);
+static AInputQueue* gMainInputQueue = nullptr;
+
 void MainLoop()
 {
 	is_running = true;
@@ -51,6 +55,27 @@ void MainLoop()
 	while (gApplication->Update() && !need_to_stop)
 	{
 		engine::update();
+
+		if (gMainInputQueue != nullptr)
+		{
+			while (AInputQueue_hasEvents(gMainInputQueue) > 0)
+			{
+				AInputEvent* event = nullptr;
+				AInputQueue_getEvent(gMainInputQueue, &event);
+
+				if (AInputQueue_preDispatchEvent(gMainInputQueue, event)) {
+					continue;
+				}
+
+				int32_t handled = 0;
+
+				ImGui_ImplAndroid_HandleInputEvent(event);
+				//pass to input system
+
+				AInputQueue_finishEvent(gMainInputQueue, event, handled);
+			}
+		}
+		
 	}
 
 	gApplication->Shutdown();
@@ -199,6 +224,7 @@ void onNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window)
 void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue)
 {
 	mercury::write_log_message("onInputQueueCreated");
+	gMainInputQueue = queue;
 }
 
 /**
@@ -208,6 +234,7 @@ void onInputQueueCreated(ANativeActivity* activity, AInputQueue* queue)
  */
 void onInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue)
 {
+	gMainInputQueue = nullptr;
 	mercury::write_log_message("onInputQueueDestroyed");
 }
 

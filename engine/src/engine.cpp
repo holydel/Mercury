@@ -11,13 +11,11 @@ bool engine::initialize()
 	mercury::write_log_message("engine initialize");
 	platform::initialize();
 	llri::initialize();
-	imgui::initialize();
 	return true;
 }
 
 void engine::shutdown()
 {	
-	imgui::shutdown();
 	llri::shutdown();
 	platform::shutdown();
 	mercury::write_log_message("engine shutdown");
@@ -26,7 +24,8 @@ void engine::shutdown()
 bool engine::update()
 {
 	platform::update();
+	imgui::update();
 	llri::update();
-
+	
 	return true;
 }
