@@ -208,6 +208,13 @@ bool llri::swapchain::create(void* nativeWindowHandle)
 
 	vkCreateXcbSurfaceKHR(gInstance, &createInfo, gGlobalAllocationsCallbacks, &gSurface);
 #endif
+
+#ifdef MERCURY_PLATFORM_MACOS
+    VkMetalSurfaceCreateInfoEXT createInfo {VK_STRUCTURE_TYPE_METAL_SURFACE_CREATE_INFO_EXT};
+	createInfo.pLayer = static_cast<CAMetalLayer*>(nativeWindowHandle);
+
+	vkCreateMetalSurfaceEXT(gInstance, &createInfo, gGlobalAllocationsCallbacks, &gSurface);
+#endif
 	VkBool32 is_supported = false;
 
 	vkGetPhysicalDeviceSurfaceSupportKHR(gPhysicalDevice, 0, gSurface, &is_supported);

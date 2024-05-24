@@ -19,6 +19,7 @@
 #endif
 
 #ifdef MERCURY_PLATFORM_MACOS
+#define IMGUI_IMPL_METAL_CPP_EXTENSIONS
 #include "backends/imgui_impl_osx.h"
 #endif
 
@@ -76,6 +77,10 @@ void mercury::imgui::update()
 #ifdef MERCURY_PLATFORM_ANDROID
 			ImGui_ImplAndroid_Init(static_cast<ANativeWindow*>(mercury::platform::getMainWindowHandle()));
 			ImGui::GetIO().FontGlobalScale = 2.0f;
+#endif
+#ifdef MERCURY_PLATFORM_MACOS
+            void* view = mercury::platform::getAppInstanceHandle(); //view
+			ImGui_ImplOSX_Init(view);
 #endif
 			ImGui_ImplVulkan_InitInfo init_info = {};
 			init_info.Instance = gInstance;
@@ -135,6 +140,10 @@ void mercury::imgui::update()
 #endif
 #ifdef MERCURY_PLATFORM_ANDROID
 		ImGui_ImplAndroid_NewFrame();
+#endif
+#ifdef MERCURY_PLATFORM_MACOS
+        void* view = mercury::platform::getAppInstanceHandle(); //view
+        ImGui_ImplOSX_NewFrame(view);
 #endif
 		ImGui::NewFrame();
 		ImGui::ShowDemoWindow(); // Show demo window! :)

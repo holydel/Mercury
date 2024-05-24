@@ -4,13 +4,28 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/D3D12MemoryAllocator" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/DirectX-Headers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/OpenGL-Registry" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/OpenXR-SDK" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/SPIRV-Cross" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/Vulkan-Headers" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/VulkanMemoryAllocator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/assimp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/box2d" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/bullet3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/compressonator" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/enet" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/entt" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/freetype" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/freetype/subprojects/dlg" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/glslang" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/libjpeg-turbo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/lz4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/meshoptimizer" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/metal-cpp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/metal-cpp-extensions" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/pugixml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/spine-runtimes" vcs="Git" />
   </component>
 </project>

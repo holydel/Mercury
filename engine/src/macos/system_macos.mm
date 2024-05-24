@@ -10,6 +10,11 @@
 
 #import <AppKit/AppKit.hpp>
 #import <MetalKit/MetalKit.hpp>
+
+#include "../application.h"
+#include "../platform.h"
+#include "../engine.h"
+
 using namespace std::chrono_literals;
 using namespace mercury;
 
@@ -78,7 +83,9 @@ public:
     ~View() override { delete renderer;};
 
     void drawInMTKView(MTK::View *pView) override {
-        renderer->Draw(pView);
+        gApplication->Update();
+        engine::update();
+       // renderer->Draw(pView);
     };
 
 private:
@@ -113,14 +120,23 @@ private:
 };
 
 MercuryApp::~MercuryApp() {
+
+    gApplication->Shutdown();
+    engine::shutdown();
+
     m_view->release();
     m_window->release();
     m_device->release();
     delete m_appView;
 }
+CA::MetalLayer *gMainOutput = nullptr;
+MTK::View *gMainView = nullptr;
 
 void MercuryApp::applicationDidFinishLaunching(NS::Notification* pNotification) {
     //Returns the device instance Metal selects as the default
+    engine::initialize();
+    gApplication->Initialize();
+
     m_device = MTL::CreateSystemDefaultDevice();
 
     //window frame dimensions
@@ -141,6 +157,7 @@ void MercuryApp::applicationDidFinishLaunching(NS::Notification* pNotification) 
     //construct a view delegate and set it
    m_appView = new View(m_device);
     m_view->setDelegate(m_appView);
+    gMainView = m_view;
 
     //the window retains the new content view and owns it thereafter, view obj is resized to fit precisely within the content area of the window
     m_window->setContentView(m_view);
@@ -152,6 +169,10 @@ void MercuryApp::applicationDidFinishLaunching(NS::Notification* pNotification) 
     //get global shared application state and activate it
     auto* appNS = reinterpret_cast<NS::Application*>(pNotification->object());
     appNS->activateIgnoringOtherApps(true);
+
+    gMainOutput = m_view->currentDrawable()->layer();
+
+    printf("layer");
 
 }
 
@@ -346,12 +367,12 @@ void platform::outputToLogFile(const char* text)
 
 void* platform::getMainWindowHandle()
 {
-	return 0;
+	return gMainOutput;
 }
 
 void* platform::getAppInstanceHandle()
 {
-	return 0;
+	return gMainView;
 }
 
 

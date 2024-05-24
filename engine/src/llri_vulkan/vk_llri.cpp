@@ -156,7 +156,7 @@ static void InitializeInstance()
     //Applications that wish to enumerate portability drivers must set the VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR bit in the VkInstanceCreateInfo flags
     //and enable the VK_KHR_portability_enumeration instance extension.
     instance_extender.TryAddExtension(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
-    instance_extender.TryAddExtension("VK_MVK_macos_surface");
+    instance_extender.TryAddExtension(VK_EXT_METAL_SURFACE_EXTENSION_NAME);
 #endif
 
 	instance_extender.TryAddExtension(VK_EXT_DEBUG_REPORT_EXTENSION_NAME);

@@ -69,6 +69,9 @@ VK_DEFINE_FUNCTION(vkCreateAndroidSurfaceKHR);
 VK_DEFINE_FUNCTION(vkCreateXcbSurfaceKHR);
 #endif
 
+#ifdef MERCURY_PLATFORM_MACOS
+VK_DEFINE_FUNCTION(vkCreateMetalSurfaceEXT);
+#endif
 //GLOBAL LEVEL
 VK_DEFINE_FUNCTION(vkDestroyDevice);
 VK_DEFINE_FUNCTION(vkDeviceWaitIdle);
@@ -247,6 +250,10 @@ void LoadVkInstanceLevelFuncs(VkInstance instance)
 
 #ifdef MERCURY_PLATFORM_LINUX
 	VK_LOAD_INSTANCE_FUNC(vkCreateXcbSurfaceKHR);
+#endif
+
+#ifdef MERCURY_PLATFORM_MACOS
+    VK_LOAD_INSTANCE_FUNC(vkCreateMetalSurfaceEXT);
 #endif
 }
 

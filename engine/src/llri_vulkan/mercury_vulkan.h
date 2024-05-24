@@ -14,6 +14,9 @@
 #ifdef MERCURY_PLATFORM_LINUX
 #define VK_USE_PLATFORM_XCB_KHR 1
 #endif
+#ifdef MERCURY_PLATFORM_MACOS
+#define VK_USE_PLATFORM_METAL_EXT 1
+#endif
 #define VK_ENABLE_BETA_EXTENSIONS 1
 
 #include <vulkan/vulkan.h>
@@ -78,6 +81,11 @@ VK_DECLARE_FUNCTION(vkCreateAndroidSurfaceKHR);
 #ifdef MERCURY_PLATFORM_LINUX
 VK_DECLARE_FUNCTION(vkCreateXcbSurfaceKHR);
 #endif
+
+#ifdef MERCURY_PLATFORM_MACOS
+VK_DECLARE_FUNCTION(vkCreateMetalSurfaceEXT);
+#endif
+
 //DEVICE LEVEL FUNCS
 VK_DECLARE_FUNCTION(vkDestroyDevice);
 VK_DECLARE_FUNCTION(vkDeviceWaitIdle);

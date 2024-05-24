@@ -17,7 +17,7 @@ endif()
 include_directories("${CMAKE_CURRENT_LIST_DIR}/engine/include")
 
 if(APPLE)
-    set(CMAKE_EXE_LINKER_FLAGS "-framework Cocoa -framework AppKit -framework CoreData -framework Foundation -framework Metal -framework AppKit -framework MetalKit")
+    set(CMAKE_EXE_LINKER_FLAGS "-framework Cocoa -framework AppKit -framework CoreData -framework Foundation -framework Metal -framework AppKit -framework MetalKit -framework GameController")
 endif()
 
 add_subdirectory(engine)
