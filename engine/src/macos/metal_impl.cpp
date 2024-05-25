@@ -1,3 +1,6 @@
+#include "mercury_api.h"
+
+#ifdef MERCURY_PLATFORM_MACOS
 #define NS_PRIVATE_IMPLEMENTATION
 #define CA_PRIVATE_IMPLEMENTATION
 #define MTL_PRIVATE_IMPLEMENTATION
@@ -7,3 +10,4 @@
 #include <QuartzCore/QuartzCore.hpp>
 #include <AppKit/AppKit.hpp>
 #include <MetalKit/MetalKit.hpp>
+#endif

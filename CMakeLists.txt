@@ -25,5 +25,6 @@ add_subdirectory(engine)
 add_executable(TestBed testbed/src/testbed.cpp)
 target_link_libraries(TestBed MercuryEngine)
 
+add_subdirectory(solar_baker)
 #add_executable(TestBedXR testbed_xr/src/testbed_xr.cpp)
 #add_executable(SolarBaker solar_baker/src/main.cpp)

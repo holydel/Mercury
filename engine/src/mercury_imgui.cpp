@@ -27,13 +27,14 @@
 #include "llri_vulkan/vk_swapchain.h"
 #define VOLK_H_
 #include "backends/imgui_impl_vulkan.cpp"
-
 static void mercury_check_vk_result(VkResult err)
 {
 }
 #endif
+#include <algorithm>
 
 bool gImGuiInitialized = false;
+std::vector<mercury::imgui_interface::Screen*> gAllScreens;
 
 void mercury::imgui::initialize()
 {
@@ -42,20 +43,38 @@ void mercury::imgui::initialize()
 	ImGuiIO& io = ImGui::GetIO();
 
 	ImGui::StyleColorsDark();
-
+	gAllScreens.reserve(32);
 }
 
 void mercury::imgui::shutdown()
 {
-#ifdef MERCURY_PLATFORM_ANDROID
-	ImGui_ImplAndroid_Shutdown();	
-#endif
+	if (gImGuiInitialized)
+	{
 #ifdef MERCURY_GRAPHICS_API_VULKAN
-	ImGui_ImplVulkan_Shutdown();
+		ImGui_ImplVulkan_Shutdown();
 #endif
+
+#ifdef MERCURY_PLATFORM_ANDROID
+		ImGui_ImplAndroid_Shutdown();
+#endif
+#ifdef MERCURY_PLATFORM_WINDOWS
+		ImGui_ImplWin32_Shutdown();
+#endif
+
+	}
+
 	ImGui::DestroyContext();
 	gImGuiInitialized = false;
 }
+
+
+
+bool mercury::imgui_interface::AddScreen(mercury::imgui_interface::Screen* screen)
+{
+	gAllScreens.push_back(screen);
+	return true;
+}
+
 
 void mercury::imgui::update()
 {
@@ -112,7 +131,7 @@ void mercury::imgui::update()
 			};
 
 			VkDescriptorPoolCreateInfo dp_create_info = { VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO,nullptr };
-			dp_create_info.flags = 0;
+			dp_create_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
 			dp_create_info.maxSets = 1000;
 			dp_create_info.pPoolSizes = pool_sizes;
 			dp_create_info.poolSizeCount = sizeof(pool_sizes) / sizeof(pool_sizes[0]);
@@ -146,6 +165,17 @@ void mercury::imgui::update()
         ImGui_ImplOSX_NewFrame(view);
 #endif
 		ImGui::NewFrame();
+
+		for (auto* screen : gAllScreens)
+		{
+			screen->Draw();
+		}
+
+		gAllScreens.erase(
+			std::remove_if(gAllScreens.begin(), gAllScreens.end(),
+				[](const auto o) { return !o->IsActive(); }),
+			gAllScreens.end());
+
 		ImGui::ShowDemoWindow(); // Show demo window! :)
 		ImGui::Render();
 	}

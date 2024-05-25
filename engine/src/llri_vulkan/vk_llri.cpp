@@ -462,6 +462,7 @@ static void DestroyDevice()
 	{
 		vkDeviceWaitIdle(gDevice);
 		llri::swapchain::destroy();
+		vkDestroyCommandPool(gDevice, gOneTimeSubmitCommandPool, nullptr);
 		vkDestroyDevice(gDevice, gGlobalAllocationsCallbacks);
 
 		gDevice = nullptr;

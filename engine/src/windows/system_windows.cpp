@@ -20,6 +20,7 @@
 
 #include "../application.h"
 #include "../platform.h"
+#include <thread>
 
 using namespace mercury;
 
@@ -42,11 +43,14 @@ void platform::shutdown()
 	timeEndPeriod(1);
 }
 
+std::thread* mainThread;
+
 //console main
 int main()
 {
 	gWinSystemInstance = GetModuleHandle(nullptr);
-	ApplicationRun();
+	mainThread = new std::thread(ApplicationRun);
+	mainThread->join();
 	return 0;
 }
 
@@ -57,7 +61,8 @@ int WINAPI WinMain([[maybe_unused]] HINSTANCE hInstance,    // HANDLE TO AN INST
 	[[maybe_unused]] int iCmdShow)          // Start window maximized, minimized, etc.
 {
 	gWinSystemInstance = hInstance;
-	ApplicationRun();
+	mainThread = new std::thread(ApplicationRun);
+	mainThread->join();
 	return 0;
 }
 

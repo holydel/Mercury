@@ -3,3 +3,5 @@
 /x64
 /Mercury
 /enc_temp_folder
+/packages
+/packages.config
