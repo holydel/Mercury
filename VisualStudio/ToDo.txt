@@ -13,3 +13,5 @@
 9) Create Window (iOS)
 10) Create Instacne Abstraction (Vulkan (MoltenVK) / iOS)
 
+
+Save ImGUI context even if swapchain recreating (init engine - init imgui context - init window/swapchain - init imgui rendering backend (try to save font textures))

@@ -53,6 +53,20 @@ namespace mercury
 		void outputToDebugConsole(const char* text);
 		void outputToLogFile(const char* text);
 
+		inline void outputToDebugConsole(const wchar_t* text)
+		{
+			char buff[1024];
+			wideToUtf8(text, buff,1024);
+			outputToDebugConsole(buff);
+		}
+
+		inline void outputToLogFile(const wchar_t* text)
+		{
+			char buff[1024];
+			wideToUtf8(text, buff, 1024);
+			outputToLogFile(buff);
+		}
+
 		void* getMainWindowHandle();
 		void* getAppInstanceHandle();
 	}

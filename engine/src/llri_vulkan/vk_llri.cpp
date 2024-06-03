@@ -1,5 +1,6 @@
 #include "vk_llri.h"
 
+#ifdef MERCURY_GRAPHICS_API_VULKAN
 #include <cstring>
 
 #include "vk_swapchain.h"
@@ -573,3 +574,4 @@ void llri::EndOneTimeSubmitCommandList(llri::CommandList clist)
 
 	vkQueueSubmit(gMainQueue, 1, &sbmtInfo, nullptr); //TODO: fence to free cmdBuff
 }
+#endif

@@ -224,12 +224,12 @@ void platform::update()
 
 int platform::utf8ToWide(const char* utf8Str, wchar_t* outBuff, int buffLen)
 {
-	return ::MultiByteToWideChar(CP_UTF8, 0, utf8Str, static_cast<int>(strlen(utf8Str)), outBuff, buffLen);
+	return ::MultiByteToWideChar(CP_UTF8, 0, utf8Str, static_cast<int>(strlen(utf8Str))+1, outBuff, buffLen);
 }
 
 int platform::wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
 {
-	return ::WideCharToMultiByte(CP_UTF8, 0, wideStr, static_cast<int>(wcslen(wideStr)), outBuff, buffLen,nullptr, nullptr);
+	return ::WideCharToMultiByte(CP_UTF8, 0, wideStr, static_cast<int>(wcslen(wideStr))+1, outBuff, buffLen,nullptr, nullptr);
 }
 
 long platform::interlockedAdd32(volatile long* value, long add)

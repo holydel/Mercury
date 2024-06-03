@@ -1,3 +1,6 @@
+#include "mercury_api.h"
+
+#ifdef MERCURY_GRAPHICS_API_VULKAN
 #include "vk_swapchain.h"
 #include "../platform.h"
 #include "../mercury_imgui.h"
@@ -400,3 +403,4 @@ bool llri::swapchain::update()
 	gCurrentFrame++;
 	return true;
 }
+#endif

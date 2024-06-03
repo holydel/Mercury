@@ -1,4 +1,4 @@
-project(TestBed)
+project(SolarBaker)
 
 file(GLOB SolarBaker_SRC
         "src/*.h"

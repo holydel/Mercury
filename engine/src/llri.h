@@ -11,7 +11,7 @@ namespace llri
 
 	struct CommandList
 	{
-		void* impl;		
+		void* impl;			
 	};
 
 	CommandList BeginOneTimeSubmitCommandList();

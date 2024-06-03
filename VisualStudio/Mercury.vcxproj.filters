@@ -34,6 +34,12 @@
     <Filter Include="Source Files\llris\llri_vulkan">
       <UniqueIdentifier>{10ccc47c-9033-4fa3-a369-076924b6697f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\llris\llri_d3d12">
+      <UniqueIdentifier>{ce0aeaf0-16d2-43a2-885f-a06e9ce88c20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\third_party\imgui">
+      <UniqueIdentifier>{980dff40-b46c-441b-be27-1df4ea899442}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\engine\src\application.cpp">
@@ -60,23 +66,11 @@
     <ClCompile Include="..\engine\src\rendering.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\mercury_imgui.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\engine\src\llri_d3d12\d3d12_llri.cpp">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
     </ClCompile>
-    <ClCompile Include="..\third_party\imgui\imgui.cpp">
-      <Filter>Source Files\third_party</Filter>
-    </ClCompile>
-    <ClCompile Include="..\third_party\imgui\imgui_demo.cpp">
-      <Filter>Source Files\third_party</Filter>
-    </ClCompile>
-    <ClCompile Include="..\third_party\imgui\imgui_draw.cpp">
-      <Filter>Source Files\third_party</Filter>
-    </ClCompile>
-    <ClCompile Include="..\third_party\imgui\imgui_tables.cpp">
-      <Filter>Source Files\third_party</Filter>
-    </ClCompile>
-    <ClCompile Include="..\third_party\imgui\imgui_widgets.cpp">
-      <Filter>Source Files\third_party</Filter>
+    <ClCompile Include="..\engine\src\llri_d3d12\d3d12_swapchain.cpp">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
     </ClCompile>
     <ClCompile Include="..\engine\src\llri_vulkan\mercury_vulkan.cpp">
       <Filter>Source Files\llris\llri_vulkan</Filter>
@@ -86,6 +80,24 @@
     </ClCompile>
     <ClCompile Include="..\engine\src\llri_vulkan\vk_swapchain.cpp">
       <Filter>Source Files\llris\llri_vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mercury_imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\imgui\imgui.cpp">
+      <Filter>Source Files\third_party\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\imgui\imgui_demo.cpp">
+      <Filter>Source Files\third_party\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\imgui\imgui_draw.cpp">
+      <Filter>Source Files\third_party\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\imgui\imgui_tables.cpp">
+      <Filter>Source Files\third_party\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\third_party\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +134,12 @@
     <ClInclude Include="..\engine\include\mercury_rendering.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\engine\src\llri_d3d12\d3d12_llri.h">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llri_d3d12\d3d12_swapchain.h">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
+    </ClInclude>
     <ClInclude Include="..\engine\src\llri_vulkan\mercury_vulkan.h">
       <Filter>Source Files\llris\llri_vulkan</Filter>
     </ClInclude>
@@ -131,14 +149,5 @@
     <ClInclude Include="..\engine\src\llri_vulkan\vk_swapchain.h">
       <Filter>Source Files\llris\llri_vulkan</Filter>
     </ClInclude>
-    <ClInclude Include="..\engine\src\mercury_imgui.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\engine\include\mercury_imgui_interface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

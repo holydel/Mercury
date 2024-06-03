@@ -9,6 +9,7 @@ include_directories("${CMAKE_CURRENT_LIST_DIR}/../third_party/Vulkan-Headers/inc
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/imgui"
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/metal-cpp"
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/metal-cpp-extensions"
+        "${CMAKE_CURRENT_LIST_DIR}/../third_party/DirectX-Headers/include"
 )
 
 add_library(MercuryEngine STATIC src/application.cpp
@@ -19,6 +20,8 @@ add_library(MercuryEngine STATIC src/application.cpp
         src/llri_vulkan/mercury_vulkan.cpp
         src/llri_vulkan/vk_llri.cpp
         src/llri_vulkan/vk_swapchain.cpp
+        src/llri_d3d12/d3d12_llri.cpp
+        src/llri_d3d12/d3d12_swapchain.cpp
         src/rendering.cpp
         src/mercury_imgui.cpp
         ../third_party/imgui/imgui.cpp
