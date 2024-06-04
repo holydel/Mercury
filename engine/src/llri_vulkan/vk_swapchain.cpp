@@ -4,6 +4,7 @@
 #include "vk_swapchain.h"
 #include "../platform.h"
 #include "../mercury_imgui.h"
+#include "../engine.h"
 
 using namespace mercury;
 
@@ -362,8 +363,8 @@ bool llri::swapchain::update()
 	vkCmdSetScissor(frame.cmdBuffer, 0, 1, &scissorRect);
 	vkCmdSetViewport(frame.cmdBuffer, 0, 1, &viewport);
 
-
-	mercury::imgui::render(frame.cmdBuffer);
+	llri::context ctx{ static_cast<void*>(frame.cmdBuffer) };
+	engine::renderCallback(ctx);
 
 	vkCmdEndRenderPass(frame.cmdBuffer);
 

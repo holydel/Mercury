@@ -3,6 +3,7 @@
 #include "mercury_log.h"
 #include "llri.h"
 #include "mercury_imgui.h"
+#include "swapchain.h"
 
 using namespace mercury;
 
@@ -21,11 +22,42 @@ void engine::shutdown()
 	mercury::write_log_message("engine shutdown");
 }
 
-bool engine::update()
+void renderMainOutput()
 {
+	static void* nativeWindowHandle = nullptr;
+
+	if (nativeWindowHandle != platform::getMainWindowHandle())
+	{
+		nativeWindowHandle = platform::getMainWindowHandle();
+
+		if (nativeWindowHandle == nullptr)
+		{
+			llri::swapchain::destroy();
+
+		}
+		else
+		{
+			llri::swapchain::create(nativeWindowHandle);
+		}
+	}
+
+	if (nativeWindowHandle != nullptr)
+	{
+		llri::swapchain::update();
+	}
+}
+
+bool engine::update()
+{	
 	platform::update();
 	imgui::update();
-	llri::update();
-	
+
+	renderMainOutput();
+
 	return true;
+}
+
+void engine::renderCallback(llri::context ctx)
+{
+	imgui::render(ctx);
 }

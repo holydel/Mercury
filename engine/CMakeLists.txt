@@ -30,6 +30,8 @@ add_library(MercuryEngine STATIC src/application.cpp
         ../third_party/imgui/imgui_tables.cpp
         ../third_party/imgui/imgui_widgets.cpp
         src/macos/metal_impl.cpp
+        src/llri_d3d12/d3d12_context.cpp
+        src/llri_vulkan/vk_context.cpp
 )
 
 if(APPLE)

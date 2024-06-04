@@ -1,6 +1,7 @@
 #pragma once
 #include "mercury_api.h"
 #include "mercury_imgui_interface.h"
+#include "context.h"
 
 namespace mercury
 {
@@ -11,7 +12,6 @@ namespace mercury
 		void update();
 
 
-		void render(void* cbuff);
-
+		void render(llri::context& ctx);
 	}
 }

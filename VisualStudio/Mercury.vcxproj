@@ -23,9 +23,11 @@
     <ClCompile Include="..\engine\src\application.cpp" />
     <ClCompile Include="..\engine\src\engine.cpp" />
     <ClCompile Include="..\engine\src\linux\system_linux.cpp" />
+    <ClCompile Include="..\engine\src\llri_d3d12\d3d12_context.cpp" />
     <ClCompile Include="..\engine\src\llri_d3d12\d3d12_llri.cpp" />
     <ClCompile Include="..\engine\src\llri_d3d12\d3d12_swapchain.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\mercury_vulkan.cpp" />
+    <ClCompile Include="..\engine\src\llri_vulkan\vk_context.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\vk_llri.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\vk_swapchain.cpp" />
     <ClCompile Include="..\engine\src\logger.cpp" />
@@ -47,6 +49,7 @@
     <ClInclude Include="..\engine\include\mercury_log.h" />
     <ClInclude Include="..\engine\include\mercury_rendering.h" />
     <ClInclude Include="..\engine\src\application.h" />
+    <ClInclude Include="..\engine\src\context.h" />
     <ClInclude Include="..\engine\src\engine.h" />
     <ClInclude Include="..\engine\src\llri.h" />
     <ClInclude Include="..\engine\src\llri_d3d12\d3d12_llri.h" />

@@ -99,6 +99,12 @@
     <ClCompile Include="..\third_party\imgui\imgui_widgets.cpp">
       <Filter>Source Files\third_party\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\llri_d3d12\d3d12_context.cpp">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\llri_vulkan\vk_context.cpp">
+      <Filter>Source Files\llris\llri_vulkan</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\src\application.h">
@@ -148,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="..\engine\src\llri_vulkan\vk_swapchain.h">
       <Filter>Source Files\llris\llri_vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\context.h">
+      <Filter>Source Files\llris</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

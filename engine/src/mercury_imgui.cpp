@@ -3,6 +3,7 @@
 #include "mercury_imgui.h"
 #include "platform.h"
 
+
 #include "imgui.h"
 
 
@@ -225,16 +226,16 @@ void mercury::imgui::update()
 	}
 }
 
-void mercury::imgui::render(void* cbuff)
+void mercury::imgui::render(llri::context& ctx)
 {
 	if (gImGuiInitialized)
 	{
 #ifdef MERCURY_GRAPHICS_API_VULKAN
-		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), static_cast<VkCommandBuffer>(cbuff));
+		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), static_cast<VkCommandBuffer>(ctx.impl));
 #endif
 
 #ifdef MERCURY_GRAPHICS_API_D3D12
-		auto cmdList = static_cast<ID3D12GraphicsCommandList*>(cbuff);
+		auto cmdList = static_cast<ID3D12GraphicsCommandList*>(ctx.impl);
 
 		cmdList->SetDescriptorHeaps(1, &gImgui_pd3dSrvDescHeap);
 		ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), cmdList);

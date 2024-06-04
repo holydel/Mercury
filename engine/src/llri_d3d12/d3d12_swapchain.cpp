@@ -1,6 +1,8 @@
 #include "d3d12_swapchain.h"
 #include <chrono>
 #include "../mercury_imgui.h"
+#include "../engine.h"
+
 using namespace mercury;
 
 #ifdef MERCURY_GRAPHICS_API_D3D12
@@ -153,7 +155,8 @@ bool llri::swapchain::update()
 		frame.commandList->OMSetRenderTargets(1, &frame.bbRTV, FALSE, NULL);
 	}
 
-	//mercury::imgui::render(frame.commandList);
+	llri::context ctx{ static_cast<void*>(frame.commandList) };
+	engine::renderCallback(ctx);
 
 	CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		frame.bbResource,

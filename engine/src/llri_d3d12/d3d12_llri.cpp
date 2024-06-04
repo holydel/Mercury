@@ -120,30 +120,6 @@ void llri::shutdown()
 
 bool llri::update()
 {
-	static void* nativeWindowHandle = nullptr;
-
-	if (nativeWindowHandle != platform::getMainWindowHandle())
-	{
-		nativeWindowHandle = platform::getMainWindowHandle();
-
-		if (nativeWindowHandle == nullptr)
-		{
-			llri::swapchain::destroy();
-
-		}
-		else
-		{
-			llri::swapchain::create(nativeWindowHandle);
-		}
-	}
-
-	if (nativeWindowHandle != nullptr)
-	{
-		//do render
-
-		llri::swapchain::update();
-	}
-
 
 	return true;}
 
