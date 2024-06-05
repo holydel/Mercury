@@ -2,7 +2,7 @@
 // Created by holyd on 05.06.2024.
 //
 #include "imgui_impl_emscripten.h"
-
+#ifdef MERCURY_PLATFORM_EMSCRIPTEN
 IMGUI_IMPL_API bool     ImGui_ImplEmscripten_Init()
 {
     ImGuiIO& io = ImGui::GetIO();
@@ -41,3 +41,4 @@ IMGUI_IMPL_API bool     ImGui_ImplEmscripten_Event()
 
     return true;
 }
+#endif

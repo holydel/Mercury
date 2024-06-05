@@ -59,7 +59,7 @@ void platform::createMainWindow()
 	xcb_screen_iterator_t   iter   = xcb_setup_roots_iterator (gSetup);
 	gScreen = iter.data;
 
-	uint32_t valueList[] = { gScreen->black_pixel, 0 };
+	uint32_t valueList[] = {65535};
 	/* Create the window */
 	gWindow = xcb_generate_id (gConnection);
 	xcb_create_window (gConnection,                    /* Connection          */
@@ -71,7 +71,7 @@ void platform::createMainWindow()
 					   10,                            /* border_width        */
 					   XCB_WINDOW_CLASS_INPUT_OUTPUT, /* class               */
 					   gScreen->root_visual,           /* visual              */
-					   XCB_CW_BACK_PIXEL | XCB_CW_EVENT_MASK, valueList );                     /* masks, not used yet */
+					   XCB_CW_EVENT_MASK, valueList );                     /* masks, not used yet */
 
 
 	/* Map the window on the screen */

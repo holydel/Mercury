@@ -237,6 +237,7 @@ void mercury::imgui::update()
 		ImGui_ImplWin32_NewFrame();
 #endif
 #ifdef MERCURY_PLATFORM_LINUX
+
 		ImGui_ImplX11_NewFrame();
 #endif
 #ifdef MERCURY_PLATFORM_ANDROID

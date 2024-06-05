@@ -65,7 +65,8 @@ if(APPLE)
     )
 else ()
     if(UNIX)
-        target_sources(MercuryEngine PRIVATE src/linux/system_linux.cpp)
+        target_sources(MercuryEngine PRIVATE src/linux/system_linux.cpp
+                src/third_party/imgui_impl_x11.cpp)
     endif()
 endif()
 
