@@ -71,3 +71,6 @@
 [submodule "third_party/metal-cpp-extensions"]
 	path = third_party/metal-cpp-extensions
 	url = https://gitlab.com/mark-grimes/metal-cpp-extensions
+[submodule "third_party/wasm_webgpu"]
+	path = third_party/wasm_webgpu
+	url = https://github.com/juj/wasm_webgpu

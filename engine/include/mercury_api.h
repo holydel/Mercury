@@ -3,13 +3,17 @@
 
 //uncomment one for configure graphics API
 
-#define MERCURY_GRAPHICS_API_VULKAN
+//#define MERCURY_GRAPHICS_API_VULKAN
 //#define MERCURY_GRAPHICS_API_D3D12
 //#define MERCURY_GRAPHICS_API_METAL
-
+#define MERCURY_GRAPHICS_API_WEBGPU
 
 #ifdef _WIN32
 #define MERCURY_PLATFORM_WINDOWS
+#endif
+
+#ifdef __EMSCRIPTEN__
+#define MERCURY_PLATFORM_EMSCRIPTEN
 #endif
 
 #ifdef __ANDROID__

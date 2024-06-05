@@ -50,6 +50,8 @@ void renderMainOutput()
 bool engine::update()
 {	
 	platform::update();
+
+
 	imgui::update();
 
 	renderMainOutput();

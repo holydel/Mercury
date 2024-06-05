@@ -11,12 +11,16 @@
 #include "backends/imgui_impl_win32.cpp"
 #endif
 
+#ifdef MERCURY_PLATFORM_EMSCRIPTEN
+#include "emscripten/imgui_impl_emscripten.h"
+#endif
+
 #ifdef MERCURY_PLATFORM_ANDROID
 #include "backends/imgui_impl_android.cpp"
 #endif
 
 #ifdef MERCURY_PLATFORM_LINUX
-#include "third_party/imgui_impl_x11.cpp"
+#include "third_party/imgui_impl_x11.h"
 #endif
 
 #ifdef MERCURY_PLATFORM_MACOS
@@ -38,6 +42,12 @@ static void mercury_check_vk_result(VkResult err)
 
 #include "backends/imgui_impl_dx12.cpp"
 static ID3D12DescriptorHeap* gImgui_pd3dSrvDescHeap = nullptr;
+#endif
+
+#ifdef MERCURY_GRAPHICS_API_WEBGPU
+#include "llri_webgpu/webgpu_swapchain.h"
+
+#include "backends/imgui_impl_wgpu.cpp"
 #endif
 
 #include <algorithm>
@@ -65,13 +75,18 @@ void mercury::imgui::shutdown()
 #ifdef MERCURY_GRAPHICS_API_D3D12
 		ImGui_ImplDX12_Shutdown();
 #endif
+#ifdef MERCURY_GRAPHICS_API_WEBGPU
+        ImGui_ImplWGPU_Shutdown();
+#endif
 #ifdef MERCURY_PLATFORM_ANDROID
 		ImGui_ImplAndroid_Shutdown();
 #endif
 #ifdef MERCURY_PLATFORM_WINDOWS
 		ImGui_ImplWin32_Shutdown();
 #endif
-
+#ifdef MERCURY_PLATFORM_EMSCRIPTEN
+        ImGui_ImplEmscripten_Shutdown();
+#endif
 	}
 
 	ImGui::DestroyContext();
@@ -93,6 +108,12 @@ bool IsBackendReady()
 #endif
 #ifdef MERCURY_GRAPHICS_API_D3D12
 	return gSwapChain != nullptr;
+#endif
+#ifdef MERCURY_GRAPHICS_API_WEBGPU
+    return gSwapChain != nullptr;
+#endif
+#ifdef MERCURY_GRAPHICS_API_METAL
+    return false;
 #endif
 	return true;
 }
@@ -155,6 +176,16 @@ bool InitializeBackend()
 	ImGui_ImplDX12_CreateDeviceObjects();
 	ImGui_ImplDX12_CreateFontsTexture();
 #endif
+
+#ifdef MERCURY_GRAPHICS_API_WEBGPU
+    ImGui_ImplWGPU_InitInfo initInfo = {};
+    initInfo.Device = gDevice;
+    initInfo.RenderTargetFormat = gPrefferedBackbufferFormat;
+    initInfo.NumFramesInFlight = 3;
+    initInfo.DepthStencilFormat = WGPUTextureFormat::WGPUTextureFormat_Undefined;
+
+    ImGui_ImplWGPU_Init(&initInfo);
+#endif
 	return true;
 }
 
@@ -182,6 +213,9 @@ void mercury::imgui::update()
             void* view = mercury::platform::getAppInstanceHandle(); //view
 			ImGui_ImplOSX_Init(view);
 #endif
+#ifdef MERCURY_PLATFORM_EMSCRIPTEN
+			ImGui_ImplEmscripten_Init();
+#endif
 			InitializeBackend();
 			gImGuiInitialized = true;
 		}
@@ -196,6 +230,9 @@ void mercury::imgui::update()
 #ifdef MERCURY_GRAPHICS_API_D3D12
 		ImGui_ImplDX12_NewFrame();
 #endif
+#ifdef MERCURY_GRAPHICS_API_WEBGPU
+        ImGui_ImplWGPU_NewFrame();
+#endif
 #ifdef MERCURY_PLATFORM_WINDOWS 
 		ImGui_ImplWin32_NewFrame();
 #endif
@@ -208,6 +245,10 @@ void mercury::imgui::update()
 #ifdef MERCURY_PLATFORM_MACOS
         void* view = mercury::platform::getAppInstanceHandle(); //view
         ImGui_ImplOSX_NewFrame(view);
+#endif
+#ifdef MERCURY_PLATFORM_EMSCRIPTEN
+        ImGui_ImplEmscripten_Event();
+        ImGui_ImplEmscripten_NewFrame();
 #endif
 		ImGui::NewFrame();
 
@@ -239,6 +280,10 @@ void mercury::imgui::render(llri::context& ctx)
 
 		cmdList->SetDescriptorHeaps(1, &gImgui_pd3dSrvDescHeap);
 		ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), cmdList);
+#endif
+#ifdef MERCURY_GRAPHICS_API_WEBGPU
+        auto cmdList = static_cast<WGPURenderPassEncoder>(ctx.impl);
+        ImGui_ImplWGPU_RenderDrawData(ImGui::GetDrawData(), cmdList);
 #endif
 	}	
 }
