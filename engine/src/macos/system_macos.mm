@@ -15,6 +15,10 @@
 #include "../platform.h"
 #include "../engine.h"
 
+#ifdef MERCURY_GRAPHICS_API_METAL
+#include "../llri_metal/metal_llri.h"
+extern MTL::Device *gDevice;
+#endif
 using namespace std::chrono_literals;
 using namespace mercury;
 
@@ -48,6 +52,9 @@ private:
 
 Renderer::Renderer(MTL::Device* device) : device{device->retain()}{
     commandQueue = device->newCommandQueue();
+#ifdef MERCURY_GRAPHICS_API_METAL
+    gCommandQueue = commandQueue;
+#endif
 }
 
 
@@ -134,10 +141,14 @@ MTK::View *gMainView = nullptr;
 
 void MercuryApp::applicationDidFinishLaunching(NS::Notification* pNotification) {
     //Returns the device instance Metal selects as the default
+    m_device = MTL::CreateSystemDefaultDevice();
+#ifdef MERCURY_GRAPHICS_API_METAL
+    gDevice = m_device;
+#endif
     engine::initialize();
     gApplication->Initialize();
 
-    m_device = MTL::CreateSystemDefaultDevice();
+
 
     //window frame dimensions
     CGRect frame{{0, 0}, {width, height}};
@@ -367,6 +378,9 @@ void platform::outputToLogFile(const char* text)
 
 void* platform::getMainWindowHandle()
 {
+#ifdef MERCURY_GRAPHICS_API_METAL
+    return gMainView;
+#endif
 	return gMainOutput;
 }
 
