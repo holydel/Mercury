@@ -43,6 +43,16 @@ void MainScreen::Draw()
 		if (ImGui::MenuItem("Cut", "CTRL+X")) {}
 		if (ImGui::MenuItem("Copy", "CTRL+C")) {}
 		if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+		
+		ImGui::EndMenu();
+	}
+
+	if (ImGui::BeginMenu("Assets"))
+	{
+		if (ImGui::MenuItem("Shaders")) {
+			mercury::imgui_interface::AddScreen(&shadersScreen);
+		}
+
 		ImGui::EndMenu();
 	}
 

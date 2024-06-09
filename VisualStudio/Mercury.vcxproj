@@ -58,6 +58,7 @@
     <ClInclude Include="..\engine\src\llri_vulkan\vk_llri.h" />
     <ClInclude Include="..\engine\src\llri_vulkan\vk_swapchain.h" />
     <ClInclude Include="..\engine\src\platform.h" />
+    <ClInclude Include="..\engine\src\shader_bytecode.h" />
     <ClInclude Include="..\engine\src\swapchain.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

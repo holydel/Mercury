@@ -3,9 +3,9 @@
 
 //uncomment one for configure graphics API
 
-//#define MERCURY_GRAPHICS_API_VULKAN
+#define MERCURY_GRAPHICS_API_VULKAN
 //#define MERCURY_GRAPHICS_API_D3D12
-#define MERCURY_GRAPHICS_API_METAL
+//#define MERCURY_GRAPHICS_API_METAL
 //#define MERCURY_GRAPHICS_API_WEBGPU
 
 #ifdef _WIN32

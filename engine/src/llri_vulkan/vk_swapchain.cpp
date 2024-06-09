@@ -5,6 +5,7 @@
 #include "../platform.h"
 #include "../mercury_imgui.h"
 #include "../engine.h"
+#include "../application.h"
 
 using namespace mercury;
 
@@ -280,6 +281,10 @@ bool llri::swapchain::destroy()
 	{
 		vkDestroyRenderPass(gDevice, gRenderPass, gGlobalAllocationsCallbacks);
 		gRenderPass = nullptr;
+	}
+	else
+	{
+		return true;
 	}
 
 	imgui::shutdown();

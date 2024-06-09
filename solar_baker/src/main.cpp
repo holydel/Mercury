@@ -43,6 +43,7 @@ SolarBaker::~SolarBaker()
 bool SolarBaker::Initialize()
 {
 	mercury::rendering::SetBackGroundColor(0.1f, 0.15f, 0.2f, 1.0f);
+	
 	mercury::imgui_interface::AddScreen(&mainScreen);
 
 	return true;

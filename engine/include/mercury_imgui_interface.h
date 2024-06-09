@@ -8,11 +8,20 @@ namespace mercury
 	{
 		class Screen
 		{
+		protected:
+			bool is_active = false;
 		public:
 			virtual void Draw() = 0;
 
-			virtual bool IsActive() = 0;
+			bool IsActive()
+			{
+				return is_active;
+			};
 
+			void Activate()
+			{
+				is_active = true;
+			}
 		};
 
 		bool AddScreen(Screen* screen);

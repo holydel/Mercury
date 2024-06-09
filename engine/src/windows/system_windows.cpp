@@ -143,6 +143,7 @@ void platform::createMainWindow()
 
 void platform::destroyMainWindow()
 {
+	gMainWindow = nullptr;
 	::DestroyWindow(gMainWindow);
 	::UnregisterClassW(winClassName, gWinSystemInstance);
 }
@@ -193,6 +194,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 	case WM_DESTROY:
+		gMainWindow = nullptr;
 		gApplication->OnApplicationClose();
 		::PostQuitMessage(0);
 		break;

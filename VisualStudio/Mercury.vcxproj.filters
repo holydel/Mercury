@@ -158,5 +158,8 @@
     <ClInclude Include="..\engine\src\context.h">
       <Filter>Source Files\llris</Filter>
     </ClInclude>
+    <ClInclude Include="..\engine\src\shader_bytecode.h">
+      <Filter>Source Files\llris</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

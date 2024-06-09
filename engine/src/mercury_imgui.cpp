@@ -97,6 +97,7 @@ void mercury::imgui::shutdown()
 
 bool mercury::imgui_interface::AddScreen(mercury::imgui_interface::Screen* screen)
 {
+	screen->Activate();
 	gAllScreens.push_back(screen);
 	return true;
 }
