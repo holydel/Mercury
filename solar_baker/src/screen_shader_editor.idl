@@ -1,9 +1,0 @@
-namespace SolarBaker
-{
-    [default_interface]
-    runtimeclass screen_shader_editor : Windows.UI.Xaml.Controls.Page
-    {
-        screen_shader_editor();
-        Int32 MyProperty;
-    }
-}

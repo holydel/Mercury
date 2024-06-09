@@ -69,6 +69,8 @@ namespace mercury
 
 		void* getMainWindowHandle();
 		void* getAppInstanceHandle();
+
+		const char* getApplicationDataPath();
 	}
 }
 

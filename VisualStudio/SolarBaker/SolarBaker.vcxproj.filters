@@ -21,9 +21,21 @@
     <ClCompile Include="..\..\solar_baker\src\screen_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\solar_baker\src\screen_shaders_editor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solar_baker\src\solar_baker_project.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\solar_baker\src\screen_main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\screen_shaders_editor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\solar_baker_project.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

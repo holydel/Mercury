@@ -40,6 +40,9 @@
     <Filter Include="Source Files\third_party\imgui">
       <UniqueIdentifier>{980dff40-b46c-441b-be27-1df4ea899442}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\third_party\pugixml">
+      <UniqueIdentifier>{3f153f73-ba0d-4d3b-a9f1-7ff36c3af699}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\engine\src\application.cpp">
@@ -105,6 +108,12 @@
     <ClCompile Include="..\engine\src\llri_vulkan\vk_context.cpp">
       <Filter>Source Files\llris\llri_vulkan</Filter>
     </ClCompile>
+    <ClCompile Include="..\third_party\ImGuiColorTextEdit\TextEditor.cpp">
+      <Filter>Source Files\third_party\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\pugixml\src\pugixml.cpp">
+      <Filter>Source Files\third_party\pugixml</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\src\application.h">
@@ -160,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="..\engine\src\shader_bytecode.h">
       <Filter>Source Files\llris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party\pugixml\src\pugiconfig.hpp">
+      <Filter>Source Files\third_party\pugixml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third_party\pugixml\src\pugixml.hpp">
+      <Filter>Source Files\third_party\pugixml</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

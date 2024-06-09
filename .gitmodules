@@ -74,3 +74,6 @@
 [submodule "third_party/wasm_webgpu"]
 	path = third_party/wasm_webgpu
 	url = https://github.com/juj/wasm_webgpu
+[submodule "third_party/ImGuiColorTextEdit"]
+	path = third_party/ImGuiColorTextEdit
+	url = https://github.com/BalazsJako/ImGuiColorTextEdit

@@ -35,11 +35,13 @@
     <ClCompile Include="..\engine\src\platform.cpp" />
     <ClCompile Include="..\engine\src\rendering.cpp" />
     <ClCompile Include="..\engine\src\windows\system_windows.cpp" />
+    <ClCompile Include="..\third_party\ImGuiColorTextEdit\TextEditor.cpp" />
     <ClCompile Include="..\third_party\imgui\imgui.cpp" />
     <ClCompile Include="..\third_party\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\third_party\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\third_party\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\third_party\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\third_party\pugixml\src\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\include\mercury.h" />
@@ -60,6 +62,8 @@
     <ClInclude Include="..\engine\src\platform.h" />
     <ClInclude Include="..\engine\src\shader_bytecode.h" />
     <ClInclude Include="..\engine\src\swapchain.h" />
+    <ClInclude Include="..\third_party\pugixml\src\pugiconfig.hpp" />
+    <ClInclude Include="..\third_party\pugixml\src\pugixml.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -134,7 +138,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include;..\third_party\pugixml\src</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -151,7 +155,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;;..\third_party\pugixml\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -169,7 +173,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include;..\third_party\pugixml\src</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -190,7 +194,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;;..\third_party\pugixml\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

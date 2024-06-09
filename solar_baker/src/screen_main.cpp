@@ -1,6 +1,21 @@
 #include "screen_main.h"
 #include "imgui.h"
+#include "solar_baker_project.h"
 
+SBProject* gCurrentProject = nullptr;
+
+void MainScreen::InitializeRecentlyProjects(mercury::Application* app)
+{
+	recentlyProjects = app->GetRuntimeSettingsList("RecentlyProjects");
+}
+
+void MainScreen::SaveRecentlyProjects(mercury::Application* app)
+{
+	if (!recentlyProjects.empty())
+	{
+		app->SetRuntimeSettingsList("RecentlyProjects", recentlyProjects);
+	}
+}
 
 void MainScreen::Draw()
 {
@@ -10,12 +25,20 @@ void MainScreen::Draw()
 	{
 		if (ImGui::MenuItem("New..."))
 		{
+			SBProject::Create();
 		}
 
 		if (ImGui::MenuItem(u8"Open...")) {}
 
 		if (ImGui::BeginMenu("Open Recent", false))
 		{
+			for (auto proj : recentlyProjects)
+			{
+				if (ImGui::MenuItem(proj.c_str()))
+				{
+
+				}
+			}
 			ImGui::EndMenu();
 		}
 
@@ -57,4 +80,6 @@ void MainScreen::Draw()
 	}
 
 	ImGui::EndMainMenuBar();
+
+	SBProject::Draw();
 }

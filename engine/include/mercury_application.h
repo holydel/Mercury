@@ -1,5 +1,7 @@
 #pragma once
 #include "mercury_api.h"
+#include <string>
+#include <vector>
 
 namespace mercury
 {
@@ -90,5 +92,11 @@ namespace mercury
 		virtual bool Update();
 
 		virtual void OnApplicationClose();
+
+		const std::string& GetRuntimeSettingsValue(const char* u8key);
+		const std::vector<std::string>& GetRuntimeSettingsList(const char* u8key);
+
+		void SetRuntimeSettingsValue(const char* u8key, const std::string& value);
+		void SetRuntimeSettingsList(const char* u8key, const std::vector<std::string> & value);
 	};
 }

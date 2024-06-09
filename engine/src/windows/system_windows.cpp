@@ -21,6 +21,8 @@
 #include "../application.h"
 #include "../platform.h"
 #include <thread>
+#include <KnownFolders.h>
+#include <shlobj.h>
 
 using namespace mercury;
 
@@ -285,5 +287,19 @@ void platform::outputToDebugConsole(const char* text)
 void platform::outputToLogFile(const char* text)
 {
 
+}
+
+const char* platform::getApplicationDataPath()
+{
+	char appPath[MAX_PATH];
+
+	PWSTR path;
+	SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path);
+
+	wideToUtf8(path, appPath, MAX_PATH);
+
+	CoTaskMemFree((LPVOID)path);
+
+	return appPath;
 }
 #endif

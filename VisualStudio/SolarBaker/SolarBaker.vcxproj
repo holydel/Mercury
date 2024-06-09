@@ -49,7 +49,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -66,7 +67,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,9 +87,13 @@
   <ItemGroup>
     <ClCompile Include="..\..\solar_baker\src\main.cpp" />
     <ClCompile Include="..\..\solar_baker\src\screen_main.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\screen_shaders_editor.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\solar_baker_project.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\solar_baker\src\screen_main.h" />
+    <ClInclude Include="..\..\solar_baker\src\screen_shaders_editor.h" />
+    <ClInclude Include="..\..\solar_baker\src\solar_baker_project.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

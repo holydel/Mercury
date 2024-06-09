@@ -3,3 +3,4 @@
 
 extern mercury::Application* gApplication;
 void ApplicationRun();
+void ApplicationInitializeSettingsCache();
