@@ -43,6 +43,15 @@
     <Filter Include="Source Files\third_party\pugixml">
       <UniqueIdentifier>{3f153f73-ba0d-4d3b-a9f1-7ff36c3af699}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\llvris">
+      <UniqueIdentifier>{b740a4d0-a812-4bf4-a24f-f3d6ffd859d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\llvris\llvri_openxr">
+      <UniqueIdentifier>{e3112136-34c6-4dce-9f25-58513a661ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\llvris\llvri_apple_vision">
+      <UniqueIdentifier>{2579d641-ba1e-4896-a571-c14a890af5da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\engine\src\application.cpp">
@@ -114,6 +123,27 @@
     <ClCompile Include="..\third_party\pugixml\src\pugixml.cpp">
       <Filter>Source Files\third_party\pugixml</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\shader_bytecode_spirv.cpp">
+      <Filter>Source Files\llris</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\shader_bytecode_dxil.cpp">
+      <Filter>Source Files\llris</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\shader_bytecode_msl.cpp">
+      <Filter>Source Files\llris</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\internal_shaders.cpp">
+      <Filter>Source Files\llris</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\llri_vulkan\vk_utils.cpp">
+      <Filter>Source Files\llris\llri_vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mercury_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\llvri_openxr\llvri_openxr.cpp">
+      <Filter>Source Files\llvris\llvri_openxr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\src\application.h">
@@ -175,6 +205,30 @@
     </ClInclude>
     <ClInclude Include="..\third_party\pugixml\src\pugixml.hpp">
       <Filter>Source Files\third_party\pugixml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llri_vulkan\vk_utils.h">
+      <Filter>Source Files\llris\llri_vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\rendering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llvri.h">
+      <Filter>Source Files\llvris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llvri_openxr\llvri_openxr.h">
+      <Filter>Source Files\llvris\llvri_openxr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llvri_apple_vision\llvri_apple_vision.h">
+      <Filter>Source Files\llvris\llvri_apple_vision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

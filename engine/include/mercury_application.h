@@ -90,6 +90,9 @@ namespace mercury
 		virtual bool Shutdown();
 
 		virtual bool Update();
+		virtual bool Render() { return false; };
+		virtual bool PreRender() { return false; };
+		virtual bool PostRender() { return false; };
 
 		virtual void OnApplicationClose();
 
@@ -98,5 +101,7 @@ namespace mercury
 
 		void SetRuntimeSettingsValue(const char* u8key, const std::string& value);
 		void SetRuntimeSettingsList(const char* u8key, const std::vector<std::string> & value);
+
+		void SetWindowTitle(const char* u8string);
 	};
 }

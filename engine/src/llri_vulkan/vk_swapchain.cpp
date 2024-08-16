@@ -323,11 +323,11 @@ bool llri::swapchain::update()
 		return false;
 	}
 
-	vkWaitForFences(gDevice, 1, &frame.fence, VK_TRUE, UINT64_MAX); //UINT64_MAX
-	vkResetFences(gDevice, 1, &frame.fence);
+	VK_CALL(vkWaitForFences(gDevice, 1, &frame.fence, VK_TRUE, UINT64_MAX)); //UINT64_MAX
+	VK_CALL(vkResetFences(gDevice, 1, &frame.fence));
 
 	//mercury::write_log_message("frameID: %d imageID: %d", frameIndex, presentedImageIndex);
-	vkResetCommandPool(gDevice,frame.cmdPool,0);
+	VK_CALL(vkResetCommandPool(gDevice,frame.cmdPool,0));
 
 	VkCommandBufferBeginInfo cbuffBegin;
 	cbuffBegin.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -335,7 +335,11 @@ bool llri::swapchain::update()
 	cbuffBegin.pInheritanceInfo = nullptr;
 	cbuffBegin.flags = VkCommandBufferUsageFlagBits::VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
-	vkBeginCommandBuffer(frame.cmdBuffer, &cbuffBegin);
+	VK_CALL(vkBeginCommandBuffer(frame.cmdBuffer, &cbuffBegin));
+	gCurrentCommandBuffer = frame.cmdBuffer;
+	llri::context ctx{ static_cast<void*>(frame.cmdBuffer) };
+
+	engine::renderBeforeCallback(ctx);
 
 	VkRenderPassBeginInfo renderPassInfo{};
 	renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -368,12 +372,14 @@ bool llri::swapchain::update()
 	vkCmdSetScissor(frame.cmdBuffer, 0, 1, &scissorRect);
 	vkCmdSetViewport(frame.cmdBuffer, 0, 1, &viewport);
 
-	llri::context ctx{ static_cast<void*>(frame.cmdBuffer) };
+
 	engine::renderCallback(ctx);
 
 	vkCmdEndRenderPass(frame.cmdBuffer);
 
-	vkEndCommandBuffer(frame.cmdBuffer);
+	engine::renderAfterCallback(ctx);
+
+	VK_CALL(vkEndCommandBuffer(frame.cmdBuffer));
 
 	VkSubmitInfo sbmtInfo;
 	sbmtInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -389,7 +395,7 @@ bool llri::swapchain::update()
 	sbmtInfo.pWaitSemaphores = &frame.acquireComplete;
 	sbmtInfo.waitSemaphoreCount = 1;
 
-	vkQueueSubmit(gMainQueue, 1, &sbmtInfo, frame.fence);
+	VK_CALL(vkQueueSubmit(gMainQueue, 1, &sbmtInfo, frame.fence));
 
 	VkPresentInfoKHR presentInfo = { VK_STRUCTURE_TYPE_PRESENT_INFO_KHR };
 	presentInfo.pWaitSemaphores = &frame.renderingComplete;

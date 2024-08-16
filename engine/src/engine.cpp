@@ -4,6 +4,7 @@
 #include "llri.h"
 #include "mercury_imgui.h"
 #include "swapchain.h"
+#include "application.h"
 
 using namespace mercury;
 
@@ -61,5 +62,17 @@ bool engine::update()
 
 void engine::renderCallback(llri::context ctx)
 {
+	gApplication->Render();
+
 	imgui::render(ctx);
+}
+
+void engine::renderBeforeCallback(llri::context ctx)
+{
+	gApplication->PreRender();
+}
+
+void engine::renderAfterCallback(llri::context ctx)
+{
+	gApplication->PostRender();
 }

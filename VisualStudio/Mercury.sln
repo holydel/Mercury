@@ -30,8 +30,8 @@ Global
 		{FECA1EE2-E53C-4F6F-B774-A6CAC0817A7F}.Debug|x64.Build.0 = Debug|x64
 		{FECA1EE2-E53C-4F6F-B774-A6CAC0817A7F}.Release|Android-arm64-v8a.ActiveCfg = Release|Android-arm64-v8a
 		{FECA1EE2-E53C-4F6F-B774-A6CAC0817A7F}.Release|Android-arm64-v8a.Build.0 = Release|Android-arm64-v8a
-		{FECA1EE2-E53C-4F6F-B774-A6CAC0817A7F}.Release|x64.ActiveCfg = Release|Android-arm64-v8a
-		{FECA1EE2-E53C-4F6F-B774-A6CAC0817A7F}.Release|x64.Build.0 = Release|Android-arm64-v8a
+		{FECA1EE2-E53C-4F6F-B774-A6CAC0817A7F}.Release|x64.ActiveCfg = Release|x64
+		{FECA1EE2-E53C-4F6F-B774-A6CAC0817A7F}.Release|x64.Build.0 = Release|x64
 		{724FA322-A6E8-48BE-80FD-F4264E85AC40}.Debug|Android-arm64-v8a.ActiveCfg = Debug|x64
 		{724FA322-A6E8-48BE-80FD-F4264E85AC40}.Debug|x64.ActiveCfg = Debug|x64
 		{724FA322-A6E8-48BE-80FD-F4264E85AC40}.Debug|x64.Build.0 = Debug|x64
@@ -44,16 +44,16 @@ Global
 		{CA5354FC-8824-43E4-9EEC-2AEC97467296}.Debug|x64.Build.0 = Debug|x64
 		{CA5354FC-8824-43E4-9EEC-2AEC97467296}.Release|Android-arm64-v8a.ActiveCfg = Release|Android-arm64-v8a
 		{CA5354FC-8824-43E4-9EEC-2AEC97467296}.Release|Android-arm64-v8a.Build.0 = Release|Android-arm64-v8a
-		{CA5354FC-8824-43E4-9EEC-2AEC97467296}.Release|x64.ActiveCfg = Release|Android-arm64-v8a
-		{CA5354FC-8824-43E4-9EEC-2AEC97467296}.Release|x64.Build.0 = Release|Android-arm64-v8a
+		{CA5354FC-8824-43E4-9EEC-2AEC97467296}.Release|x64.ActiveCfg = Release|x64
+		{CA5354FC-8824-43E4-9EEC-2AEC97467296}.Release|x64.Build.0 = Release|x64
 		{6210424F-C15C-4513-BA20-684304C31973}.Debug|Android-arm64-v8a.ActiveCfg = Debug|Android-arm64-v8a
 		{6210424F-C15C-4513-BA20-684304C31973}.Debug|Android-arm64-v8a.Build.0 = Debug|Android-arm64-v8a
 		{6210424F-C15C-4513-BA20-684304C31973}.Debug|x64.ActiveCfg = Debug|x64
 		{6210424F-C15C-4513-BA20-684304C31973}.Debug|x64.Build.0 = Debug|x64
 		{6210424F-C15C-4513-BA20-684304C31973}.Release|Android-arm64-v8a.ActiveCfg = Release|Android-arm64-v8a
 		{6210424F-C15C-4513-BA20-684304C31973}.Release|Android-arm64-v8a.Build.0 = Release|Android-arm64-v8a
-		{6210424F-C15C-4513-BA20-684304C31973}.Release|x64.ActiveCfg = Release|Android-arm64-v8a
-		{6210424F-C15C-4513-BA20-684304C31973}.Release|x64.Build.0 = Release|Android-arm64-v8a
+		{6210424F-C15C-4513-BA20-684304C31973}.Release|x64.ActiveCfg = Release|x64
+		{6210424F-C15C-4513-BA20-684304C31973}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

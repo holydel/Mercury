@@ -77,3 +77,6 @@
 [submodule "third_party/ImGuiColorTextEdit"]
 	path = third_party/ImGuiColorTextEdit
 	url = https://github.com/BalazsJako/ImGuiColorTextEdit
+[submodule "third_party/libdeflate"]
+	path = third_party/libdeflate
+	url = https://github.com/NVIDIA/libdeflate

@@ -71,6 +71,8 @@ namespace mercury
 		void* getAppInstanceHandle();
 
 		const char* getApplicationDataPath();
+
+		void setMainWindowTitle(const char* u8string);
 	}
 }
 

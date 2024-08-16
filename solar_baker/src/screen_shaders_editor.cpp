@@ -1,12 +1,18 @@
 #include "screen_shaders_editor.h"
 #include "imgui.h"
 #include "../../third_party/ImGuiColorTextEdit/TextEditor.h"
+#include "shader_compiler.h"
+#include "sbproj_source.h"
+#include <fstream>
 
 ShadersEditorScreen::ShadersEditorScreen()
 {
 	textEditor = new TextEditor();
 	
 	textEditor->SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
+
+	textEditor->SetText("//we will be using glsl version 4.5 syntax\n");
+
 }
 
 ShadersEditorScreen::~ShadersEditorScreen()
@@ -23,6 +29,15 @@ void ShadersEditorScreen::Draw()
 		{
 			if (ImGui::MenuItem(u8"Compile"))
 			{
+				auto temp = ShaderCompiler::CompileShader(currentSource);
+				int a = 52;
+			}
+			bool is_selected = false;
+			if (ImGui::MenuItem(u8"Save","CTRL+S",&is_selected, currentSource != nullptr))
+			{
+				currentSource->cachedSource = textEditor->GetText();
+				std::ofstream file(currentSource->fullPath);
+				file << currentSource->cachedSource;
 			}
 
 			ImGui::Separator();
@@ -56,5 +71,26 @@ void ShadersEditorScreen::Draw()
 
 		textEditor->Render("Source");
 		ImGui::End();
+	}
+}
+
+void ShadersEditorScreen::SetShaderSource(SBProjShaderSource* src)
+{
+	currentSource = src;
+
+	std::ifstream file(src->fullPath);
+	if (file)
+	{
+		file.seekg(0, std::ios::end);
+		std::streampos          length = file.tellg();
+		file.seekg(0, std::ios::beg);
+
+		src->cachedSource.resize(length);
+
+		file.read(src->cachedSource.data(), length);
+
+		textEditor->SetText(src->cachedSource.c_str());
+
+		int a = 42;
 	}
 }

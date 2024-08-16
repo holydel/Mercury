@@ -13,6 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\third_party">
+      <UniqueIdentifier>{30ce19a8-3888-49ee-bd04-65142420edbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\third_party\glslang">
+      <UniqueIdentifier>{34dbb291-15c8-487e-9378-198141d35cca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\third_party\libdeflate">
+      <UniqueIdentifier>{0de43eac-d426-4b58-a49c-77900f69963b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\third_party\libdeflate\x86">
+      <UniqueIdentifier>{c719aed2-029e-4edf-b2ec-5a8de174e004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\third_party\glslang\SPIRV">
+      <UniqueIdentifier>{fd1edc5a-8a17-41e2-872b-c8d23b1eef74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\solar_baker\src\main.cpp">
@@ -27,6 +42,174 @@
     <ClCompile Include="..\..\solar_baker\src\solar_baker_project.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\GenericCodeGen\CodeGen.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\GenericCodeGen\Link.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\attribute.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Constant.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\glslang_tab.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\InfoSink.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Initialize.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Intermediate.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\intermOut.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\IntermTraverse.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\iomapper.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\limits.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\linkValidate.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\parseConst.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\ParseContextBase.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\ParseHelper.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\PoolAlloc.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\propagateNoContraction.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\reflection.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\RemoveTree.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Scan.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\ShaderLang.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\SpirvIntrinsics.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\SymbolTable.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Versions.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\OSDependent\Windows\ossource.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\CInterface\glslang_c_interface.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\Pp.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpAtom.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpContext.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpScanner.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpTokens.cpp">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\adler32.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\crc32.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\deflate_compress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\deflate_decompress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gdeflate_compress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gdeflate_decompress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gzip_compress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gzip_decompress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\utils.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\zlib_compress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\zlib_decompress.c">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\x86\cpu_features.c">
+      <Filter>Source Files\third_party\libdeflate\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solar_baker\src\shader_compiler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solar_baker\src\shader_resource_limits.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\disassemble.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\doc.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\GlslangToSpv.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\InReadableOrder.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\Logger.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SpvBuilder.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SpvPostProcess.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SPVRemapper.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SpvTools.cpp">
+      <Filter>Source Files\third_party\glslang\SPIRV</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solar_baker\src\sbproj_source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\solar_baker\src\screen_main.h">
@@ -36,6 +219,84 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solar_baker\src\solar_baker_project.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\app.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpContext.h">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpTokens.h">
+      <Filter>Source Files\third_party\glslang</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\adler32_vec_template.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\bt_matchfinder.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\cpu_features_common.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\crc32_table.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\crc32_vec_template.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\decompress_template.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\deflate_compress.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\deflate_constants.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\gdeflate_decompress_template.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\gzip_constants.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\hc_matchfinder.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\lib_common.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\matchfinder_common.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\unaligned.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\zlib_constants.h">
+      <Filter>Source Files\third_party\libdeflate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\adler32_impl.h">
+      <Filter>Source Files\third_party\libdeflate\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\cpu_features.h">
+      <Filter>Source Files\third_party\libdeflate\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\crc32_impl.h">
+      <Filter>Source Files\third_party\libdeflate\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\crc32_pclmul_template.h">
+      <Filter>Source Files\third_party\libdeflate\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\decompress_impl.h">
+      <Filter>Source Files\third_party\libdeflate\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\matchfinder_impl.h">
+      <Filter>Source Files\third_party\libdeflate\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\sbproj_source.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\shader_compiler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

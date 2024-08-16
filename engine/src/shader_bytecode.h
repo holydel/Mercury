@@ -1,11 +1,11 @@
 #pragma once
-#include "mercury_api.h"
+#include "mercury_shader.h"
 
-namespace llri
+namespace internal_shader_bytecode
 {
-	struct ShaderBytecode
-	{
-		void* data;
+	mercury::Shader::ByteCode TestTriangleVert();
+	mercury::Shader::ByteCode TestTriangleFrag();
 
-	};
+	mercury::Shader::ByteCode TestPointCacheVert();
+	mercury::Shader::ByteCode TestPointCacheFrag();
 }

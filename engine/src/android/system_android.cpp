@@ -368,4 +368,17 @@ void* platform::getAppInstanceHandle()
 	return static_cast<void*>(0);
 }
 
+const char* platform::getApplicationDataPath()
+{
+	static const char* appParh = "OOB/DATA/TODO";
+	return appParh;
+}
+
+void platform::setMainWindowTitle(const char* u8string)
+{
+	//TODO: set android window title
+}
+
+
+
 #endif

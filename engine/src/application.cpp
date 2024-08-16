@@ -121,7 +121,8 @@ const std::string& Application::GetRuntimeSettingsValue(const char* u8key)
 		return (*value).second;
 	}
 
-	return std::string();
+    static std::string emptyString = {};
+	return emptyString;
 }
 
 const std::vector<std::string>& Application::GetRuntimeSettingsList(const char* u8key)
@@ -133,7 +134,8 @@ const std::vector<std::string>& Application::GetRuntimeSettingsList(const char* 
 		return (*value).second;
 	}
 
-	return std::vector<std::string>();
+    static std::vector<std::string> emptyStringVec = {};
+    return emptyStringVec;
 }
 
 void Application::SetRuntimeSettingsValue(const char* u8key, const std::string& value)
@@ -144,4 +146,9 @@ void Application::SetRuntimeSettingsValue(const char* u8key, const std::string& 
 void Application::SetRuntimeSettingsList(const char* u8key, const std::vector<std::string>& value)
 {
 	gSettingsLists[u8key] = value;
+}
+
+void Application::SetWindowTitle(const char* u8string)
+{
+	platform::setMainWindowTitle(u8string);
 }

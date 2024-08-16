@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/D3D12MemoryAllocator" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/DirectX-Headers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/ImGuiColorTextEdit" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/OpenGL-Registry" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/OpenXR-SDK" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/SPIRV-Cross" vcs="Git" />
@@ -19,7 +20,11 @@
     <mapping directory="$PROJECT_DIR$/third_party/freetype/subprojects/dlg" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/glm" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/glslang" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/glslang/External/googletest" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/glslang/External/spirv-tools" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/glslang/External/spirv-tools/external/spirv-headers" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/libdeflate" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/libjpeg-turbo" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/lz4" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/meshoptimizer" vcs="Git" />

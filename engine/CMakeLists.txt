@@ -10,6 +10,7 @@ include_directories("${CMAKE_CURRENT_LIST_DIR}/../third_party/Vulkan-Headers/inc
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/metal-cpp"
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/metal-cpp-extensions"
         "${CMAKE_CURRENT_LIST_DIR}/../third_party/DirectX-Headers/include"
+        "${CMAKE_CURRENT_LIST_DIR}/../third_party/pugixml/src"
 )
 
 if (EMSCRIPTEN)
@@ -37,6 +38,11 @@ add_library(MercuryEngine STATIC src/application.cpp
         src/llri_vulkan/vk_context.cpp
         src/emscripten/imgui_impl_emscripten.cpp
         src/emscripten/imgui_impl_emscripten.h
+        src/internal_shaders.cpp
+        src/mercury_utils.cpp
+        src/shader_bytecode_dxil.cpp
+        src/shader_bytecode_msl.cpp
+        src/shader_bytecode_spirv.cpp
 )
 
 if(EMSCRIPTEN)

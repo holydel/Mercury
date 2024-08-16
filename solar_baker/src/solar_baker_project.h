@@ -1,9 +1,25 @@
 #pragma once
+#include <string>
+#include <filesystem>
+#include <pugixml.hpp>
+#include "sbproj_source.h"
 
 class SBProject
 {
 	static SBProject* CreateNew(const char* name, const char* path);
+
+	pugi::xml_document doc;
+	std::string name;
+	std::filesystem::path path;
+
+	void DrawProjectSources();
+
+	SBProjSource* rootSource = nullptr;
+
 public:
+	SBProject();
+	~SBProject();
+
 	static void Create();
 	static void Open(const char* path);
 
@@ -16,8 +32,10 @@ public:
 
 	static SBProject* gCurrent;
 
-	void Load();
+	void Load(const char* path);
 	void UnLoad();
+
+	void ReloadSources();
 };
 
  

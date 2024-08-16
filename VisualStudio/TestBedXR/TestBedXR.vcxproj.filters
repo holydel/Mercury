@@ -13,10 +13,147 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="AndroidPackaging">
+      <UniqueIdentifier>{c3b4542d-28d7-4ccf-a224-ee46472e168d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\gradle">
+      <UniqueIdentifier>{e425b49b-aacf-4c2b-8d07-a8933468b0f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\gradle\wrapper">
+      <UniqueIdentifier>{3587db79-989d-4639-aeae-feeae51bebed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app">
+      <UniqueIdentifier>{3b6bec14-17a0-422d-81fa-bb3c131432df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src">
+      <UniqueIdentifier>{d4c82f08-7af2-4b17-be28-4ac4a95af4fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main">
+      <UniqueIdentifier>{53f16bef-5e72-45bf-a6ec-5c352eb745ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res">
+      <UniqueIdentifier>{157ea968-d9cb-4557-95aa-1fe0bbfaede3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\drawable">
+      <UniqueIdentifier>{ac84ad18-190a-4d8b-89e8-0d268492832c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\drawable-v24">
+      <UniqueIdentifier>{36541d7f-31c6-479f-ba83-2ae24a4994ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\layout">
+      <UniqueIdentifier>{0c2360e9-97e3-46bd-b242-f65230f25540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\mipmap-anydpi-v26">
+      <UniqueIdentifier>{ff9292de-b3e3-4849-a009-f0a78593d4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\mipmap-hdpi">
+      <UniqueIdentifier>{f4596ea6-3e3b-4efb-a1fd-3be06a5e0511}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\mipmap-mdpi">
+      <UniqueIdentifier>{b29a8221-cc0f-4620-9b80-d7a6abe5ba0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\mipmap-xhdpi">
+      <UniqueIdentifier>{e3ff8dcd-6286-477b-b74a-91db7eb1943a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\mipmap-xxhdpi">
+      <UniqueIdentifier>{245b3ceb-41ed-4577-9b41-9dbc319e5c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\mipmap-xxxhdpi">
+      <UniqueIdentifier>{731ad4e0-84a8-4243-b9b6-81a7b2b7f181}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AndroidPackaging\app\src\main\res\values">
+      <UniqueIdentifier>{ca912570-6a50-4bc2-ad29-fcc0ec983714}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\testbed_xr\src\testbed_xr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AndroidPackaging\gradle\wrapper\gradle-wrapper.jar">
+      <Filter>AndroidPackaging\gradle\wrapper</Filter>
+    </None>
+    <None Include="AndroidPackaging\gradle\wrapper\gradle-wrapper.properties">
+      <Filter>AndroidPackaging\gradle\wrapper</Filter>
+    </None>
+    <None Include="AndroidPackaging\build.gradle">
+      <Filter>AndroidPackaging</Filter>
+    </None>
+    <None Include="AndroidPackaging\gradle.properties">
+      <Filter>AndroidPackaging</Filter>
+    </None>
+    <None Include="AndroidPackaging\gradlew">
+      <Filter>AndroidPackaging</Filter>
+    </None>
+    <None Include="AndroidPackaging\gradlew.bat">
+      <Filter>AndroidPackaging</Filter>
+    </None>
+    <None Include="AndroidPackaging\settings.gradle">
+      <Filter>AndroidPackaging</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\drawable\ic_launcher_background.xml">
+      <Filter>AndroidPackaging\app\src\main\res\drawable</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\drawable-v24\ic_launcher_foreground.xml">
+      <Filter>AndroidPackaging\app\src\main\res\drawable-v24</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\layout\activity_main.xml">
+      <Filter>AndroidPackaging\app\src\main\res\layout</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-anydpi-v26</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-anydpi-v26</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-hdpi\ic_launcher.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-hdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-hdpi\ic_launcher_round.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-hdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-mdpi\ic_launcher.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-mdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-mdpi\ic_launcher_round.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-mdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-xhdpi\ic_launcher.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-xhdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-xhdpi\ic_launcher_round.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-xhdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-xxhdpi\ic_launcher.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-xxhdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-xxhdpi\ic_launcher_round.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-xxhdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-xxxhdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\mipmap-xxxhdpi\ic_launcher_round.png">
+      <Filter>AndroidPackaging\app\src\main\res\mipmap-xxxhdpi</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\values\colors.xml">
+      <Filter>AndroidPackaging\app\src\main\res\values</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\values\strings.xml">
+      <Filter>AndroidPackaging\app\src\main\res\values</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\res\values\styles.xml">
+      <Filter>AndroidPackaging\app\src\main\res\values</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\src\main\AndroidManifest.xml">
+      <Filter>AndroidPackaging\app\src\main</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\build.gradle">
+      <Filter>AndroidPackaging\app</Filter>
+    </None>
+    <None Include="AndroidPackaging\app\proguard-rules.pro">
+      <Filter>AndroidPackaging\app</Filter>
+    </None>
   </ItemGroup>
 </Project>

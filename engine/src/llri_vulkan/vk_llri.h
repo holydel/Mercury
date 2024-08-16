@@ -11,4 +11,22 @@ extern VkPhysicalDevice gPhysicalDevice;
 extern VkDevice gDevice;
 extern VmaAllocator gVMAallocator;
 extern VkQueue gMainQueue;
+extern VkCommandBuffer gCurrentCommandBuffer;
+
+extern std::vector<VkShaderModule> gAllShaderModules;
+extern std::vector<VkPipeline> gAllPSOs;
+extern std::vector<VkPipelineLayout> gAllLayouts;
+extern std::vector<VkBuffer> gAllBuffers;
+
+struct BufferMeta
+{
+	void* mappedPointer;
+	VmaAllocation allocation;
+	VmaAllocationInfo allocInfo;
+	VkDeviceMemory dedicatedMemory;
+	VkDeviceAddress deviceAddress;
+};
+
+extern std::vector<BufferMeta> gAllBuffersMeta;
+
 #endif

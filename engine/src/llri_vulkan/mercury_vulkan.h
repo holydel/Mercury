@@ -191,6 +191,8 @@ VK_DECLARE_FUNCTION(vkBindBufferMemory2);
 VK_DECLARE_FUNCTION(vkBindImageMemory2);
 VK_DECLARE_FUNCTION(vkGetBufferMemoryRequirements2);
 VK_DECLARE_FUNCTION(vkGetImageMemoryRequirements2);
+VK_DECLARE_FUNCTION(vkCmdDecompressMemoryNV);
+
 
 #ifdef MERCURY_PLATFORM_WINDOWS
 VK_DECLARE_FUNCTION(vkGetWinrtDisplayNV);

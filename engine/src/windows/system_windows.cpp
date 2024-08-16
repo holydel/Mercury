@@ -291,6 +291,8 @@ void platform::outputToLogFile(const char* text)
 
 const char* platform::getApplicationDataPath()
 {
+	GUID guid;
+
 	char appPath[MAX_PATH];
 
 	PWSTR path;
@@ -301,5 +303,10 @@ const char* platform::getApplicationDataPath()
 	CoTaskMemFree((LPVOID)path);
 
 	return appPath;
+}
+
+void platform::setMainWindowTitle(const char *u8string)
+{
+	SetWindowTextA(gMainWindow, u8string);
 }
 #endif

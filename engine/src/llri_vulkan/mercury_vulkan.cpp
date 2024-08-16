@@ -174,6 +174,8 @@ VK_DEFINE_FUNCTION(vkBindBufferMemory2);
 VK_DEFINE_FUNCTION(vkBindImageMemory2);
 VK_DEFINE_FUNCTION(vkGetBufferMemoryRequirements2);
 VK_DEFINE_FUNCTION(vkGetImageMemoryRequirements2);
+VK_DEFINE_FUNCTION(vkCmdDecompressMemoryNV);
+
 
 #ifdef MERCURY_PLATFORM_WINDOWS
 VK_DEFINE_FUNCTION(vkGetWinrtDisplayNV);
@@ -362,6 +364,8 @@ void LoadVkDeviceLevelFuncs(VkDevice device)
 	VK_LOAD_DEVICE_FUNC(vkBindImageMemory2);
 	VK_LOAD_DEVICE_FUNC(vkGetBufferMemoryRequirements2);
 	VK_LOAD_DEVICE_FUNC(vkGetImageMemoryRequirements2);
+	VK_LOAD_DEVICE_FUNC(vkCmdDecompressMemoryNV);
+
 
 #ifdef MERCURY_PLATFORM_WINDOWS
 	VK_LOAD_DEVICE_FUNC(vkGetWinrtDisplayNV);

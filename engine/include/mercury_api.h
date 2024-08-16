@@ -8,6 +8,9 @@
 //#define MERCURY_GRAPHICS_API_METAL
 //#define MERCURY_GRAPHICS_API_WEBGPU
 
+#define MERCURY_XR_API_OPENXR
+//#define MERCURY_XR_API_APPLE_VISION
+
 #ifdef _WIN32
 #define MERCURY_PLATFORM_WINDOWS
 #endif
@@ -73,4 +76,41 @@ namespace mercury
 	unsigned long long operator ""_MB(unsigned long long v);
 
 	unsigned long long operator ""_GB(unsigned long long v);
+
+	struct Handle32
+	{
+		u32 handle = 0xFFFFFFFFu;
+		operator bool() const
+		{
+			return handle != 0xFFFFFFFFu;
+		}
+	};
+
+	struct Handle64
+	{
+		u64 handle = 0xFFFFFFFFFFFFFFFFu;
+		operator bool() const
+		{
+			return handle != 0xFFFFFFFFFFFFFFFFu;
+		}
+	};
+
+	struct Handle16
+	{
+		u64 handle = 0xFFFFu;
+		operator bool() const
+		{
+			return handle != 0xFFFFu;
+		}
+	};
+
+	struct Handle8
+	{
+		u8 handle = 0xFFu;
+		operator bool() const
+		{
+			return handle != 0xFFu;
+		}
+	};
 }
+

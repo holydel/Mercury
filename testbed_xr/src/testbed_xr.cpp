@@ -39,7 +39,7 @@ bool TestBedApplication::Update()
 	static int a = 0;
 	a++;
 
-	return a < 5;
+	return a < 50000;
 }
 
 static TestBedApplication myApp;

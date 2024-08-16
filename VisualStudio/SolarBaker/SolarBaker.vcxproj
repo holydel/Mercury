@@ -46,10 +46,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src;..\..\third_party\glslang;..\..\third_party\libdeflate</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -64,10 +64,10 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src;..\..\third_party\glslang;..\..\third_party\libdeflate</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -86,14 +86,134 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\solar_baker\src\main.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\sbproj_source.cpp" />
     <ClCompile Include="..\..\solar_baker\src\screen_main.cpp" />
     <ClCompile Include="..\..\solar_baker\src\screen_shaders_editor.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\shader_compiler.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\shader_resource_limits.cpp" />
     <ClCompile Include="..\..\solar_baker\src\solar_baker_project.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\CInterface\glslang_c_interface.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\GenericCodeGen\CodeGen.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\GenericCodeGen\Link.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\attribute.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Constant.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\glslang_tab.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\InfoSink.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Initialize.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Intermediate.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\intermOut.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\IntermTraverse.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\iomapper.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\limits.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\linkValidate.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\parseConst.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\ParseContextBase.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\ParseHelper.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\PoolAlloc.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\Pp.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpAtom.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpContext.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpScanner.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpTokens.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\propagateNoContraction.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\reflection.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\RemoveTree.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Scan.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\ShaderLang.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\SpirvIntrinsics.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\SymbolTable.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\MachineIndependent\Versions.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\glslang\OSDependent\Windows\ossource.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\disassemble.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\doc.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\GlslangToSpv.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\InReadableOrder.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\Logger.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SpvBuilder.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SpvPostProcess.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SPVRemapper.cpp" />
+    <ClCompile Include="..\..\third_party\glslang\SPIRV\SpvTools.cpp" />
+    <ClCompile Include="..\..\third_party\libdeflate\lib\adler32.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\crc32.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\deflate_compress.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\deflate_decompress.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gdeflate_compress.c">
+      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</LanguageStandard_C>
+      <ConformanceMode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ConformanceMode>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gdeflate_decompress.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gzip_compress.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\gzip_decompress.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\utils.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\x86\cpu_features.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\zlib_compress.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\..\third_party\libdeflate\lib\zlib_decompress.c">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4267;4244;4146</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4267;4244;4146</DisableSpecificWarnings>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\solar_baker\src\app.h" />
+    <ClInclude Include="..\..\solar_baker\src\sbproj_source.h" />
     <ClInclude Include="..\..\solar_baker\src\screen_main.h" />
     <ClInclude Include="..\..\solar_baker\src\screen_shaders_editor.h" />
+    <ClInclude Include="..\..\solar_baker\src\shader_compiler.h" />
     <ClInclude Include="..\..\solar_baker\src\solar_baker_project.h" />
+    <ClInclude Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpContext.h" />
+    <ClInclude Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpTokens.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\adler32_vec_template.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\bt_matchfinder.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\cpu_features_common.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\crc32_table.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\crc32_vec_template.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\decompress_template.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\deflate_compress.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\deflate_constants.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\gdeflate_decompress_template.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\gzip_constants.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\hc_matchfinder.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\lib_common.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\matchfinder_common.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\unaligned.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\adler32_impl.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\cpu_features.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\crc32_impl.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\crc32_pclmul_template.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\decompress_impl.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\x86\matchfinder_impl.h" />
+    <ClInclude Include="..\..\third_party\libdeflate\lib\zlib_constants.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
