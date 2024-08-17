@@ -1,13 +1,15 @@
+#include "solar_baker_config.h"
+
+#ifdef SB_SHADERS_FRONTEND_HLSL
 #include "shader_compiler.h"
-#include "glslang/Public/ShaderLang.h"
-#include <glslang/Public/ResourceLimits.h>
-#include <glslang/MachineIndependent/localintermediate.h>
-#include "SPIRV/GlslangToSpv.h"
 #include <set>
 #include <algorithm>
 #include <fstream>
 #include <imgui.h>
-#include <mercury_api.h>
+#include "glslang/Public/ShaderLang.h"
+#include <glslang/Public/ResourceLimits.h>
+#include <glslang/MachineIndependent/localintermediate.h>
+#include "SPIRV/GlslangToSpv.h"
 
 void ShaderCompiler::initialize()
 {
@@ -375,3 +377,4 @@ bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
 
 	return true;
 }
+#endif //SB_SHADERS_FRONTEND_GLSL

@@ -17,6 +17,7 @@ ID3D12DebugDevice* gDebugDevice = nullptr;
 ID3D12CommandQueue* gCommandQueue = nullptr;
 ID3D12CommandAllocator* gCommandAllocator = nullptr;
 ID3D12DescriptorHeap* gDescriptorsHeapRTV = nullptr;
+ID3D12CommandList* gCurrentCommandBuffer = nullptr;
 
 using namespace mercury;
 
@@ -100,7 +101,7 @@ bool llri::initialize()
 
 	D3D_CALL(gDevice->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&gCommandQueue)));
 
-	D3D_CALL(gDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT,	IID_PPV_ARGS(&gCommandAllocator)));
+	D3D_CALL(gDevice->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&gCommandAllocator)));
 
 
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
@@ -120,19 +121,30 @@ void llri::shutdown()
 
 bool llri::update()
 {
+	return true;
+}
 
-	return true;}
 
-llri::CommandList llri::BeginOneTimeSubmitCommandList()
+mercury::Shader llri::create_shader_from_bytecode(mercury::Shader::ByteCode bc)
 {
-	void* cmdListPtr = nullptr;
-
-	llri::CommandList result = { cmdListPtr };
+	mercury::Shader result;
 	return result;
 }
 
-void llri::EndOneTimeSubmitCommandList(llri::CommandList clist)
+mercury::Material llri::create_material(mercury::Material::Desc)
 {
+	mercury::Material result;
+	return result;
+}
 
+mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType)
+{
+	mercury::Buffer result;
+	return result;
+}
+
+void* llri::buffer_mapped_data(mercury::u32 handle)
+{
+	return nullptr;
 }
 #endif

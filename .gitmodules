@@ -80,3 +80,6 @@
 [submodule "third_party/libdeflate"]
 	path = third_party/libdeflate
 	url = https://github.com/NVIDIA/libdeflate
+[submodule "third_party/DirectXShaderCompiler"]
+	path = third_party/DirectXShaderCompiler
+	url = https://github.com/microsoft/DirectXShaderCompiler

@@ -28,6 +28,9 @@
     <Filter Include="Source Files\third_party\glslang\SPIRV">
       <UniqueIdentifier>{fd1edc5a-8a17-41e2-872b-c8d23b1eef74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\third_party\dxc">
+      <UniqueIdentifier>{c9a17533-f873-45b5-a959-16bf7f6bda1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\solar_baker\src\main.cpp">
@@ -174,7 +177,7 @@
     <ClCompile Include="..\..\third_party\libdeflate\lib\x86\cpu_features.c">
       <Filter>Source Files\third_party\libdeflate\x86</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\solar_baker\src\shader_compiler.cpp">
+    <ClCompile Include="..\..\solar_baker\src\shader_compiler_glsl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\solar_baker\src\shader_resource_limits.cpp">
@@ -208,6 +211,9 @@
       <Filter>Source Files\third_party\glslang\SPIRV</Filter>
     </ClCompile>
     <ClCompile Include="..\..\solar_baker\src\sbproj_source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solar_baker\src\shader_compiler_hlsl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -297,6 +303,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solar_baker\src\shader_compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\solar_baker_config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

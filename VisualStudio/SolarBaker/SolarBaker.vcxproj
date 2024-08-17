@@ -49,7 +49,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src;..\..\third_party\glslang;..\..\third_party\libdeflate</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src;..\..\third_party\glslang;..\..\third_party\libdeflate;..\..\third_party\DirectXShaderCompiler\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -67,7 +67,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src;..\..\third_party\glslang;..\..\third_party\libdeflate</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\engine\include;..\..\third_party\glm\glm;..\..\third_party\entt\src\entt;..\..\third_party\imgui;..\..\third_party\pugixml\src;..\..\third_party\glslang;..\..\third_party\libdeflate;..\..\third_party\DirectXShaderCompiler\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -89,7 +89,8 @@
     <ClCompile Include="..\..\solar_baker\src\sbproj_source.cpp" />
     <ClCompile Include="..\..\solar_baker\src\screen_main.cpp" />
     <ClCompile Include="..\..\solar_baker\src\screen_shaders_editor.cpp" />
-    <ClCompile Include="..\..\solar_baker\src\shader_compiler.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\shader_compiler_glsl.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\shader_compiler_hlsl.cpp" />
     <ClCompile Include="..\..\solar_baker\src\shader_resource_limits.cpp" />
     <ClCompile Include="..\..\solar_baker\src\solar_baker_project.cpp" />
     <ClCompile Include="..\..\third_party\glslang\glslang\CInterface\glslang_c_interface.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="..\..\solar_baker\src\screen_main.h" />
     <ClInclude Include="..\..\solar_baker\src\screen_shaders_editor.h" />
     <ClInclude Include="..\..\solar_baker\src\shader_compiler.h" />
+    <ClInclude Include="..\..\solar_baker\src\solar_baker_config.h" />
     <ClInclude Include="..\..\solar_baker\src\solar_baker_project.h" />
     <ClInclude Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpContext.h" />
     <ClInclude Include="..\..\third_party\glslang\glslang\MachineIndependent\preprocessor\PpTokens.h" />

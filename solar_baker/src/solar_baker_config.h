@@ -1,0 +1,23 @@
+#pragma once
+
+#include "mercury_api.h"
+
+#ifdef MERCURY_PLATFORM_WINDOWS
+#ifdef MERCURY_GRAPHICS_API_D3D12
+#define SB_SHADERS_FRONTEND_HLSL
+#else
+#define SB_SHADERS_FRONTEND_GLSL
+#endif
+#endif
+
+#ifdef MERCURY_PLATFORM_LINUX
+#define SB_SHADERS_FRONTEND_GLSL
+#endif
+
+#ifdef MERCURY_PLATFORM_MACOS
+#ifdef MERCURY_GRAPHICS_API_METAL
+#define SB_SHADERS_FRONTEND_METAL
+#else
+#define SB_SHADERS_FRONTEND_GLSL
+#endif
+#endif

@@ -11,5 +11,7 @@ namespace llri
 
 		void setBackGroundColor(float r, float g, float b, float a);
 		bool update();
+
+		void resize(mercury::u32 newWidth, mercury::u32 newHeight);
 	}	
 }

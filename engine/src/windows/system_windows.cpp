@@ -23,6 +23,7 @@
 #include <thread>
 #include <KnownFolders.h>
 #include <shlobj.h>
+#include "../swapchain.h"
 
 using namespace mercury;
 
@@ -193,6 +194,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_SIZE:
 	{
+		UINT width = LOWORD(lParam);
+		UINT height = HIWORD(lParam);
+
+		llri::swapchain::resize(width, height);
 	}
 	break;
 	case WM_DESTROY:

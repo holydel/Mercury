@@ -21,6 +21,7 @@ extern ID3D12DebugDevice* gDebugDevice;
 extern ID3D12CommandQueue* gCommandQueue;
 extern ID3D12CommandAllocator* gCommandAllocator;
 extern ID3D12DescriptorHeap* gDescriptorsHeapRTV;
+extern ID3D12CommandList* gCurrentCommandBuffer;
 
 #define D3D_CALL(func) {HRESULT res = (func); if(res < 0){ mercury::platform::fatalFail( std::system_category().message(res).c_str() ); } }
 

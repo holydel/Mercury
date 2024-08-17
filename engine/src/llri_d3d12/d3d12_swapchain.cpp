@@ -20,17 +20,26 @@ struct FrameObject
 
 int gNumFrames = 3;
 std::vector<FrameObject> gFrames;
-IDXGISwapChain1* gSwapChain = nullptr;
+IDXGISwapChain3* gSwapChain = nullptr;
 u64 gCurrentFrameIndex = 0;
 u64 gFrameID = 0;
 DXGI_FORMAT gSwapChainFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+u32 gNewWidth = 0;
+u32 gCurWidth = 0;
+u32 gNewHeight = 0;
+u32 gCurHeight = 0;
+u32 gDeltaFrameInBB = 0;
 
 bool llri::swapchain::create(void* nativeWindowHandle)
 {
 	HWND hwnd = static_cast<HWND>(nativeWindowHandle);
+
+	RECT clientRect = {};
+	GetClientRect(hwnd, (LPRECT)&clientRect);
+	
 	DXGI_SWAP_CHAIN_DESC1 sdesc = {};
-	sdesc.Width = 800;
-	sdesc.Height = 600;
+	sdesc.Width = gNewWidth = gCurWidth = clientRect.right - clientRect.left;
+	sdesc.Height = gNewHeight = gCurHeight = clientRect.bottom - clientRect.top;
 	sdesc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
 	sdesc.BufferCount = gNumFrames;
 	sdesc.Format = gSwapChainFormat;
@@ -48,7 +57,10 @@ bool llri::swapchain::create(void* nativeWindowHandle)
 	sfdesc.RefreshRate.Denominator = 60;
 	IDXGIOutput* output = nullptr;
 
-	auto res = gFactory->CreateSwapChainForHwnd(gCommandQueue, hwnd, &sdesc, nullptr, output, &gSwapChain);
+	IDXGISwapChain1* swapchain1 = nullptr;
+	auto res = gFactory->CreateSwapChainForHwnd(gCommandQueue, hwnd, &sdesc, nullptr, output, &swapchain1);
+	swapchain1->QueryInterface(__uuidof(IDXGISwapChain3), (void**) & gSwapChain);
+
 	gFrames.resize(gNumFrames);
 
 	auto rtvDescriptorSize = gDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
@@ -107,7 +119,6 @@ void llri::swapchain::setBackGroundColor(float r, float g, float b, float a)
 {
 
 }
-
 uint64_t Signal(ID3D12CommandQueue* commandQueue, ID3D12Fence* fence,
 	uint64_t& fenceValue)
 {
@@ -128,14 +139,63 @@ void WaitForFenceValue(ID3D12Fence* fence, uint64_t fenceValue, HANDLE fenceEven
 	}
 }
 
+void Flush(ID3D12CommandQueue* commandQueue, ID3D12Fence* fence,
+	uint64_t& fenceValue, HANDLE fenceEvent)
+{
+	uint64_t fenceValueForSignal = Signal(commandQueue, fence, fenceValue);
+	WaitForFenceValue(fence, fenceValueForSignal, fenceEvent);
+}
+
+void llri::swapchain::resize(mercury::u32 newWidth, mercury::u32 newHeight)
+{
+	gNewWidth = newWidth;
+	gNewHeight = newHeight;
+}
+
 bool llri::swapchain::update()
 {
-	gCurrentFrameIndex = gFrameID % gNumFrames;
+	if (gNewWidth != gCurWidth || gNewHeight != gCurHeight)
+	{
+		gCurWidth = gNewWidth;
+		gCurHeight = gNewHeight;
+
+		for (uint32_t i = 0; i < gNumFrames; ++i)
+		{
+			Flush(gCommandQueue, gFrames[i].fence, gFrames[i].fenceValue, gFrames[i].fenceEvent);
+
+			gFrames[i].bbResource->Release();
+			gFrames[i].fenceValue = gFrames[gCurrentFrameIndex].fenceValue;
+		}
+
+		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+		D3D_CALL(gSwapChain->GetDesc(&swapChainDesc));
+
+		D3D_CALL(gSwapChain->ResizeBuffers(swapChainDesc.BufferCount, gCurWidth, gCurHeight, swapChainDesc.BufferDesc.Format, swapChainDesc.Flags));
+
+
+		auto rtvDescriptorSize = gDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+		CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(gDescriptorsHeapRTV->GetCPUDescriptorHandleForHeapStart());
+
+		for (uint32_t i = 0; i < gNumFrames; ++i)
+		{
+			FrameObject& fo = gFrames[i];
+			gSwapChain->GetBuffer(i, IID_PPV_ARGS(&fo.bbResource));
+			gDevice->CreateRenderTargetView(fo.bbResource, nullptr, rtvHandle);
+			fo.bbRTV = rtvHandle;
+			rtvHandle.Offset(rtvDescriptorSize);
+		}
+
+		//u32 curBBFrame = gSwapChain->GetCurrentBackBufferIndex();
+		//gDeltaFrameInBB = curBBFrame - (gFrameID % gNumFrames);
+	}
+
+	gCurrentFrameIndex = gSwapChain->GetCurrentBackBufferIndex();
 
 	auto& frame = gFrames[gCurrentFrameIndex];
 	
 	frame.commandAllocator->Reset();
 	frame.commandList->Reset(frame.commandAllocator, nullptr);
+	gCurrentCommandBuffer = frame.commandList;
 
 	{
 		CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
