@@ -192,53 +192,55 @@ void ParseErrors(const std::string& infoLog, std::vector<ShaderCompiler::ShaderC
 	}
 }
 
+EShLanguage MercuryStageToGLSLangStage(mercury::Shader::Stage stage)
+{
+	using namespace mercury;
+	switch (stage)
+	{
+	case Shader::Stage::Vertex:
+		return EShLanguage::EShLangVertex;
+	case Shader::Stage::Fragment:
+		return EShLanguage::EShLangFragment;
+	case Shader::Stage::Compute:
+		return EShLanguage::EShLangCompute;
+	case Shader::Stage::Geometry:
+		return EShLanguage::EShLangGeometry;
+	case Shader::Stage::TessControl:
+		return EShLanguage::EShLangTessControl;
+	case Shader::Stage::TessEvaluation:
+		return EShLanguage::EShLangTessEvaluation;
+	case Shader::Stage::Mesh:
+		return EShLanguage::EShLangMesh;
+	case Shader::Stage::Task:
+		return EShLanguage::EShLangTask;
+
+	case Shader::Stage::RayGen:
+		return EShLanguage::EShLangRayGen;
+	case Shader::Stage::AnyHit:
+		return EShLanguage::EShLangAnyHit;
+	case Shader::Stage::Miss:
+		return EShLanguage::EShLangMiss;
+	case Shader::Stage::ClosestHit:
+		return EShLanguage::EShLangClosestHit;
+	case Shader::Stage::Callable:
+		return EShLanguage::EShLangCallable;
+	default:
+		return EShLanguage::EShLangVertex;
+	}
+}
+
 bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
 {
 	using namespace mercury;
 
-	bool isDebug = false;
+	bool isDebug = true;
 
 	std::vector<ShaderCompilerErrorInfo> errors;
 
 	glslang::TProgram* program = new glslang::TProgram();
 
-	struct StageInfo
-	{
-		EShLanguage stage;
-		std::string ext;
-	};
 
-	StageInfo stages[] =
-	{
-		{EShLangVertex,"vert"}
-		,{EShLangTessControl,"tesc"}
-		,{EShLangTessEvaluation,"tese"}
-		,{EShLangGeometry,"geom"}
-		,{EShLangFragment,"frag"}
-		,{EShLangCompute,"comp"}
-		,{EShLangRayGen,"rgen"}
-		,{EShLangAnyHit,"ahit"}
-		,{EShLangClosestHit,"chit"}
-		,{EShLangMiss,"miss"}
-		,{EShLangIntersect,"isect"}
-		,{EShLangCallable,"call"}
-		,{EShLangTask,"task"}
-		,{EShLangMesh,"mesh"}
-		,{EShLangCompute,"subpass"} //not supported for huawei SubpassShading
-		,{EShLangCompute,"ccull"} //not supported for huawei ClusterCulling
-	};
-
-	EShLanguage curStage = EShLangVertex;
-	auto srcext = src->fullPath.extension().u8string().substr(1);
-
-	for (auto& s : stages)
-	{
-		if (s.ext == srcext)
-		{
-			curStage = s.stage;
-			break;
-		}
-	}
+	EShLanguage curStage = MercuryStageToGLSLangStage(src->stage);
 
 	glslang::TShader* shader = new glslang::TShader(curStage);
 
@@ -344,6 +346,8 @@ bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
 
 	std::vector<uint32_t> spirv;
 	glslang::GlslangToSpv(*intermediate, spirv, &logger, &spvOptions);
+
+	src->cachedSPIRV = spirv;
 
 	int textSize = spirv.size() * 21;
 	std::string output = "";

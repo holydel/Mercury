@@ -408,3 +408,8 @@ void MainScreen::DebugConvertBlenderPhysicsCache()
 
 
 }
+
+void MainScreen::ShowScreenIfNeeded(mercury::imgui_interface::Screen* screen)
+{
+	mercury::imgui_interface::AddScreen(screen);
+}

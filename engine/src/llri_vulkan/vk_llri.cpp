@@ -754,7 +754,7 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 	bstate.srcAlphaBlendFactor = VkBlendFactor::VK_BLEND_FACTOR_ONE;
 	bstate.dstAlphaBlendFactor = VkBlendFactor::VK_BLEND_FACTOR_ONE;
 
-	pipInputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
+	pipInputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 
 	pipColorBlendState.attachmentCount = 1;
 	pipColorBlendState.pAttachments = &bstate;

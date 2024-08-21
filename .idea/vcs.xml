@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/D3D12MemoryAllocator" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/DirectX-Headers" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/third_party/DirectXShaderCompiler" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/ImGuiColorTextEdit" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/OpenGL-Registry" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/third_party/OpenXR-SDK" vcs="Git" />

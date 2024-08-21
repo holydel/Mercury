@@ -5,9 +5,10 @@ namespace mercury
 {
 	struct Shader : Handle32
 	{
-		enum class Stage
+		enum class Stage : i8
 		{
-			Vertex
+			UNKNOWN = -1,
+			Vertex = 0
 			, TessControl
 			, TessEvaluation
 			, Geometry

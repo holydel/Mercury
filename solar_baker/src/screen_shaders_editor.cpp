@@ -4,6 +4,18 @@
 #include "shader_compiler.h"
 #include "sbproj_source.h"
 #include <fstream>
+#include "material_preview.h"
+
+void ShadersEditorScreen::CompileShader()
+{
+	currentSource->cachedSource = textEditor->GetText();
+	auto temp = ShaderCompiler::CompileShader(currentSource);
+
+	if (!currentSource->cachedSPIRV.empty())
+	{
+		MaterialPreview::Instance().UpdateShader(currentSource->cachedSPIRV, currentSource->stage);
+	}
+}
 
 ShadersEditorScreen::ShadersEditorScreen()
 {
@@ -28,10 +40,8 @@ void ShadersEditorScreen::Draw()
 		if (ImGui::BeginMenu(u8"Shader"))
 		{
 			if (ImGui::MenuItem(u8"Compile"))
-			{
-				auto temp = ShaderCompiler::CompileShader(currentSource);
-				int a = 52;
-			}
+				CompileShader();
+
 			bool is_selected = false;
 			if (ImGui::MenuItem(u8"Save","CTRL+S",&is_selected, currentSource != nullptr))
 			{
@@ -69,6 +79,9 @@ void ShadersEditorScreen::Draw()
 
 		ImGui::EndMenuBar();
 
+		if(ImGui::Button("Compile"))
+			CompileShader();
+
 		textEditor->Render("Source");
 		ImGui::End();
 	}
@@ -79,15 +92,32 @@ void ShadersEditorScreen::SetShaderSource(SBProjShaderSource* src)
 	currentSource = src;
 
 	std::ifstream file(src->fullPath);
+
+	std::string ext = src->fullPath.extension().generic_u8string();
+	for (char& c : ext)
+		c = std::tolower(c);
+
+	if (ext == ".hlsl")
+	{
+		textEditor->SetLanguageDefinition(TextEditor::LanguageDefinition::HLSL());
+	}
+	else
+	{
+		textEditor->SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
+	}
+
 	if (file)
 	{
-		file.seekg(0, std::ios::end);
-		std::streampos          length = file.tellg();
-		file.seekg(0, std::ios::beg);
+		//std::string file_content;
+		std::getline(file, src->cachedSource, '\0');
 
-		src->cachedSource.resize(length);
+		//file.seekg(0, std::ios::end);
+		//std::streampos          length = file.tellg();
+		//file.seekg(0, std::ios::beg);
 
-		file.read(src->cachedSource.data(), length);
+		//src->cachedSource.resize(length,'x');
+
+		//file.read(src->cachedSource.data(), length);
 
 		textEditor->SetText(src->cachedSource.c_str());
 

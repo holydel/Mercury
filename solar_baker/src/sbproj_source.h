@@ -4,6 +4,7 @@
 #include <vector>
 #include <filesystem>
 #include <algorithm>
+#include "mercury_shader.h"
 
 struct SBProjSource
 {
@@ -33,6 +34,11 @@ struct SBProjSource
 
 struct SBProjShaderSource : public SBProjSource
 {
+	mercury::Shader::Stage stage = mercury::Shader::Stage::UNKNOWN;
+
+	std::string entryPoint = "main";
 	std::string cachedSource;
 	std::vector<uint32_t> cachedSPIRV;
+
+	void CalculateStage();
 };

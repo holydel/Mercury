@@ -18,7 +18,7 @@ public:
 	// Inherited via Screen
 	void Draw() override;
 
-	void InitializeRecentlyProjects(mercury::Application *app);
+	void InitializeRecentlyProjects(mercury::Application* app);
 	void SaveRecentlyProjects(mercury::Application* app);
 
 	void DebugConvertBlenderPhysicsCache();
@@ -32,4 +32,6 @@ public:
 	{
 		return gMainScreenInstance;
 	}
+
+	void ShowScreenIfNeeded(mercury::imgui_interface::Screen* screen);
 };

@@ -2,12 +2,14 @@
 #include <cmath>
 #include <chrono>
 #include <mercury_log.h>
+#include "material_preview.h"
 
-#include "screen_main.h"
 #include "shader_compiler.h"
+#include "screen_main.h"
 #include "solar_baker_project.h"
 
 bool gIsRunning = true;
+using namespace mercury;
 
 class SolarBaker : public mercury::Application
 {
@@ -25,6 +27,8 @@ public:
 	virtual bool Shutdown() override;
 
 	virtual bool Update() override;
+
+	virtual bool Render() override;
 
 	virtual void OnApplicationClose() override;
 };
@@ -52,6 +56,7 @@ bool SolarBaker::Initialize()
 
 	//TODO: from recent
 	SBProject::Open(u8"C:\\Users\\holyd\\Documents\\NoName Mercury Project");
+
 	return true;
 }
 
@@ -65,6 +70,15 @@ bool SolarBaker::Shutdown()
 bool SolarBaker::Update()
 {
 	return gIsRunning;
+}
+
+bool SolarBaker::Render()
+{
+	MaterialPreview::Instance().Draw();
+
+
+
+	return false;
 }
 
 void SolarBaker::OnApplicationClose()

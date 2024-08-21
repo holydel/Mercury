@@ -12,8 +12,6 @@ class SBProject
 	std::string name;
 	std::filesystem::path path;
 
-	void DrawProjectSources();
-
 	SBProjSource* rootSource = nullptr;
 
 public:
@@ -36,6 +34,7 @@ public:
 	void UnLoad();
 
 	void ReloadSources();
+	void DrawProjectSources();
 };
 
  

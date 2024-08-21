@@ -309,6 +309,10 @@ void llri::swapchain::setBackGroundColor(float r, float g, float b, float a)
 	backColorA = a;
 }
 
+void llri::swapchain::resize(mercury::u32 newWidth, mercury::u32 newHeight)
+{
+	
+}
 
 bool llri::swapchain::update()
 {

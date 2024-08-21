@@ -3,33 +3,38 @@
 
 //uncomment one for configure graphics API
 
-//#define MERCURY_GRAPHICS_API_VULKAN
-#define MERCURY_GRAPHICS_API_D3D12
-//#define MERCURY_GRAPHICS_API_METAL
-//#define MERCURY_GRAPHICS_API_WEBGPU
+//
+
 
 #define MERCURY_XR_API_OPENXR
 //#define MERCURY_XR_API_APPLE_VISION
 
 #ifdef _WIN32
 #define MERCURY_PLATFORM_WINDOWS
+//#define MERCURY_GRAPHICS_API_D3D12
+#define MERCURY_GRAPHICS_API_VULKAN
 #endif
 
 #ifdef __EMSCRIPTEN__
 #define MERCURY_PLATFORM_EMSCRIPTEN
+#define MERCURY_GRAPHICS_API_WEBGPU
 #endif
 
 #ifdef __ANDROID__
 #define MERCURY_PLATFORM_ANDROID
+#define MERCURY_GRAPHICS_API_VULKAN
 #else
 #ifdef __linux__
 #define MERCURY_PLATFORM_LINUX
+#define MERCURY_GRAPHICS_API_VULKAN
 #endif
 #endif
 
 
 #ifdef __APPLE__
 #define MERCURY_PLATFORM_MACOS
+//#define MERCURY_GRAPHICS_API_METAL
+#define MERCURY_GRAPHICS_API_VULKAN
 #endif
 
 #if defined(MERCURY_PLATFORM_ANDROID) || defined(MERCURY_PLATFORM_IOS)
@@ -45,6 +50,16 @@
 #ifdef MERCURY_PLATFORM_ANDROID
 #include <arm_neon.h>
 #endif
+
+//Profilers
+//Enable IO profiler (also enabled sound IO profilers if possible)
+//#define MERCURY_IO_PROFILER
+//Enable CPU profiler (also enabled sound CPU profilers if possible)
+//#define MERCURY_CPU_PROFILER
+//Enable GPU profiler (also enabled tools profilers)
+//#define MERCURY_GPU_PROFILER
+//Enable CPU profiler (also enabled sound MEMORY profilers if possible)
+//#define MERCURY_MEMORY_PROFILER
 
 namespace mercury
 {

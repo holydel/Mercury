@@ -248,6 +248,8 @@ void LoadSource(fs::path path, SBProjSource* parent)
 			source->is_source_file = true;
 			source->SetParent(current);
 			source->fullPath = entry.path();
+			source->CalculateStage();
+
 		}
 
 		if (entry.is_directory())
@@ -384,6 +386,7 @@ void SBProject::DrawProjectSources()
 					SBProjShaderSource* shaderSrc = static_cast<SBProjShaderSource*>(c);
 
 					MainScreen::GetMainScreenInstance()->GetShadersScreen()->SetShaderSource(shaderSrc);
+					MainScreen::GetMainScreenInstance()->ShowScreenIfNeeded(MainScreen::GetMainScreenInstance()->GetShadersScreen());
 
 					int a = 42;
 				}

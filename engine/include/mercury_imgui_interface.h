@@ -24,6 +24,6 @@ namespace mercury
 			}
 		};
 
-		bool AddScreen(Screen* screen);
+		bool AddScreen(Screen* screen, bool force = false);
 	}
 }
