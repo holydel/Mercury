@@ -32,7 +32,9 @@
     <ClCompile Include="..\engine\src\llri_vulkan\vk_llri.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\vk_swapchain.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\vk_utils.cpp" />
+    <ClCompile Include="..\engine\src\llsi_miniaudio\ma_llsi.cpp" />
     <ClCompile Include="..\engine\src\llvri_openxr\llvri_openxr.cpp" />
+    <ClCompile Include="..\engine\src\llvri_openxr\mercury_openxr.cpp" />
     <ClCompile Include="..\engine\src\logger.cpp" />
     <ClCompile Include="..\engine\src\mercury_imgui.cpp" />
     <ClCompile Include="..\engine\src\mercury_utils.cpp" />
@@ -70,9 +72,12 @@
     <ClInclude Include="..\engine\src\llri_vulkan\vk_llri.h" />
     <ClInclude Include="..\engine\src\llri_vulkan\vk_swapchain.h" />
     <ClInclude Include="..\engine\src\llri_vulkan\vk_utils.h" />
+    <ClInclude Include="..\engine\src\llsi.h" />
+    <ClInclude Include="..\engine\src\llsi_miniaudio\ma_llsi.h" />
     <ClInclude Include="..\engine\src\llvri.h" />
     <ClInclude Include="..\engine\src\llvri_apple_vision\llvri_apple_vision.h" />
     <ClInclude Include="..\engine\src\llvri_openxr\llvri_openxr.h" />
+    <ClInclude Include="..\engine\src\llvri_openxr\mercury_openxr.h" />
     <ClInclude Include="..\engine\src\platform.h" />
     <ClInclude Include="..\engine\src\rendering.h" />
     <ClInclude Include="..\engine\src\shader_bytecode.h" />
@@ -153,7 +158,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include;..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include;..\third_party\pugixml\src;..\third_party\miniaudio;..\third_party\OpenXR-SDK\include;..\third_party\json\single_include\nlohmann</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -170,7 +175,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;;..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;;..\third_party\pugixml\src;..\third_party\miniaudio;..\third_party\OpenXR-SDK\include;..\third_party\json\single_include\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -188,7 +193,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include;..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;..\third_party\DirectX-Headers\include;..\third_party\D3D12MemoryAllocator\include;..\third_party\pugixml\src;..\third_party\miniaudio;..\third_party\OpenXR-SDK\include;..\third_party\json\single_include\nlohmann</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -209,7 +214,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;;..\third_party\pugixml\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\engine\include;..\third_party\glm\glm;..\third_party\entt\src\entt;..\third_party\Vulkan-Headers\include;..\third_party\VulkanMemoryAllocator\include;..\third_party\imgui;;..\third_party\pugixml\src;..\third_party\miniaudio;..\third_party\OpenXR-SDK\include;..\third_party\json\single_include\nlohmann</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>

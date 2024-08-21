@@ -2,9 +2,24 @@
 #include "mercury_api.h"
 #include <stdint.h>
 #include <vector>
+#include <string>
 
 namespace mercury
 {
+#ifdef MERCURY_XR_API_OPENXR
+	struct OpenXRRuntimeInfo
+	{
+		bool hasRuntime = false;
+
+		std::string file_format_version = "";
+		std::string library_path = "";
+		std::string library_fullpath = "";
+		std::string name = "";
+
+		bool isValveRuntime = false;
+	};
+#endif
+
 	namespace platform
 	{
 		void initialize();
@@ -73,9 +88,17 @@ namespace mercury
 		const char* getApplicationDataPath();
 
 		void setMainWindowTitle(const char* u8string);
+
+#ifdef MERCURY_GRAPHICS_API_VULKAN
+		const char* getVulkanLibraryPath();
+#endif
+#ifdef MERCURY_XR_API_OPENXR
+		const OpenXRRuntimeInfo& getOpenXRRuntimeInfo();
+#endif
 	}
 }
 
 
 #define LOAD_FUNC_PTR(libHandle,funcPtrOut) funcPtrOut = mercury::platform::getFuncPtr<decltype(funcPtrOut)>(libHandle,#funcPtrOut);
+
 #define M_ASSERT(assert) if(!(assert)) {mercury::platform::fatalFail(#assert);}

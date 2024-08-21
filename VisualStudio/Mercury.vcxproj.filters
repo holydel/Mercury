@@ -52,6 +52,12 @@
     <Filter Include="Source Files\llvris\llvri_apple_vision">
       <UniqueIdentifier>{2579d641-ba1e-4896-a571-c14a890af5da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\llsis">
+      <UniqueIdentifier>{d5ad2b40-a952-4602-9ea4-7b7b91e12393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\llsis\llsi_miniaudio">
+      <UniqueIdentifier>{48a801d7-d58e-4c40-b912-1addb3a95174}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\engine\src\application.cpp">
@@ -144,6 +150,12 @@
     <ClCompile Include="..\engine\src\llvri_openxr\llvri_openxr.cpp">
       <Filter>Source Files\llvris\llvri_openxr</Filter>
     </ClCompile>
+    <ClCompile Include="..\engine\src\llsi_miniaudio\ma_llsi.cpp">
+      <Filter>Source Files\llsis\llsi_miniaudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\llvri_openxr\mercury_openxr.cpp">
+      <Filter>Source Files\llvris\llvri_openxr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\src\application.h">
@@ -229,6 +241,15 @@
     </ClInclude>
     <ClInclude Include="..\engine\src\llvri_apple_vision\llvri_apple_vision.h">
       <Filter>Source Files\llvris\llvri_apple_vision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llsi.h">
+      <Filter>Source Files\llsis</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llsi_miniaudio\ma_llsi.h">
+      <Filter>Source Files\llsis\llsi_miniaudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llvri_openxr\mercury_openxr.h">
+      <Filter>Source Files\llvris\llvri_openxr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

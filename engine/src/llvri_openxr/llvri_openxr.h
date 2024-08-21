@@ -3,20 +3,11 @@
 
 #ifdef MERCURY_XR_API_OPENXR
 
-bool llvri::initialize()
-{
-	return true;
-}
+bool llvri::initialize();
 
-void llvri::shutdown()
-{
+void llvri::shutdown();
 
-}
-
-bool llvri::update()
-{
-	return true;
-}
+bool llvri::update();
 
 
 #endif

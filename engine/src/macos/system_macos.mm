@@ -401,4 +401,12 @@ int wideToUtf8(const wchar_t* wideStr, char* outBuff, int buffLen)
 	return 0; //TODO: implement
 }
 
+#ifdef MERCURY_GRAPHICS_API_VULKAN
+const char* platform::getVulkanLibraryPath()
+{
+	static const char* libName = u8"libvulkan.1.dylib";
+	return libName;
+}
+#endif
+
 #endif

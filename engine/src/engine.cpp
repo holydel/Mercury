@@ -2,6 +2,8 @@
 #include "platform.h"
 #include "mercury_log.h"
 #include "llri.h"
+#include "llsi.h"
+#include "llvri.h"
 #include "mercury_imgui.h"
 #include "swapchain.h"
 #include "application.h"
@@ -12,12 +14,16 @@ bool engine::initialize()
 {
 	mercury::write_log_message("engine initialize");
 	platform::initialize();
-	llri::initialize();
+	llri::initialize();	
+	llsi::initialize();
+	llvri::initialize();
 	return true;
 }
 
 void engine::shutdown()
 {	
+	llvri::shutdown();
+	llsi::shutdown();
 	llri::shutdown();
 	platform::shutdown();
 	mercury::write_log_message("engine shutdown");
@@ -52,10 +58,11 @@ bool engine::update()
 {	
 	platform::update();
 
-
 	imgui::update();
-
 	renderMainOutput();
+
+	llvri::update();
+	llsi::update();
 
 	return true;
 }

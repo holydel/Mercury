@@ -379,6 +379,12 @@ void platform::setMainWindowTitle(const char* u8string)
 	//TODO: set android window title
 }
 
-
+#ifdef MERCURY_GRAPHICS_API_VULKAN
+const char* platform::getVulkanLibraryPath()
+{
+	static const char* libName = u8"libvulkan.so";
+	return libName;
+}
+#endif
 
 #endif

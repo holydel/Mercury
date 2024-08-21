@@ -190,7 +190,7 @@ SBProject* SBProject::CreateNew(const char* name, const char* path)
 	fs::create_directory(curPath / "source" / "geometry");
 	fs::create_directory(curPath / "source" / "scenes");
 	fs::create_directory(curPath / "source" / "textures");
-	fs::create_directory(curPath / "source" / "fonts");
+	fs::create_directory(curPath / "source" / "fonts");	
 
 	fs::create_directory(curPath / "intermediate");
 	fs::create_directory(curPath / "paks");
@@ -271,6 +271,7 @@ void SBProject::ReloadSources()
 	LoadSource(sources_path / "fonts", rootSource);
 	LoadSource(sources_path / "assets", rootSource);
 	LoadSource(sources_path / "scenes", rootSource);
+	LoadSource(sources_path / "sounds", rootSource);
 }
 
 void DrawSources(SBProjSource* src)

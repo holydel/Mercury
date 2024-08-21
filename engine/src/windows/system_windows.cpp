@@ -25,6 +25,10 @@
 #include <shlobj.h>
 #include "../swapchain.h"
 
+#include <filesystem>
+#include <json.hpp>
+#include <fstream>
+
 using namespace mercury;
 
 HWND gMainWindow = nullptr;
@@ -314,4 +318,73 @@ void platform::setMainWindowTitle(const char *u8string)
 {
 	SetWindowTextA(gMainWindow, u8string);
 }
+
+#ifdef MERCURY_GRAPHICS_API_VULKAN
+const char* platform::getVulkanLibraryPath()
+{
+	static const char* libName = u8"vulkan-1.dll";
+	return libName;
+}
+#endif
+
+#ifdef MERCURY_XR_API_OPENXR
+const OpenXRRuntimeInfo& platform::getOpenXRRuntimeInfo()
+{
+	using namespace nlohmann;
+
+	static OpenXRRuntimeInfo runtimeInfo;
+
+	char data[MAX_PATH] = {};
+	DWORD maxPath = MAX_PATH;
+
+	auto res = RegGetValueA(HKEY_LOCAL_MACHINE, "SOFTWARE\\Khronos\\OpenXR\\1", "ActiveRuntime", RRF_RT_REG_SZ, nullptr /*type not required*/, data, &maxPath);
+	if (res == ERROR_FILE_NOT_FOUND)
+	{
+		runtimeInfo = {};
+		return runtimeInfo;
+	}
+
+	runtimeInfo.hasRuntime = true;
+
+	std::filesystem::path jsonPath = data;
+
+	std::ifstream f(jsonPath);
+	json dataJson = json::parse(f);
+
+	auto file_format_version = dataJson["file_format_version"];
+
+	auto runtime = dataJson["runtime"];
+
+	auto library_path = runtime["library_path"];
+	auto name = runtime["name"];
+	auto VALVE_runtime_is_steamvr = runtime["VALVE_runtime_is_steamvr"];
+
+	if (file_format_version.is_string())
+	{
+		runtimeInfo.file_format_version = file_format_version.template get<std::string>();
+	}
+
+	if (library_path.is_string())
+	{
+		runtimeInfo.library_path = library_path.template get<std::string>();
+		auto fullLibraryPath = std::filesystem::weakly_canonical(jsonPath.remove_filename() / std::filesystem::path(runtimeInfo.library_path));
+
+		runtimeInfo.library_fullpath = fullLibraryPath.u8string();
+	}
+
+
+	if (name.is_string())
+	{
+		runtimeInfo.name = name.template get<std::string>();
+	}
+
+	if (VALVE_runtime_is_steamvr.is_boolean())
+	{
+		runtimeInfo.isValveRuntime = VALVE_runtime_is_steamvr.template get<bool>();
+	}
+
+	return runtimeInfo;
+}
+#endif
+
 #endif

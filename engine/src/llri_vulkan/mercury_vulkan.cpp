@@ -182,7 +182,7 @@ VK_DEFINE_FUNCTION(vkGetWinrtDisplayNV);
 VK_DEFINE_FUNCTION(vkAcquireWinrtDisplayNV);
 #endif
 
-static void* libHandle = nullptr;
+static void* gLibHandle = nullptr;
 
 #define VK_LOAD_GLOBAL_FUNC(func) func = (PFN_##func)vkGetInstanceProcAddr( nullptr, #func)
 #define VK_LOAD_INSTANCE_FUNC(func) func = (PFN_##func)vkGetInstanceProcAddr(instance, #func)
@@ -190,25 +190,17 @@ static void* libHandle = nullptr;
 
 void LoadVK_Library()
 {
-#ifdef MERCURY_PLATFORM_WINDOWS
-	const char* libName = u8"vulkan-1.dll";
-#elif defined(MERCURY_PLATFORM_MACOS)
-    const char* libName = u8"libvulkan.1.dylib";
-#else
-	const char* libName = u8"libvulkan.so";
-#endif
+	gLibHandle = platform::loadSharedLibrary(platform::getVulkanLibraryPath());
+	M_ASSERT(gLibHandle != nullptr);
 
-	libHandle = platform::loadSharedLibrary(libName);
-	M_ASSERT(libHandle != nullptr);
-
-	LOAD_FUNC_PTR(libHandle, vkGetInstanceProcAddr);
+	LOAD_FUNC_PTR(gLibHandle, vkGetInstanceProcAddr);
 
 	VK_LOAD_GLOBAL_FUNC(vkEnumerateInstanceVersion);
 	VK_LOAD_GLOBAL_FUNC(vkCreateInstance);
 	VK_LOAD_GLOBAL_FUNC(vkEnumerateInstanceExtensionProperties);
 	VK_LOAD_GLOBAL_FUNC(vkEnumerateInstanceLayerProperties);
 
-	auto libFullName = platform::getSharedLibraryFullFilename(libHandle);
+	auto libFullName = platform::getSharedLibraryFullFilename(gLibHandle);
 	write_log_message("Found vulkan loader: %s", libFullName);
 }
 
@@ -384,7 +376,8 @@ const char* VkResultToString(VkResult res)
 
 void ShutdownVK_Library()
 {
-	platform::unloadSharedLibrary(libHandle);
+	platform::unloadSharedLibrary(gLibHandle);
+	gLibHandle = nullptr;
 }
 
 #endif //MERCURY_GRAPHICS_API_VULKAN
