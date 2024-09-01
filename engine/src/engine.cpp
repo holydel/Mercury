@@ -12,19 +12,31 @@ using namespace mercury;
 
 bool engine::initialize()
 {
+	
 	mercury::write_log_message("engine initialize");
 	platform::initialize();
-	llri::initialize();	
-	llsi::initialize();
-	llvri::initialize();
+	
+	if (gApplication->config.engine.EnableSound)
+		llsi::initialize();
+
+	if (gApplication->config.engine.EnableXR)
+		llvri::initialize();
+	
+	llri::initialize();
+
 	return true;
 }
 
 void engine::shutdown()
 {	
-	llvri::shutdown();
-	llsi::shutdown();
 	llri::shutdown();
+
+	if (gApplication->config.engine.EnableXR)
+		llvri::shutdown();
+
+	if (gApplication->config.engine.EnableSound)
+		llsi::shutdown();
+
 	platform::shutdown();
 	mercury::write_log_message("engine shutdown");
 }

@@ -8,6 +8,7 @@
 namespace vk_utils
 {
 	VkFormat GetFormatFromMercuryFormat(mercury::Format fmt);
+	VkPrimitiveTopology GetTopologyFromMercuryTopology(mercury::Topology topology);
 }
 
 #endif

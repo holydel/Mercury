@@ -39,7 +39,7 @@ struct FrameObject
 
 static std::vector<FrameObject>			gFrameObjects;
 
-
+extern glm::vec4 gCurrentViewport;
 
 void _obtainImages()
 {
@@ -170,7 +170,7 @@ void _recreateSwapChain()
 		createInfo.preTransform = gSurfaceCaps.currentTransform;
 		//createInfo.
 		createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-		createInfo.presentMode = VK_PRESENT_MODE_FIFO_KHR;// VK_PRESENT_MODE_FIFO_KHR; //VK_PRESENT_MODE_MAILBOX_KHR
+		createInfo.presentMode = VK_PRESENT_MODE_MAILBOX_KHR;// VK_PRESENT_MODE_FIFO_KHR; //VK_PRESENT_MODE_MAILBOX_KHR
 		createInfo.clipped = VK_TRUE;
 		createInfo.oldSwapchain = gSwapChain;
 
@@ -314,6 +314,8 @@ void llri::swapchain::resize(mercury::u32 newWidth, mercury::u32 newHeight)
 	
 }
 
+
+
 bool llri::swapchain::update()
 {
 	u32 frameIndex = gCurrentFrame % 3;
@@ -372,6 +374,11 @@ bool llri::swapchain::update()
 	viewport.height = (float)scissorRect.extent.height;
 	viewport.minDepth = 0.0f; //TODO: revZ
 	viewport.maxDepth = 1.0f;
+
+	gCurrentViewport.x = 0;
+	gCurrentViewport.y = 0;
+	gCurrentViewport.z = viewport.width;
+	gCurrentViewport.w = viewport.height;
 
 	vkCmdSetScissor(frame.cmdBuffer, 0, 1, &scissorRect);
 	vkCmdSetViewport(frame.cmdBuffer, 0, 1, &viewport);

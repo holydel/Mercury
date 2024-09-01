@@ -24,6 +24,8 @@ namespace mercury
 			, Mesh
 			, SubpassShading
 			, ClusterCulling
+			, ShaderGraph
+			,MAX
 		};
 
 		struct ByteCode
@@ -33,6 +35,8 @@ namespace mercury
 		};
 
 		static Shader CreateFromByteCode(ByteCode bc); //llri implementation (vulkan/d3d12/metal/WGPU)
+
+		static const char** GetHumanReadableShaderNames(); //shared engine implementation
 	};
 
 	namespace internal_shader //shader backend implementation (spirv/dxil/metal)
@@ -41,5 +45,7 @@ namespace mercury
 		Shader TestTriangleFrag();
 		Shader TestPointCacheVert();
 		Shader TestPointCacheFrag();
+		Shader ColoredSpriteVS();
+		Shader ColoredSpritePS();
 	}
 }

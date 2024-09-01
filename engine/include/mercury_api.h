@@ -100,37 +100,68 @@ namespace mercury
 
 	struct Handle32
 	{
-		u32 handle = 0xFFFFFFFFu;
-		operator bool() const
+		static constexpr u32 InvalidValue = 0xFFFFFFFFu;
+
+		u32 handle = InvalidValue;
+
+		bool isValid() const
 		{
-			return handle != 0xFFFFFFFFu;
+			return handle != InvalidValue;
+		}
+		u32 Value()
+		{
+			return handle;
 		}
 	};
 
 	struct Handle64
 	{
-		u64 handle = 0xFFFFFFFFFFFFFFFFu;
-		operator bool() const
+		static constexpr u64 InvalidValue = 0xFFFFFFFFFFFFFFFFu;
+
+		u64 handle = InvalidValue;
+
+		bool isValid() const
 		{
-			return handle != 0xFFFFFFFFFFFFFFFFu;
+			return handle != InvalidValue;
+		}
+
+		u64 Value()
+		{
+			return handle;
 		}
 	};
 
 	struct Handle16
 	{
-		u64 handle = 0xFFFFu;
-		operator bool() const
+		static constexpr u16 InvalidValue = 0xFFFFu;
+
+		u16 handle = InvalidValue;
+
+		bool isValid() const
 		{
-			return handle != 0xFFFFu;
+			return handle != InvalidValue;
+		}
+
+		u16 Value()
+		{
+			return handle;
 		}
 	};
 
 	struct Handle8
 	{
-		u8 handle = 0xFFu;
-		operator bool() const
+		static constexpr u8 InvalidValue = 0xFFu;
+
+		u8 handle = InvalidValue;
+
+		bool isValid() const
 		{
-			return handle != 0xFFu;
+			return handle != InvalidValue;
+		}
+
+		u8 Value()
+		{
+			return handle;
 		}
 	};
 }

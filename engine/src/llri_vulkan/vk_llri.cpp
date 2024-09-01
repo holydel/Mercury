@@ -652,7 +652,7 @@ void FillShaderStageIfNeeded(std::vector<VkPipelineShaderStageCreateInfo>& allSt
 {
 	const char* entryPoint = "main";
 
-	if (shader)
+	if (shader.isValid())
 	{
 		auto& stage = allStages.emplace_back();
 		stage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -748,13 +748,13 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 	bstate.alphaBlendOp = VkBlendOp::VK_BLEND_OP_ADD;
 	bstate.colorWriteMask = VkColorComponentFlagBits::VK_COLOR_COMPONENT_A_BIT | VkColorComponentFlagBits::VK_COLOR_COMPONENT_R_BIT | VkColorComponentFlagBits::VK_COLOR_COMPONENT_G_BIT | VkColorComponentFlagBits::VK_COLOR_COMPONENT_B_BIT;
 
-	bstate.blendEnable = true;
+	bstate.blendEnable = false;
 	bstate.srcColorBlendFactor = VkBlendFactor::VK_BLEND_FACTOR_ONE;
 	bstate.dstColorBlendFactor = VkBlendFactor::VK_BLEND_FACTOR_ONE;
 	bstate.srcAlphaBlendFactor = VkBlendFactor::VK_BLEND_FACTOR_ONE;
 	bstate.dstAlphaBlendFactor = VkBlendFactor::VK_BLEND_FACTOR_ONE;
 
-	pipInputAssemblyState.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+	pipInputAssemblyState.topology = vk_utils::GetTopologyFromMercuryTopology(desc.topology);
 
 	pipColorBlendState.attachmentCount = 1;
 	pipColorBlendState.pAttachments = &bstate;

@@ -8,4 +8,7 @@ namespace internal_shader_bytecode
 
 	mercury::Shader::ByteCode TestPointCacheVert();
 	mercury::Shader::ByteCode TestPointCacheFrag();
+
+	mercury::Shader::ByteCode ColoredSpriteVS();
+	mercury::Shader::ByteCode ColoredSpritePS();
 }

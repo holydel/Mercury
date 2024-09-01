@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Android-arm64-v8a">
@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="..\engine\src\android\system_android.cpp" />
     <ClCompile Include="..\engine\src\application.cpp" />
+    <ClCompile Include="..\engine\src\canvas.cpp" />
     <ClCompile Include="..\engine\src\engine.cpp" />
     <ClCompile Include="..\engine\src\internal_shaders.cpp" />
     <ClCompile Include="..\engine\src\linux\system_linux.cpp" />
@@ -38,8 +39,11 @@
     <ClCompile Include="..\engine\src\logger.cpp" />
     <ClCompile Include="..\engine\src\mercury_imgui.cpp" />
     <ClCompile Include="..\engine\src\mercury_utils.cpp" />
+    <ClCompile Include="..\engine\src\mesh.cpp" />
+    <ClCompile Include="..\engine\src\parametrical_meshes.cpp" />
     <ClCompile Include="..\engine\src\platform.cpp" />
     <ClCompile Include="..\engine\src\rendering.cpp" />
+    <ClCompile Include="..\engine\src\shader.cpp" />
     <ClCompile Include="..\engine\src\shader_bytecode_dxil.cpp" />
     <ClCompile Include="..\engine\src\shader_bytecode_msl.cpp" />
     <ClCompile Include="..\engine\src\shader_bytecode_spirv.cpp" />
@@ -57,9 +61,11 @@
     <ClInclude Include="..\engine\include\mercury_api.h" />
     <ClInclude Include="..\engine\include\mercury_application.h" />
     <ClInclude Include="..\engine\include\mercury_buffer.h" />
+    <ClInclude Include="..\engine\include\mercury_canvas.h" />
     <ClInclude Include="..\engine\include\mercury_entrypoint.h" />
     <ClInclude Include="..\engine\include\mercury_log.h" />
     <ClInclude Include="..\engine\include\mercury_material.h" />
+    <ClInclude Include="..\engine\include\mercury_mesh.h" />
     <ClInclude Include="..\engine\include\mercury_rendering.h" />
     <ClInclude Include="..\engine\include\mercury_shader.h" />
     <ClInclude Include="..\engine\src\application.h" />
@@ -166,6 +172,15 @@
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>openxr_loaderd.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>D:\Projects\Mercury\PrebuiltLibriaries\windows\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android-arm64-v8a'">
     <ClCompile>
@@ -203,6 +218,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>D:\Projects\Mercury\PrebuiltLibriaries\windows\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openxr_loader.lib</AdditionalDependencies>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android-arm64-v8a'">
     <ClCompile>

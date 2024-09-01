@@ -17,7 +17,11 @@ ID3D12DebugDevice* gDebugDevice = nullptr;
 ID3D12CommandQueue* gCommandQueue = nullptr;
 ID3D12CommandAllocator* gCommandAllocator = nullptr;
 ID3D12DescriptorHeap* gDescriptorsHeapRTV = nullptr;
-ID3D12CommandList* gCurrentCommandBuffer = nullptr;
+ID3D12GraphicsCommandList* gCurrentCommandBuffer = nullptr;
+
+std::vector<CD3DX12_SHADER_BYTECODE> gAllShaders;
+std::vector<ID3D12RootSignature*> gAllSignatures;
+std::vector<ID3D12PipelineState*> gAllPSOs;
 
 using namespace mercury;
 
@@ -65,6 +69,10 @@ void ChoosePhysicalDevice()
 
 bool llri::initialize()
 {
+	AllocConsole();
+
+	mercury::write_log_message("LowLevel Rendering Interface Initialize: D3D12");
+
 	const auto& renderCfg = gApplication->config.render;
 
 	UINT dxgiFactoryFlags = 0;
@@ -116,7 +124,7 @@ bool llri::initialize()
 
 void llri::shutdown()
 {
-
+	mercury::write_log_message("LowLevel Rendering Interface Shutdown: D3D12");
 }
 
 bool llri::update()
@@ -125,16 +133,70 @@ bool llri::update()
 }
 
 
+
 mercury::Shader llri::create_shader_from_bytecode(mercury::Shader::ByteCode bc)
 {
-	mercury::Shader result;
-	return result;
+	u32 curShaderID = gAllShaders.size();
+
+	gAllShaders.push_back(CD3DX12_SHADER_BYTECODE(bc.data,bc.size));
+
+	return mercury::Shader{curShaderID};
 }
 
-mercury::Material llri::create_material(mercury::Material::Desc)
+
+
+mercury::Material llri::create_material(mercury::Material::Desc desc)
 {
 	mercury::Material result;
-	return result;
+
+	D3D12_ROOT_PARAMETER rootParameters[32] = {};
+	int numRootParameters = 0;
+
+	if (desc.shaderInputs.numPushConstants > 0)
+	{
+		auto& p = rootParameters[numRootParameters];
+
+		p.ParameterType = D3D12_ROOT_PARAMETER_TYPE_32BIT_CONSTANTS;
+		p.Constants.Num32BitValues = desc.shaderInputs.numPushConstants;
+		p.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+		p.Constants.RegisterSpace = 0;
+		p.Constants.ShaderRegister = 0;
+
+		numRootParameters++;
+	}
+
+	CD3DX12_ROOT_SIGNATURE_DESC rootSignatureDesc;
+	rootSignatureDesc.Init(numRootParameters, rootParameters, 0, nullptr, D3D12_ROOT_SIGNATURE_FLAG_NONE);
+
+	ID3DBlob* signature = nullptr;
+	ID3DBlob* error = nullptr;
+	D3D_CALL(D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &signature, &error));
+	
+	u32 curSignatureID = gAllSignatures.size();
+	gAllSignatures.push_back(nullptr);
+	gAllPSOs.push_back(nullptr);
+
+	D3D_CALL(gDevice->CreateRootSignature(0, signature->GetBufferPointer(), signature->GetBufferSize(), IID_PPV_ARGS(&gAllSignatures[curSignatureID])));
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
+	psoDesc.InputLayout = CD3DX12_INPUT_LAYOUT_SUBOBJECT();
+	psoDesc.pRootSignature = gAllSignatures[curSignatureID];
+	psoDesc.VS = gAllShaders[desc.vertexShader.handle];
+	psoDesc.PS = gAllShaders[desc.fragmentShader.handle];
+	psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+	psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
+	psoDesc.DepthStencilState.DepthEnable = FALSE;
+	psoDesc.DepthStencilState.StencilEnable = FALSE;
+	psoDesc.SampleMask = UINT_MAX;
+	psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	psoDesc.NumRenderTargets = 1;
+	psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+	psoDesc.SampleDesc.Count = 1;
+	D3D_CALL(gDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&gAllPSOs[curSignatureID])));
+
+	return mercury::Material{ curSignatureID };
 }
 
 mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType)

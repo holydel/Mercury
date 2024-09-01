@@ -25,4 +25,24 @@ VkFormat vk_utils::GetFormatFromMercuryFormat(mercury::Format fmt)
 	return VkFormat::VK_FORMAT_UNDEFINED;
 }
 
+VkPrimitiveTopology vk_utils::GetTopologyFromMercuryTopology(mercury::Topology topology)
+{
+
+	//TriangleList,
+	//	PointList,
+	//	LineList,
+	//	TriangleStrip
+
+	static VkPrimitiveTopology topologies[] =
+	{ VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
+	,VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_POINT_LIST 
+	,VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_LINE_LIST 
+	,VkPrimitiveTopology::VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP };
+
+	u8 index = static_cast<int>(topology);
+
+	assert(index < _countof(topologies));
+
+	return topologies[index];
+}
 #endif

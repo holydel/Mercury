@@ -9,6 +9,9 @@
 void ShadersEditorScreen::CompileShader()
 {
 	currentSource->cachedSource = textEditor->GetText();
+	currentSource->stage = currentStage;
+	currentSource->entryPoint = entryPointName;
+
 	auto temp = ShaderCompiler::CompileShader(currentSource);
 
 	if (!currentSource->cachedSPIRV.empty())
@@ -79,8 +82,20 @@ void ShadersEditorScreen::Draw()
 
 		ImGui::EndMenuBar();
 
-		if(ImGui::Button("Compile"))
+
+
+		if (ImGui::Button("Compile"))
 			CompileShader();
+
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(200);
+		ImGui::Combo("Stage: ", (int*)&currentStage, mercury::Shader::GetHumanReadableShaderNames(), (int)mercury::Shader::Stage::MAX);
+		
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(260);
+		ImGui::InputText("Entry Point: ", entryPointName, sizeof(entryPointName));
+		
+		
 
 		textEditor->Render("Source");
 		ImGui::End();
@@ -103,6 +118,7 @@ void ShadersEditorScreen::SetShaderSource(SBProjShaderSource* src)
 	}
 	else
 	{
+		currentStage = src->stage;
 		textEditor->SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
 	}
 
@@ -123,4 +139,6 @@ void ShadersEditorScreen::SetShaderSource(SBProjShaderSource* src)
 
 		int a = 42;
 	}
+
+	strcpy_s(entryPointName, "main");
 }

@@ -2,6 +2,7 @@
 #include "mercury_api.h"
 #include "mercury_material.h"
 #include "mercury_buffer.h"
+#include <glm.hpp>
 
 namespace mercury
 {
@@ -25,5 +26,7 @@ namespace mercury
 
 		void DecompressBuffer(Buffer src, Buffer dst, DecompressPage* pages, int pagesCount);
 		void CopyBuffer(Buffer src, Buffer dst, u32 size);
+
+		glm::vec4 GetCurrentViewport();
 	}
 }

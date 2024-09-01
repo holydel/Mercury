@@ -36,7 +36,7 @@ struct SBProjShaderSource : public SBProjSource
 {
 	mercury::Shader::Stage stage = mercury::Shader::Stage::UNKNOWN;
 
-	std::string entryPoint = "main";
+	std::string entryPoint = "main";	
 	std::string cachedSource;
 	std::vector<uint32_t> cachedSPIRV;
 

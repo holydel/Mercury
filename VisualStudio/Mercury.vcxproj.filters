@@ -129,12 +129,6 @@
     <ClCompile Include="..\third_party\pugixml\src\pugixml.cpp">
       <Filter>Source Files\third_party\pugixml</Filter>
     </ClCompile>
-    <ClCompile Include="..\engine\src\shader_bytecode_spirv.cpp">
-      <Filter>Source Files\llris</Filter>
-    </ClCompile>
-    <ClCompile Include="..\engine\src\shader_bytecode_dxil.cpp">
-      <Filter>Source Files\llris</Filter>
-    </ClCompile>
     <ClCompile Include="..\engine\src\shader_bytecode_msl.cpp">
       <Filter>Source Files\llris</Filter>
     </ClCompile>
@@ -155,6 +149,24 @@
     </ClCompile>
     <ClCompile Include="..\engine\src\llvri_openxr\mercury_openxr.cpp">
       <Filter>Source Files\llvris\llvri_openxr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\shader_bytecode_dxil.cpp">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\shader_bytecode_spirv.cpp">
+      <Filter>Source Files\llris\llri_vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\canvas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\parametrical_meshes.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="..\engine\src\llvri_openxr\mercury_openxr.h">
       <Filter>Source Files\llvris\llvri_openxr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_canvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_mesh.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

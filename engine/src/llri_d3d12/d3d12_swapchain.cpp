@@ -45,14 +45,14 @@ bool llri::swapchain::create(void* nativeWindowHandle)
 	sdesc.Format = gSwapChainFormat;
 	sdesc.SampleDesc.Count = 1;
 	sdesc.SampleDesc.Quality = 0;
-	sdesc.Scaling = DXGI_SCALING_NONE;
+	sdesc.Scaling = DXGI_SCALING_NONE; 
 	sdesc.Stereo = false;
-	sdesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
+	sdesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 	DXGI_SWAP_CHAIN_FULLSCREEN_DESC sfdesc = {};
 	sfdesc.Windowed = true;
 	sfdesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE;
-	sfdesc.Scaling = DXGI_MODE_SCALING_CENTERED;
+	sfdesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 	sfdesc.RefreshRate.Numerator = 1;
 	sfdesc.RefreshRate.Denominator = 60;
 	IDXGIOutput* output = nullptr;
@@ -152,6 +152,8 @@ void llri::swapchain::resize(mercury::u32 newWidth, mercury::u32 newHeight)
 	gNewHeight = newHeight;
 }
 
+extern glm::vec4 gCurrentViewport;
+
 bool llri::swapchain::update()
 {
 	if (gNewWidth != gCurWidth || gNewHeight != gCurHeight)
@@ -197,6 +199,9 @@ bool llri::swapchain::update()
 	frame.commandList->Reset(frame.commandAllocator, nullptr);
 	gCurrentCommandBuffer = frame.commandList;
 
+	llri::context ctx{ static_cast<void*>(frame.commandList) };
+	engine::renderBeforeCallback(ctx);
+
 	{
 		CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 			frame.bbResource,
@@ -215,8 +220,29 @@ bool llri::swapchain::update()
 		frame.commandList->OMSetRenderTargets(1, &frame.bbRTV, FALSE, NULL);
 	}
 
-	llri::context ctx{ static_cast<void*>(frame.commandList) };
+	CD3DX12_VIEWPORT viewport = {};
+	CD3DX12_RECT scissorRect = {};
+	viewport.Width = gCurWidth;
+	viewport.MaxDepth = 1.0f;
+
+	//viewport.Height = -((int)gCurHeight);
+	//viewport.TopLeftY = gCurHeight;
+
+	viewport.Height = gCurHeight;
+	viewport.TopLeftY = 0;
+
+	gCurrentViewport.x = 0;
+	gCurrentViewport.y = 0;
+	gCurrentViewport.z = gCurWidth;
+	gCurrentViewport.w = gCurHeight;
+
+	scissorRect.right = gCurWidth;
+	scissorRect.bottom = gCurHeight;
+	frame.commandList->RSSetViewports(1, &viewport);
+	frame.commandList->RSSetScissorRects(1, &scissorRect);
+
 	engine::renderCallback(ctx);
+	engine::renderAfterCallback(ctx);
 
 	CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
 		frame.bbResource,
@@ -230,7 +256,7 @@ bool llri::swapchain::update()
 
 	gCommandQueue->ExecuteCommandLists(1, commandLists);
 
-	HRESULT resPresent = gSwapChain->Present(0, 0);
+	HRESULT resPresent = gSwapChain->Present(0, DXGI_SWAP_EFFECT_FLIP_DISCARD);
 
 	HRESULT res2 = gDevice->GetDeviceRemovedReason();
 	auto resHumanReadable = std::system_category().message(res2);

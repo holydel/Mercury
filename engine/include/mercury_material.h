@@ -23,6 +23,14 @@ namespace mercury
 		,Multiply
 	};
 
+	enum class Topology : u8
+	{
+		TriangleList,
+		PointList,
+		LineList,
+		TriangleStrip
+	};
+
 	struct Material : Handle32
 	{
 		struct Desc
@@ -50,6 +58,10 @@ namespace mercury
 				}
 			} vertexInput;
 			
+			struct ShaderInputs
+			{
+				int numPushConstants = 0; //number of 32bit push constants
+			} shaderInputs;
 
 			Shader vertexShader;
 			Shader fragmentShader;
@@ -58,6 +70,8 @@ namespace mercury
 			{
 				return Material::Create(*this);
 			}
+
+			Topology topology = Topology::TriangleList;
 		};
 
 		static Material Create(Desc desc);

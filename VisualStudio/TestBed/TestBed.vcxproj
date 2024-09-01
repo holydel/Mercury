@@ -164,7 +164,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\testbed\src\hello_cubes.cpp" />
+    <ClCompile Include="..\..\testbed\src\hello_sprites.cpp" />
     <ClCompile Include="..\..\testbed\src\testbed.cpp" />
+    <ClCompile Include="..\..\testbed\src\test_nv_decompress.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AndroidPackaging\app\build.gradle" />

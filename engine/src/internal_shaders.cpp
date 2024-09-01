@@ -26,3 +26,15 @@ Shader internal_shader::TestPointCacheFrag()
 	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::TestPointCacheFrag());
 	return result;
 }
+
+Shader internal_shader::ColoredSpriteVS()
+{
+	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::ColoredSpriteVS());
+	return result;
+}
+
+Shader internal_shader::ColoredSpritePS()
+{
+	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::ColoredSpritePS());
+	return result;
+}

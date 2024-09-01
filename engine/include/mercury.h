@@ -4,6 +4,8 @@
 #include "mercury_log.h"
 #include "mercury_shader.h"
 #include "mercury_material.h"
+#include "mercury_canvas.h"
+#include "mercury_mesh.h"
 
 namespace mercury
 {

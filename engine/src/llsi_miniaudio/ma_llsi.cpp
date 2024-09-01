@@ -12,7 +12,7 @@ bool llsi::initialize()
 
 	auto result = ma_engine_init(NULL, &gEngine);
 
-	ma_engine_play_sound(&gEngine, "C:\\Users\\holyd\\AppData\\Roaming\\odh\\packages\\other-packages\\oculus-ambisonics-starter-pack\\Oculus Ambisonic Audio Pack 01\\Nature and Outdoors\\Afternoon Suburban Park Babbling Brook Birds ST450 02_ambiX.wav", NULL);
+	//ma_engine_play_sound(&gEngine, "C:\\Users\\holyd\\AppData\\Roaming\\odh\\packages\\other-packages\\oculus-ambisonics-starter-pack\\Oculus Ambisonic Audio Pack 01\\Nature and Outdoors\\Afternoon Suburban Park Babbling Brook Birds ST450 02_ambiX.wav", NULL);
 	ma_engine_set_volume(&gEngine, 0.1f);
 
 	return true;

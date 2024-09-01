@@ -34,6 +34,10 @@ namespace mercury
 		bool EnableIMGUI = false;
 		bool EnableSound = false;
 		bool EnableBulletPhysics = false;
+		bool EnableXR = false;
+
+		bool GraphicsValidation = false;
+		bool XRValidation = false;
 	};
 
 	struct RendererConfig

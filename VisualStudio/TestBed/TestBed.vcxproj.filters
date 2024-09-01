@@ -69,6 +69,15 @@
     <ClCompile Include="..\..\testbed\src\testbed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\testbed\src\test_nv_decompress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\testbed\src\hello_sprites.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\testbed\src\hello_cubes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="AndroidPackaging\gradle\wrapper\gradle-wrapper.jar">

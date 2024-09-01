@@ -7,6 +7,7 @@
 
 using namespace mercury;
 
+glm::vec4 gCurrentViewport = glm::vec4(0, 0, 1, 1);
 
 void rendering::SetBackGroundColor(float r, float g, float b, float a)
 {
@@ -62,4 +63,9 @@ void rendering::DecompressBuffer(Buffer src, Buffer dst, rendering::DecompressPa
 void rendering::CopyBuffer(Buffer src, Buffer dst, u32 size)
 {
 	llri::context::GetCurrent().CopyBuffer(src.handle, dst.handle, size);
+}
+
+glm::vec4 rendering::GetCurrentViewport()
+{
+	return gCurrentViewport;
 }

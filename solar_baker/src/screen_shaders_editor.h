@@ -9,6 +9,8 @@ class ShadersEditorScreen : public mercury::imgui_interface::Screen
 	TextEditor *textEditor = nullptr;
 	SBProjShaderSource* currentSource = nullptr;
 	void CompileShader();
+	char entryPointName[32] = {};
+	mercury::Shader::Stage currentStage = mercury::Shader::Stage::Vertex;
 public:
 	ShadersEditorScreen();
 	~ShadersEditorScreen();

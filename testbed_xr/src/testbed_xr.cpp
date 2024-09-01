@@ -17,6 +17,7 @@ TestBedApplication::TestBedApplication()
 {
 	config.appName = "TestBed Application";
 	config.outputMode = mercury::OutputMode::VR;
+	config.engine.EnableXR = true;
 }
 
 TestBedApplication::~TestBedApplication()
