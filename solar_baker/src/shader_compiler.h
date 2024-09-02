@@ -8,11 +8,11 @@ namespace ShaderCompiler
 	struct ShaderCompilerErrorInfo
 	{
 		std::string error;
-		short line, col;
+		mercury::u16 line, col;
 	};
 
 	void initialize();
 	void shutdown();
 
-	bool CompileShader(SBProjShaderSource * src);
+	bool CompileShader(SBProjShaderSource * src, std::vector<ShaderCompilerErrorInfo> &errors);
 }

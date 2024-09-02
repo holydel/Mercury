@@ -124,6 +124,8 @@ protected:
 
 void ParseErrors(const std::string& infoLog, std::vector<ShaderCompiler::ShaderCompilerErrorInfo>& errors)
 {
+	errors.clear();
+
 	size_t offset = 0;
 	size_t prevOff = std::string::npos;
 	std::vector<std::string> outputErr;
@@ -170,10 +172,10 @@ void ParseErrors(const std::string& infoLog, std::vector<ShaderCompiler::ShaderC
 		if (ccol == 3) //have line and row of error
 		{
 			ShaderCompiler::ShaderCompilerErrorInfo cei;
-			auto srow = s.substr(cpos[0] + 2, cpos[1] - cpos[0] - 2);
-			auto scol = s.substr(cpos[1] + 1, cpos[2] - cpos[1] - 1);
+			auto scol = s.substr(cpos[0] + 2, cpos[1] - cpos[0] - 2);
+			auto srow = s.substr(cpos[1] + 1, cpos[2] - cpos[1] - 1);
 
-			cei.line = std::stoi(srow);
+			cei.line = std::stoi(srow)-1;
 			cei.col = std::stoi(scol);
 			cei.error = s.substr(cpos[2] + 2);
 
@@ -181,13 +183,15 @@ void ParseErrors(const std::string& infoLog, std::vector<ShaderCompiler::ShaderC
 		}
 		else
 		{
-			ShaderCompiler::ShaderCompilerErrorInfo cei;
+			//non informative errors
+			// 
+			//ShaderCompiler::ShaderCompilerErrorInfo cei;
 
-			cei.line = -1;
-			cei.col = -1;
-			cei.error = s.substr(cpos[0] + 2);
+			//cei.line = -1;
+			//cei.col = -1;
+			//cei.error = s.substr(cpos[0] + 2);
 
-			errors.push_back(cei);
+			//errors.push_back(cei);
 		}
 	}
 }
@@ -229,13 +233,13 @@ EShLanguage MercuryStageToGLSLangStage(mercury::Shader::Stage stage)
 	}
 }
 
-bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
+bool ShaderCompiler::CompileShader(SBProjShaderSource* src, std::vector<ShaderCompilerErrorInfo>& errors)
 {
+	errors.clear();
+
 	using namespace mercury;
 
 	bool isDebug = false;
-
-	std::vector<ShaderCompilerErrorInfo> errors;
 
 	glslang::TProgram* program = new glslang::TProgram();
 
@@ -256,10 +260,10 @@ bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
 
 	shader->setNanMinMaxClamp(false);
 
-	if (false)
+	if (true)
 		shader->setEnhancedMsgs();
 
-	if (false)
+	if (isDebug)
 		shader->setDebugInfo(true);
 
 	shader->setOverrideVersion(450);

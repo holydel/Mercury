@@ -56,7 +56,7 @@ bool SolarBaker::Initialize()
 
 	//TODO: from recent
 	SBProject::Open(u8"C:\\Users\\holyd\\Documents\\NoName Mercury Project");
-
+	
 	return true;
 }
 

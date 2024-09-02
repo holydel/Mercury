@@ -12,7 +12,8 @@ void ShadersEditorScreen::CompileShader()
 	currentSource->stage = currentStage;
 	currentSource->entryPoint = entryPointName;
 
-	auto temp = ShaderCompiler::CompileShader(currentSource);
+	auto temp = ShaderCompiler::CompileShader(currentSource, errors);
+	currentErrorIndex = -1;
 
 	if (!currentSource->cachedSPIRV.empty())
 	{
@@ -95,9 +96,42 @@ void ShadersEditorScreen::Draw()
 		ImGui::SetNextItemWidth(260);
 		ImGui::InputText("Entry Point: ", entryPointName, sizeof(entryPointName));
 		
-		
+		ImVec2 srcRegion = ImGui::GetContentRegionAvail();
 
-		textEditor->Render("Source");
+		int errorsHeight = errors.size() * (ImGui::GetTextLineHeight() + 4) + (errors.size() > 0 ? 12 : 0);
+		srcRegion.y -= errorsHeight;
+
+		textEditor->Render("Source", srcRegion,true);
+
+		//render errors
+		//ImGui::ListBox("errors")
+		if (errors.size() > 0)
+		{
+			std::vector<const char*> errors_labels(errors.size());
+			for (int i = 0; i < errors.size(); ++i)
+			{
+				errors_labels[i] = errors[i].error.c_str();
+			}
+
+			currentErrorIndex = -1;
+			ImGui::ListBox("errors", &currentErrorIndex, errors_labels.data(), errors.size());
+
+			if (currentErrorIndex != -1)
+			{
+				auto err = errors[currentErrorIndex];
+				TextEditor::Coordinates start;
+				TextEditor::Coordinates end;
+
+				start.mColumn = 0;
+				start.mLine = err.line;
+
+				end.mColumn = 1;
+				end.mLine = err.line;
+
+				textEditor->SetSelection(start, end, TextEditor::SelectionMode::Line);
+			}
+		}
+
 		ImGui::End();
 	}
 }
@@ -136,6 +170,8 @@ void ShadersEditorScreen::SetShaderSource(SBProjShaderSource* src)
 		//file.read(src->cachedSource.data(), length);
 
 		textEditor->SetText(src->cachedSource.c_str());
+		errors.clear();
+		currentErrorIndex = -1;
 
 		int a = 42;
 	}

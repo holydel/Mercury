@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android-arm64-v8a'">
-    <AndroidDebugTarget>AGM Glory G1S:2ebd9834:arm64-v8a</AndroidDebugTarget>
+    <AndroidDebugTarget>YAL-L21:BQL0220114003744:arm64-v8a</AndroidDebugTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android-arm64-v8a'">
     <AndroidDebugTarget>AGM Glory G1S:2ebd9834:arm64-v8a</AndroidDebugTarget>

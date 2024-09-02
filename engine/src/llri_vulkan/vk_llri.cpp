@@ -677,7 +677,7 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 		VkPushConstantRange range;
 		range.size = 128;
 		range.offset = 0;
-		range.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+		range.stageFlags = VK_SHADER_STAGE_ALL;
 
 		cinfo.pushConstantRangeCount = 1;
 		cinfo.pPushConstantRanges = &range;

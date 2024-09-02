@@ -39,7 +39,7 @@ void context::Draw(mercury::u32 count)
 void context::SetConstantsData(void* ptr, u8 size)
 {
 	VkCommandBuffer cbuff = static_cast<VkCommandBuffer>(impl);
-	vkCmdPushConstants(cbuff, gAllLayouts[0], VK_SHADER_STAGE_VERTEX_BIT, 0, size, ptr);
+	vkCmdPushConstants(cbuff, gAllLayouts[0], VK_SHADER_STAGE_ALL, 0, size, ptr);
 }
 
 void context::SetBuffer(mercury::u32 handle)
