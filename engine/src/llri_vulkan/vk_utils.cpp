@@ -41,7 +41,7 @@ VkPrimitiveTopology vk_utils::GetTopologyFromMercuryTopology(mercury::Topology t
 
 	u8 index = static_cast<int>(topology);
 
-	assert(index < _countof(topologies));
+	assert(index < mercury::utils::array_size(topologies));
 
 	return topologies[index];
 }

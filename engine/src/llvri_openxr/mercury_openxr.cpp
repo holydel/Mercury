@@ -1,4 +1,5 @@
 #include "mercury_openxr.h"
+#ifdef MERCURY_XR_API_OPENXR
 #include "mercury_log.h"
 
 using namespace mercury;
@@ -138,3 +139,4 @@ void LoadXRInstanceLevelFuncs(XrInstance instance)
 {
 
 }
+#endif

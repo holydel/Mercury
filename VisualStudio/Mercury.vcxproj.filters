@@ -269,5 +269,8 @@
     <ClInclude Include="..\engine\include\mercury_mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

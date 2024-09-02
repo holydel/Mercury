@@ -1,5 +1,6 @@
 #pragma once
 #include "mercury_api.h"
+#include "mercury_utils.h"
 
 #ifdef MERCURY_GRAPHICS_API_VULKAN
 #include "mercury_material.h"

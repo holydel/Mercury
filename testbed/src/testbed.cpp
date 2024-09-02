@@ -1,11 +1,10 @@
-#include "mercury_entrypoint.h"
+//#include "mercury_entrypoint.h"
 #include <cmath>
 #include <chrono>
 #include <mercury.h>
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <thread>
-#include <Windows.h>
 
 using namespace mercury;
 

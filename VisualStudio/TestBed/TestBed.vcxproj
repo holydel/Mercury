@@ -54,7 +54,7 @@
     <PlatformToolset>Clang</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <AndroidMinSdkVersion>30</AndroidMinSdkVersion>
+    <AndroidMinSdkVersion>28</AndroidMinSdkVersion>
     <AndroidNdkVersion>25.2.9519653</AndroidNdkVersion>
     <CppLanguageStandard>cpp17</CppLanguageStandard>
   </PropertyGroup>
@@ -167,7 +167,10 @@
     <ClCompile Include="..\..\testbed\src\hello_cubes.cpp" />
     <ClCompile Include="..\..\testbed\src\hello_sprites.cpp" />
     <ClCompile Include="..\..\testbed\src\testbed.cpp" />
-    <ClCompile Include="..\..\testbed\src\test_nv_decompress.cpp" />
+    <ClCompile Include="..\..\testbed\src\test_nv_decompress.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Android-arm64-v8a'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Android-arm64-v8a'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="AndroidPackaging\app\build.gradle" />

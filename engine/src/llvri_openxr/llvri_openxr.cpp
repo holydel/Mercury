@@ -1,4 +1,5 @@
 #include "llvri_openxr.h"
+#ifdef MERCURY_XR_API_OPENXR
 #include "mercury_log.h"
 #include "mercury_openxr.h"
 
@@ -24,3 +25,4 @@ bool llvri::update()
 
 	return true;
 }
+#endif

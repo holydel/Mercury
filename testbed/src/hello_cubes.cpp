@@ -5,7 +5,6 @@
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <thread>
-#include <Windows.h>
 
 using namespace mercury;
 
@@ -70,7 +69,7 @@ bool HelloCubesApplication::Initialize()
 		r.color.w = float(rand() % 255) / 255.0f;
 	}
 
-	cubeMesh = parametrical_meshes::CreateCube(1.0f);
+	//cubeMesh = parametrical_meshes::CreateCube(1.0f);
 	return true;
 }
 

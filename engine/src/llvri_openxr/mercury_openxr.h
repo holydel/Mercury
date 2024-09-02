@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mercury_api.h"
+#ifdef MERCURY_XR_API_OPENXR
 #include "../platform.h"
 
 //#define XR_NO_PROTOTYPES 1
@@ -11,6 +12,7 @@
 #endif
 #ifdef MERCURY_PLATFORM_ANDROID
 #define XR_USE_PLATFORM_ANDROID 1
+#include <android/native_activity.h>
 #endif
 #ifdef MERCURY_PLATFORM_LINUX
 #define XR_USE_PLATFORM_XCB 1
@@ -176,3 +178,4 @@ std::vector<T> EnumerateOpenXRObjects(U instance, W system, X type, XrStructureT
 
 	return result;
 }
+#endif

@@ -19,9 +19,10 @@ bool engine::initialize()
 	if (gApplication->config.engine.EnableSound)
 		llsi::initialize();
 
+#ifdef MERCURY_USE_XR
 	if (gApplication->config.engine.EnableXR)
 		llvri::initialize();
-	
+#endif
 	llri::initialize();
 
 	return true;
@@ -30,10 +31,10 @@ bool engine::initialize()
 void engine::shutdown()
 {	
 	llri::shutdown();
-
+#ifdef MERCURY_USE_XR
 	if (gApplication->config.engine.EnableXR)
 		llvri::shutdown();
-
+#endif
 	if (gApplication->config.engine.EnableSound)
 		llsi::shutdown();
 
@@ -72,8 +73,9 @@ bool engine::update()
 
 	imgui::update();
 	renderMainOutput();
-
+#ifdef MERCURY_USE_XR
 	llvri::update();
+#endif
 	llsi::update();
 
 	return true;

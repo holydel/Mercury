@@ -170,7 +170,7 @@ void _recreateSwapChain()
 		createInfo.preTransform = gSurfaceCaps.currentTransform;
 		//createInfo.
 		createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-		createInfo.presentMode = VK_PRESENT_MODE_MAILBOX_KHR;// VK_PRESENT_MODE_FIFO_KHR; //VK_PRESENT_MODE_MAILBOX_KHR
+		createInfo.presentMode = VK_PRESENT_MODE_FIFO_KHR;// VK_PRESENT_MODE_FIFO_KHR; //VK_PRESENT_MODE_MAILBOX_KHR
 		createInfo.clipped = VK_TRUE;
 		createInfo.oldSwapchain = gSwapChain;
 

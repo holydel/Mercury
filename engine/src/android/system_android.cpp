@@ -159,6 +159,7 @@ void onDestroy(ANativeActivity* activity)
 		std::this_thread::sleep_for(16ms);
 	}
 
+	mainThread->join();
 	delete mainThread;
 
 	mercury::write_log_message("onDestroy");
@@ -384,6 +385,14 @@ const char* platform::getVulkanLibraryPath()
 {
 	static const char* libName = u8"libvulkan.so";
 	return libName;
+}
+#endif
+
+#ifdef MERCURY_XR_API_OPENXR
+const OpenXRRuntimeInfo& platform::getOpenXRRuntimeInfo()
+{
+	static OpenXRRuntimeInfo runtimeInfo = {};
+	return runtimeInfo;
 }
 #endif
 

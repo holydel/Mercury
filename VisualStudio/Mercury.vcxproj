@@ -68,6 +68,7 @@
     <ClInclude Include="..\engine\include\mercury_mesh.h" />
     <ClInclude Include="..\engine\include\mercury_rendering.h" />
     <ClInclude Include="..\engine\include\mercury_shader.h" />
+    <ClInclude Include="..\engine\include\mercury_utils.h" />
     <ClInclude Include="..\engine\src\application.h" />
     <ClInclude Include="..\engine\src\context.h" />
     <ClInclude Include="..\engine\src\engine.h" />

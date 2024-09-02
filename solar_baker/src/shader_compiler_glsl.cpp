@@ -233,7 +233,7 @@ bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
 {
 	using namespace mercury;
 
-	bool isDebug = true;
+	bool isDebug = false;
 
 	std::vector<ShaderCompilerErrorInfo> errors;
 
