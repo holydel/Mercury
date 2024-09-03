@@ -234,7 +234,7 @@ EShLanguage MercuryStageToGLSLangStage(mercury::Shader::Stage stage)
 }
 
 bool ShaderCompiler::CompileShader(SBProjShaderSource* src, std::vector<ShaderCompilerErrorInfo>& errors)
-{
+{	
 	errors.clear();
 
 	using namespace mercury;

@@ -7,6 +7,7 @@
 #include "shader_compiler.h"
 #include "screen_main.h"
 #include "solar_baker_project.h"
+#include <imgui.h>
 
 bool gIsRunning = true;
 using namespace mercury;
@@ -52,6 +53,9 @@ bool SolarBaker::Initialize()
 
 	mercury::rendering::SetBackGroundColor(0.1f, 0.15f, 0.2f, 1.0f);
 	
+	ImFont* mainFont = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF();
+	ImGui::PushFont(mainFont);
+
 	mercury::imgui_interface::AddScreen(&mainScreen);
 
 	//TODO: from recent

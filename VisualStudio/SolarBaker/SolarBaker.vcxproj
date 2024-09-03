@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\solar_baker\src\main.cpp" />
     <ClCompile Include="..\..\solar_baker\src\material_preview.cpp" />
+    <ClCompile Include="..\..\solar_baker\src\monospace_font_data.cpp" />
     <ClCompile Include="..\..\solar_baker\src\sbproj_source.cpp" />
     <ClCompile Include="..\..\solar_baker\src\screen_main.cpp" />
     <ClCompile Include="..\..\solar_baker\src\screen_shaders_editor.cpp" />
@@ -190,6 +191,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\solar_baker\src\app.h" />
     <ClInclude Include="..\..\solar_baker\src\material_preview.h" />
+    <ClInclude Include="..\..\solar_baker\src\monospace_font_data.h" />
     <ClInclude Include="..\..\solar_baker\src\sbproj_source.h" />
     <ClInclude Include="..\..\solar_baker\src\screen_main.h" />
     <ClInclude Include="..\..\solar_baker\src\screen_shaders_editor.h" />

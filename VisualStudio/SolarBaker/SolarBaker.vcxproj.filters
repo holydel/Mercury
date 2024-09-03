@@ -219,6 +219,9 @@
     <ClCompile Include="..\..\solar_baker\src\material_preview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\solar_baker\src\monospace_font_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\solar_baker\src\screen_main.h">
@@ -312,6 +315,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solar_baker\src\material_preview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\monospace_font_data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
