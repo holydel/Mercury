@@ -36,7 +36,13 @@ void context::Draw(mercury::u32 count)
 	vkCmdDraw(cbuff, count, 1, 0, 0);
 }
 
-void context::SetConstantsData(void* ptr, u8 size)
+void context::DrawIndexed(mercury::u16 count)
+{
+	VkCommandBuffer cbuff = static_cast<VkCommandBuffer>(impl);
+	vkCmdDrawIndexed(cbuff, count, 1, 0, 0, 0);
+}
+
+void context::SetConstantsData(const void* ptr, u8 size)
 {
 	VkCommandBuffer cbuff = static_cast<VkCommandBuffer>(impl);
 	vkCmdPushConstants(cbuff, gAllLayouts[0], VK_SHADER_STAGE_ALL, 0, size, ptr);
@@ -51,6 +57,17 @@ void context::SetBuffer(mercury::u32 handle)
 	//vmaFlushAllocation(gVMAallocator, meta.allocation, meta.allocInfo.offset, meta.allocInfo.size);
 
 	vkCmdBindVertexBuffers(cbuff, 0, 1, &gAllBuffers[handle], &offset);
+}
+
+void context::SetIndexBuffer(mercury::u32 handle)
+{
+	VkCommandBuffer cbuff = static_cast<VkCommandBuffer>(impl);
+	VkDeviceSize offset = 0;
+
+	//auto meta = gAllBuffersMeta[handle];
+	//vmaFlushAllocation(gVMAallocator, meta.allocation, meta.allocInfo.offset, meta.allocInfo.size);
+
+	vkCmdBindIndexBuffer(cbuff, gAllBuffers[handle], 0, VkIndexType::VK_INDEX_TYPE_UINT16);
 }
 
 void context::DecompressBuffer(mercury::u32 srcHandle, mercury::u32 dstHandle, mercury::rendering::DecompressPage* pages, int pagesCount)

@@ -38,3 +38,15 @@ Shader internal_shader::ColoredSpritePS()
 	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::ColoredSpritePS());
 	return result;
 }
+
+Shader internal_shader::StaticDedicatedMeshVS()
+{
+	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::StaticDedicatedMeshVS());
+	return result;
+}
+
+Shader internal_shader::StaticDedicatedMeshPS()
+{
+	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::StaticDedicatedMeshPS());
+	return result;
+}

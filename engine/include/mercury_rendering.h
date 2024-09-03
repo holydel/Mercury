@@ -20,9 +20,10 @@ namespace mercury
 
 		void SetPSO(Material mat);
 		void Draw(int tris_count);
-
-		void SetConstantsData(void* ptr, u8 size);
+		void DrawIndexed(int num_indices);
+		void SetConstantsData(const void* ptr, u8 size);
 		void SetBuffer(Buffer buff);
+		void SetIndexBuffer(Buffer buff);
 
 		void DecompressBuffer(Buffer src, Buffer dst, DecompressPage* pages, int pagesCount);
 		void CopyBuffer(Buffer src, Buffer dst, u32 size);

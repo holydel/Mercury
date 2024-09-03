@@ -85,6 +85,7 @@
     <ClInclude Include="..\engine\src\llvri_apple_vision\llvri_apple_vision.h" />
     <ClInclude Include="..\engine\src\llvri_openxr\llvri_openxr.h" />
     <ClInclude Include="..\engine\src\llvri_openxr\mercury_openxr.h" />
+    <ClInclude Include="..\engine\src\mesh_internal.h" />
     <ClInclude Include="..\engine\src\platform.h" />
     <ClInclude Include="..\engine\src\rendering.h" />
     <ClInclude Include="..\engine\src\shader_bytecode.h" />

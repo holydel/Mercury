@@ -14,11 +14,15 @@ class ShadersEditorScreen : public mercury::imgui_interface::Screen
 	mercury::Shader::Stage currentStage = mercury::Shader::Stage::Vertex;
 	std::vector<ShaderCompiler::ShaderCompilerErrorInfo> errors;
 	int currentErrorIndex = -1;
+	bool isSrcChanged = false;
+	bool isNeedFocus = false;
 public:
 	ShadersEditorScreen();
 	~ShadersEditorScreen();
 	// Inherited via Screen
 	void Draw() override;
+
+	void SaveShader();
 
 	void SetShaderSource(SBProjShaderSource* src);
 };

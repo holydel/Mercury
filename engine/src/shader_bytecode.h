@@ -11,4 +11,7 @@ namespace internal_shader_bytecode
 
 	mercury::Shader::ByteCode ColoredSpriteVS();
 	mercury::Shader::ByteCode ColoredSpritePS();
+
+	mercury::Shader::ByteCode StaticDedicatedMeshVS();
+	mercury::Shader::ByteCode StaticDedicatedMeshPS();
 }

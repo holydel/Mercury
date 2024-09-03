@@ -320,6 +320,9 @@
     <ClInclude Include="..\..\solar_baker\src\monospace_font_data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\solar_baker\src\imgui_fonts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

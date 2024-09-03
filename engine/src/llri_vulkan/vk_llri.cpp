@@ -715,7 +715,7 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 
 		attrib.format = vk_utils::GetFormatFromMercuryFormat(vi.fmt);
 		attrib.offset = offsetsPerBinding[attrib.binding];
-		int attribSize = mercury::utils::GetFormatSizeBits(vi.fmt);
+		int attribSize = mercury::utils::GetFormatSizeBits(vi.fmt) / 8;
 
 		offsetsPerBinding[attrib.binding] += attribSize;
 		vertexInputAttribDescription.push_back(attrib);
@@ -765,7 +765,7 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 	FillShaderStageIfNeeded(allStages, VK_SHADER_STAGE_FRAGMENT_BIT, desc.fragmentShader);
 
 	pipRasterizationState.polygonMode = VK_POLYGON_MODE_FILL;
-	pipRasterizationState.cullMode = VK_CULL_MODE_NONE; //TODO: temporal fix
+	pipRasterizationState.cullMode = VK_CULL_MODE_BACK_BIT; //TODO: temporal fix
 	pipRasterizationState.frontFace = VK_FRONT_FACE_CLOCKWISE;
 	pipRasterizationState.lineWidth = 1.0f;
 
@@ -821,13 +821,13 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 	return mercury::Material{ (u32)gAllPSOs.size() - 1 };
 }
 
-mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType)
+mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType, mercury::Buffer::BufferType btype)
 {
 	VkBuffer buffer = VK_NULL_HANDLE;
 
-	
+	//| VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT
 	VkBufferCreateInfo cinfo = { VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO };
-	cinfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;
+	cinfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;
 
 	if (heapType == mercury::Buffer::HeapType::DEFAULT)
 	{
@@ -839,6 +839,25 @@ mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType
 		cinfo.usage |= VK_BUFFER_USAGE_TRANSFER_DST_BIT;
 	}
 
+	if (btype == mercury::Buffer::BufferType::VERTEX)
+	{
+		cinfo.usage |= VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+	}
+
+	if (btype == mercury::Buffer::BufferType::INDEX)
+	{
+		cinfo.usage |= VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
+	}
+
+	if (btype == mercury::Buffer::BufferType::UNIFORM)
+	{
+		cinfo.usage |= VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
+	}
+
+	if (btype == mercury::Buffer::BufferType::STORAGE)
+	{
+		cinfo.usage |= VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
+	}
 	cinfo.size = size;
 	cinfo.pQueueFamilyIndices = &gMainQueueIndex;
 	cinfo.queueFamilyIndexCount = 1;
@@ -888,10 +907,10 @@ mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType
 		int a = 52;
 	}
 
-	VkBufferDeviceAddressInfo info = {VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO};
-	info.buffer = buffer;
-	
-	meta.deviceAddress = vkGetBufferDeviceAddress(gDevice, &info);
+	//VkBufferDeviceAddressInfo info = {VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO};
+	//info.buffer = buffer;
+	//
+	//meta.deviceAddress = vkGetBufferDeviceAddress(gDevice, &info);
 
 	gAllBuffers.emplace_back(buffer);
 

@@ -24,9 +24,9 @@ Material Material::Create(Desc desc)
 	return llri::create_material(desc);
 }
 
-Buffer Buffer::Create(u64 size, HeapType heap)
+Buffer Buffer::Create(u64 size, HeapType heap, BufferType btype)
 {
-	return llri::create_buffer(size, heap);
+	return llri::create_buffer(size, heap, btype);
 }
 
 
@@ -40,7 +40,12 @@ void rendering::Draw(int vert_count)
 	llri::context::GetCurrent().Draw(vert_count);
 }
 
-void rendering::SetConstantsData(void* ptr, u8 size)
+void rendering::DrawIndexed(int num_indices)
+{
+	llri::context::GetCurrent().DrawIndexed(num_indices);
+}
+
+void rendering::SetConstantsData(const void* ptr, u8 size)
 {
 	llri::context::GetCurrent().SetConstantsData(ptr, size);
 }
@@ -48,6 +53,11 @@ void rendering::SetConstantsData(void* ptr, u8 size)
 void rendering::SetBuffer(Buffer buff)
 {
 	llri::context::GetCurrent().SetBuffer(buff.handle);
+}
+
+void rendering::SetIndexBuffer(Buffer buff)
+{
+	llri::context::GetCurrent().SetIndexBuffer(buff.handle);
 }
 
 void* mercury::Buffer::MappedData()

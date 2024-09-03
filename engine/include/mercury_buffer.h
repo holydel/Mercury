@@ -5,16 +5,25 @@ namespace mercury
 {
 	struct Buffer : Handle32
 	{
-	public:		
+	public:
 		void* MappedData();
 
-		enum class HeapType
+		enum class HeapType : u8
 		{
 			DEFAULT
-			,UPLOAD
-			,READBACK
+			, UPLOAD
+			, READBACK
 		};
 
-		static Buffer Create(u64 size, HeapType heap);
+		enum class BufferType : u8
+		{
+			STAGING
+			, VERTEX
+			, INDEX
+			, UNIFORM
+			, STORAGE
+		};
+
+		static Buffer Create(u64 size, HeapType heap, BufferType btype);
 	};
 }

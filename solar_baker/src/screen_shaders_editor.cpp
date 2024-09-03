@@ -27,31 +27,93 @@ ShadersEditorScreen::ShadersEditorScreen()
 	
 	textEditor->SetLanguageDefinition(TextEditor::LanguageDefinition::GLSL());
 
-	textEditor->SetText("//we will be using glsl version 4.5 syntax\n");
-
+	textEditor->SetText("//we will be using glsl version 4.5 syntax\n");	
 }
 
 ShadersEditorScreen::~ShadersEditorScreen()
 {
 }
 
+std::string trim(const std::string& str) {
+	size_t start = 0;
+	size_t end = str.length();
+
+	// Trim leading whitespace
+	while (start < end && std::isspace(str[start])) {
+		start++;
+	}
+
+	// Trim trailing whitespace
+	while (end > start && std::isspace(str[end - 1])) {
+		end--;
+	}
+
+	return str.substr(start, end - start);
+}
+
 void ShadersEditorScreen::Draw()
 {
-	if (ImGui::Begin(u8"Shaders", &is_active, ImGuiWindowFlags_MenuBar))
+	std::string winName = "Shaders";
+
+	if (currentSource)
+	{
+		if (textEditor->IsTextChanged())
+		{
+			
+			if (!isSrcChanged)
+			{
+				std::string s1 = textEditor->GetText();
+				std::string s2 = currentSource->cachedSource;
+				s1 = trim(s1);
+				s2 = trim(s2);
+				int v = strcmp(s1.c_str(), s2.c_str());
+
+				if (v)
+				{
+					isSrcChanged = true;
+				}				
+			}			
+		}
+
+		winName = currentSource->name;
+
+		if (isSrcChanged)
+		{
+			winName += "*";
+		}
+	}
+
+	winName += "###Shaders";
+
+	if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_S))
+	{
+		SaveShader();
+	}
+
+	if (ImGui::IsKeyChordPressed(ImGuiMod_Ctrl | ImGuiKey_Q))
+	{
+		CompileShader();
+	}
+
+	if (isNeedFocus)
+	{
+		isNeedFocus = false;
+		ImGui::SetNextWindowFocus();
+	}
+
+	if (ImGui::Begin(winName.c_str(), &is_active, ImGuiWindowFlags_MenuBar))
 	{
 		ImGui::BeginMenuBar();
 
 		if (ImGui::BeginMenu(u8"Shader"))
 		{
-			if (ImGui::MenuItem(u8"Compile"))
+			if (ImGui::MenuItem(u8"Compile", "CTRL+Q"))
 				CompileShader();
 
 			bool is_selected = false;
 			if (ImGui::MenuItem(u8"Save","CTRL+S",&is_selected, currentSource != nullptr))
 			{
-				currentSource->cachedSource = textEditor->GetText();
-				std::ofstream file(currentSource->fullPath);
-				file << currentSource->cachedSource;
+				SaveShader();
 			}
 
 			ImGui::Separator();
@@ -136,6 +198,14 @@ void ShadersEditorScreen::Draw()
 	}
 }
 
+void ShadersEditorScreen::SaveShader()
+{
+	currentSource->cachedSource = textEditor->GetText();
+	std::ofstream file(currentSource->fullPath);
+	file << currentSource->cachedSource;
+	isSrcChanged = false;
+}
+
 void ShadersEditorScreen::SetShaderSource(SBProjShaderSource* src)
 {
 	currentSource = src;
@@ -169,10 +239,11 @@ void ShadersEditorScreen::SetShaderSource(SBProjShaderSource* src)
 
 		//file.read(src->cachedSource.data(), length);
 
-		textEditor->SetText(src->cachedSource.c_str());
+		textEditor->SetText(src->cachedSource);
 		errors.clear();
 		currentErrorIndex = -1;
-
+		isSrcChanged = false;
+		isNeedFocus = true;
 		int a = 42;
 	}
 

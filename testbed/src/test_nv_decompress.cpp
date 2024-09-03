@@ -86,80 +86,80 @@ bool TestNVDecompressApplication::Shutdown()
 
 bool TestNVDecompressApplication::PreRender()
 {
-	if (!mat2.isValid())
-	{
-		//{
-		//	mercury::Material::Desc desc;
-		//	desc.vertexShader = mercury::internal_shader::TestTriangleVert();
-		//	desc.fragmentShader = mercury::internal_shader::TestTriangleFrag();
+	//if (!mat2.isValid())
+	//{
+	//	//{
+	//	//	mercury::Material::Desc desc;
+	//	//	desc.vertexShader = mercury::internal_shader::TestTriangleVert();
+	//	//	desc.fragmentShader = mercury::internal_shader::TestTriangleFrag();
 
-		//	mat = mercury::Material::Create(desc);
-		//}
+	//	//	mat = mercury::Material::Create(desc);
+	//	//}
 
-		{
-			mercury::Material::Desc desc;
-			desc.vertexShader = mercury::internal_shader::TestPointCacheVert();
-			desc.fragmentShader = mercury::internal_shader::TestPointCacheFrag();
+	//	{
+	//		mercury::Material::Desc desc;
+	//		desc.vertexShader = mercury::internal_shader::TestPointCacheVert();
+	//		desc.fragmentShader = mercury::internal_shader::TestPointCacheFrag();
 
-			desc.vertexInput.AddAttrib(mercury::Format::R32G32B32_SFLOAT, 0, 0, 0);
-			desc.vertexInput.AddAttrib(mercury::Format::R32G32B32_SFLOAT, 12, 1, 0);
+	//		desc.vertexInput.AddAttrib(mercury::Format::R32G32B32_SFLOAT, 0, 0, 0);
+	//		desc.vertexInput.AddAttrib(mercury::Format::R32G32B32_SFLOAT, 12, 1, 0);
 
-			desc.renderState.blendMode = mercury::BlendMode::Add;
+	//		desc.renderState.blendMode = mercury::BlendMode::Add;
 
-			mat2 = mercury::Material::Create(desc);
-		}
+	//		mat2 = mercury::Material::Create(desc);
+	//	}
 
-		int meshSize = sizeof(Particle) * max_particles;
-
-
-		pointCache = mercury::Buffer::Create(meshSize, Buffer::HeapType::UPLOAD);
-
-		pointCacheGPUCompressed = mercury::Buffer::Create(meshSize, Buffer::HeapType::DEFAULT);
-		pointCacheGPU = mercury::Buffer::Create(meshSize, Buffer::HeapType::DEFAULT);
-
-		fopen_s(&pcache_file, "D:\\temp\\pointcachef32.gdeflate", "rb");
-		fopen_s(&pcache_file_meta, "D:\\temp\\pointcachef32.gdeflate.meta", "rb");
-
-		fread(&numFrames, 4, 1, pcache_file_meta);
-	}
-
-	fread(&particlesNum, 4, 1, pcache_file_meta);
-	int pagesNum = 0;
-	fread(&pagesNum, 4, 1, pcache_file_meta);
-	fread(pages, 4, pagesNum, pcache_file_meta);
-
-	int srcOffset = 0;
-	int dstOffset = 0;
-
-	for (int i = 0; i < pagesNum; ++i)
-	{
-		assert(pages[i] % 4 == 0);
-		assert(srcOffset % 4 == 0);
-
-		decompPages[i].srcSize = pages[i];
-		decompPages[i].srcOffset = srcOffset;
-		decompPages[i].dstSize = 0;
-		decompPages[i].dstOffset = dstOffset;
+	//	int meshSize = sizeof(Particle) * max_particles;
 
 
-		srcOffset += pages[i];
-		dstOffset += 65536;
-	}
+	//	pointCache = mercury::Buffer::Create(meshSize, Buffer::HeapType::UPLOAD);
 
-	fread(pointCache.MappedData(), srcOffset, 1, pcache_file);
+	//	pointCacheGPUCompressed = mercury::Buffer::Create(meshSize, Buffer::HeapType::DEFAULT);
+	//	pointCacheGPU = mercury::Buffer::Create(meshSize, Buffer::HeapType::DEFAULT);
 
-	static int decompress = 150;
+	//	fopen_s(&pcache_file, "D:\\temp\\pointcachef32.gdeflate", "rb");
+	//	fopen_s(&pcache_file_meta, "D:\\temp\\pointcachef32.gdeflate.meta", "rb");
 
-	if (decompress == 140)
-	{
-		mercury::rendering::CopyBuffer(pointCache, pointCacheGPUCompressed, srcOffset);
+	//	fread(&numFrames, 4, 1, pcache_file_meta);
+	//}
 
-		mercury::rendering::DecompressBuffer(pointCacheGPUCompressed, pointCacheGPU, decompPages, pagesNum);
-		particlesNum2 = particlesNum;
-	}
+	//fread(&particlesNum, 4, 1, pcache_file_meta);
+	//int pagesNum = 0;
+	//fread(&pagesNum, 4, 1, pcache_file_meta);
+	//fread(pages, 4, pagesNum, pcache_file_meta);
+
+	//int srcOffset = 0;
+	//int dstOffset = 0;
+
+	//for (int i = 0; i < pagesNum; ++i)
+	//{
+	//	assert(pages[i] % 4 == 0);
+	//	assert(srcOffset % 4 == 0);
+
+	//	decompPages[i].srcSize = pages[i];
+	//	decompPages[i].srcOffset = srcOffset;
+	//	decompPages[i].dstSize = 0;
+	//	decompPages[i].dstOffset = dstOffset;
 
 
-	decompress--;
+	//	srcOffset += pages[i];
+	//	dstOffset += 65536;
+	//}
+
+	//fread(pointCache.MappedData(), srcOffset, 1, pcache_file);
+
+	//static int decompress = 150;
+
+	//if (decompress == 140)
+	//{
+	//	mercury::rendering::CopyBuffer(pointCache, pointCacheGPUCompressed, srcOffset);
+
+	//	mercury::rendering::DecompressBuffer(pointCacheGPUCompressed, pointCacheGPU, decompPages, pagesNum);
+	//	particlesNum2 = particlesNum;
+	//}
+
+
+	//decompress--;
 	return true;
 }
 

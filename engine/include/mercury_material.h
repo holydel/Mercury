@@ -12,6 +12,7 @@ namespace mercury
 		, R16G16B16A16_SFLOAT
 		, R16G16B16_SFLOAT
 		,R5G6B5_UNORM_PACK16
+		, R32G32_SFLOAT
 	};
 
 	enum class BlendMode

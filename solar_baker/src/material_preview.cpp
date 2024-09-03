@@ -21,16 +21,16 @@ MaterialPreview& MaterialPreview::Instance()
 
 void MaterialPreview::Draw()
 {
-	//if (!previewMaterial)
-	//{
-	//	previewMaterialDesc.vertexShader = mercury::internal_shader::TestTriangleVert();
-	//	previewMaterialDesc.fragmentShader = mercury::internal_shader::TestTriangleFrag();
+	if (!previewMaterial.isValid())
+	{
+		previewMaterialDesc.vertexShader = mercury::internal_shader::TestTriangleVert();
+		previewMaterialDesc.fragmentShader = mercury::internal_shader::TestTriangleFrag();
 
-	//	previewMaterial = previewMaterialDesc.Instantiate();
-	//}
+		previewMaterial = previewMaterialDesc.Instantiate();
+	}
 
-	//rendering::SetPSO(previewMaterial);
-	//rendering::Draw(3);
+	rendering::SetPSO(previewMaterial);
+	rendering::Draw(3);
 }
 
 void MaterialPreview::UpdateShader(std::vector<mercury::u32>& spirv, mercury::Shader::Stage stage)

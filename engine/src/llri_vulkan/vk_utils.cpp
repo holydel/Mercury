@@ -13,6 +13,8 @@ VkFormat vk_utils::GetFormatFromMercuryFormat(mercury::Format fmt)
 		return VkFormat::VK_FORMAT_R32G32B32A32_SFLOAT;
 	case Format::R32G32B32_SFLOAT:
 		return VkFormat::VK_FORMAT_R32G32B32_SFLOAT;
+	case Format::R32G32_SFLOAT:
+		return VkFormat::VK_FORMAT_R32G32_SFLOAT;
 	case Format::R16G16B16A16_SFLOAT:
 		return VkFormat::VK_FORMAT_R16G16B16A16_SFLOAT;
 	case Format::R16G16B16_SFLOAT:

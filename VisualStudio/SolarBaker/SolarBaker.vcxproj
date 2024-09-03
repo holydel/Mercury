@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\solar_baker\src\app.h" />
+    <ClInclude Include="..\..\solar_baker\src\imgui_fonts.h" />
     <ClInclude Include="..\..\solar_baker\src\material_preview.h" />
     <ClInclude Include="..\..\solar_baker\src\monospace_font_data.h" />
     <ClInclude Include="..\..\solar_baker\src\sbproj_source.h" />

@@ -47,5 +47,7 @@ namespace mercury
 		Shader TestPointCacheFrag();
 		Shader ColoredSpriteVS();
 		Shader ColoredSpritePS();
+		Shader StaticDedicatedMeshVS();
+		Shader StaticDedicatedMeshPS();
 	}
 }

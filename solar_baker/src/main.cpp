@@ -7,10 +7,12 @@
 #include "shader_compiler.h"
 #include "screen_main.h"
 #include "solar_baker_project.h"
-#include <imgui.h>
+#include "imgui_fonts.h"
 
 bool gIsRunning = true;
 using namespace mercury;
+
+ImFont* gMainFont = nullptr;
 
 class SolarBaker : public mercury::Application
 {
@@ -18,6 +20,7 @@ class SolarBaker : public mercury::Application
 	float value = 0.0f;
 	std::chrono::time_point<std::chrono::steady_clock, std::chrono::milliseconds> timer;
 	MainScreen mainScreen;
+	bool isInitialized = false;
 
 public:
 	SolarBaker();
@@ -52,15 +55,12 @@ bool SolarBaker::Initialize()
 	ShaderCompiler::initialize();
 
 	mercury::rendering::SetBackGroundColor(0.1f, 0.15f, 0.2f, 1.0f);
-	
-	ImFont* mainFont = ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF();
-	ImGui::PushFont(mainFont);
 
 	mercury::imgui_interface::AddScreen(&mainScreen);
 
 	//TODO: from recent
 	SBProject::Open(u8"C:\\Users\\holyd\\Documents\\NoName Mercury Project");
-	
+
 	return true;
 }
 
@@ -78,6 +78,15 @@ bool SolarBaker::Update()
 
 bool SolarBaker::Render()
 {
+	if (!isInitialized)
+	{
+		auto& io = ImGui::GetIO();
+
+		gMainFont = io.Fonts->AddFontFromFileTTF("assets\\fonts\\FiraCode-SemiBold.ttf", 20);
+		
+		io.Fonts->Build();
+		isInitialized = true;
+	}
 	MaterialPreview::Instance().Draw();
 
 
@@ -95,4 +104,10 @@ static SolarBaker myApp;
 void SetMainWindowTitle(const char* u8string)
 {
 	myApp.SetWindowTitle(u8string);
+}
+
+
+ImFont* SolarBakerFonts::MainFont()
+{
+	return gMainFont;
 }

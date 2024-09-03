@@ -22,6 +22,6 @@ namespace llri
 
 	mercury::Shader create_shader_from_bytecode(mercury::Shader::ByteCode bc);
 	mercury::Material create_material(mercury::Material::Desc);
-	mercury::Buffer create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType);
+	mercury::Buffer create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType, mercury::Buffer::BufferType bufferType);
 	void* buffer_mapped_data(mercury::u32 handle);
 }

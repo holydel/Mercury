@@ -49,7 +49,7 @@ void context::Draw(mercury::u32 count)
 	//cbuff->
 }
 
-void context::SetConstantsData(void* ptr, mercury::u8 size)
+void context::SetConstantsData(const void* ptr, mercury::u8 size)
 {
 	ID3D12GraphicsCommandList* cbuff = static_cast<ID3D12GraphicsCommandList*>(impl);
 	cbuff->SetGraphicsRoot32BitConstants(0, size / 4, ptr, 0);
@@ -60,6 +60,11 @@ void context::SetBuffer(mercury::u32 handle)
 
 }
 
+void context::SetIndexBuffer(mercury::u32 handle)
+{
+
+
+}
 void context::DecompressBuffer(mercury::u32 srcHandle, mercury::u32 dstHandle, mercury::rendering::DecompressPage* pages, int pagesCount)
 {
 

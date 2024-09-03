@@ -1,5 +1,7 @@
 #include "mercury_canvas.h"
 #include "mercury_rendering.h"
+#include "mesh_internal.h"
+
 #include <glm.hpp>
 
 void mercury::canvas::DrawDedicatedRect(Material mat, float x, float y, float width, float height, glm::vec4 color)
@@ -20,4 +22,15 @@ void mercury::canvas::DrawDedicatedRect(Material mat, float x, float y, float wi
 	rendering::SetPSO(mat);
 	rendering::SetConstantsData(&rectData, sizeof(rectData));
 	rendering::Draw(4);
+}
+
+void mercury::canvas::DrawDedicatedStaticMesh(Material mat, Mesh mesh, const glm::mat4& MVP)
+{
+	rendering::SetPSO(mat);
+	rendering::SetConstantsData(&MVP, sizeof(MVP));
+
+	auto const& m = gAllMeshes[mesh.handle];
+	rendering::SetBuffer(m.vertexBuffer);
+	rendering::SetIndexBuffer(m.indexBuffer);
+	rendering::DrawIndexed(m.numIndices);
 }

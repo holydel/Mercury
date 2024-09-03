@@ -325,7 +325,9 @@ void SBProject::DrawProjectSources()
 	ImGui::SameLine();
 
 	auto viewport = ImGui::GetMainViewport();
-	ImGui::BeginChild("Content", ImVec2(viewport->Size.x - 250, 0), true);
+	ImVec2 srcViewport = ImGui::GetContentRegionAvail();
+
+	ImGui::BeginChild("Content", ImVec2(srcViewport.x - 2, 0), true);
 
 	auto viewport2 = ImGui::GetMainViewport();
 
@@ -336,6 +338,7 @@ void SBProject::DrawProjectSources()
 		int cols = (int)((viewport2->WorkSize.x - 16) / (texSize + 12));
 
 		int index = 0;
+		ImVec2 srcRegion = ImGui::GetContentRegionAvail();
 
 		for (auto c : gCurrentSourceFolder->childs)
 		{
@@ -371,14 +374,16 @@ void SBProject::DrawProjectSources()
 
 			//ImGui::Image(img->GetPreview(), ImVec2((float)texSize, (float)texSize), ImVec2(0, 0), ImVec2(1, 1), tint, border);
 
-			ImGui::PushStyleColor(ImGuiCol_Text, selected ? ImVec4(1, 0, 0, 1) : ImVec4(1, 1, 1, 1));
-			ImGui::TextEx(c->name.c_str());
-			ImGui::PopStyleColor();
-
-			if ((index + 1) % cols != 0)
+			auto elSize = ImGui::CalcTextSize(c->name.c_str());
+			float curX = ImGui::GetCursorScreenPos().x;
+			if (curX + elSize.x + 2 < srcRegion.x)
 			{
 				ImGui::SameLine();
 			}
+
+			ImGui::PushStyleColor(ImGuiCol_Text, selected ? ImVec4(1, 0, 0, 1) : tint);
+			ImGui::TextEx(c->name.c_str());
+			ImGui::PopStyleColor();
 
 			if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
 			{

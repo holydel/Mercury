@@ -199,7 +199,7 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 	return mercury::Material{ curSignatureID };
 }
 
-mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType)
+mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType, BufferType btype)
 {
 	mercury::Buffer result;
 	return result;

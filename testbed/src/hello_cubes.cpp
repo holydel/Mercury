@@ -12,6 +12,7 @@ class HelloCubesApplication : public mercury::Application
 {
 	bool isRunning = true;
 	mercury::Material mat;
+	mercury::Material mat2;
 
 	struct Rectangle
 	{
@@ -69,7 +70,7 @@ bool HelloCubesApplication::Initialize()
 		r.color.w = float(rand() % 255) / 255.0f;
 	}
 
-	//cubeMesh = parametrical_meshes::CreateCube(1.0f);
+	cubeMesh = parametrical_meshes::CreateCube(1.0f);
 	return true;
 }
 
@@ -82,7 +83,6 @@ bool HelloCubesApplication::PreRender()
 {
 	if (!mat.isValid())
 	{
-
 		mercury::Material::Desc desc;
 		desc.vertexShader = mercury::internal_shader::ColoredSpriteVS();
 		desc.fragmentShader = mercury::internal_shader::ColoredSpritePS();
@@ -90,13 +90,45 @@ bool HelloCubesApplication::PreRender()
 		desc.topology = Topology::TriangleStrip;
 
 		mat = mercury::Material::Create(desc);
-
 	}
+
+	if (!mat2.isValid())
+	{
+		mercury::Material::Desc desc;
+		desc.vertexShader = mercury::internal_shader::StaticDedicatedMeshVS();
+		desc.fragmentShader = mercury::internal_shader::StaticDedicatedMeshPS();
+		desc.shaderInputs.numPushConstants = 16;
+		desc.topology = Topology::TriangleList;
+		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 0, 0, 0);
+		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 12, 1, 0);
+		desc.vertexInput.AddAttrib(Format::R32G32_SFLOAT, 24, 2, 0);
+		desc.vertexInput.AddAttrib(Format::R32G32B32A32_SFLOAT, 32, 3, 0);
+		mat2 = mercury::Material::Create(desc);
+	}
+
 	return true;
 }
+static float angle = 0.0f;
 
 bool HelloCubesApplication::Render()
 {
+	if (mat2.isValid())
+	{
+		float cameraX = 4.0f * cos(angle);
+		float cameraZ = 4.0f * sin(angle);
+		angle += 0.01f;
+
+		// Define your model, view, and projection matrices
+		glm::mat4 model = glm::mat4(1.0f); // Identity matrix for the model
+		glm::mat4 view = glm::lookAt(glm::vec3(cameraX, 0.0f, cameraZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f); // Adjust aspectRatio as needed
+
+		// Calculate the Model-View-Projection matrix
+		glm::mat4 mvp = projection * view * model;
+
+		canvas::DrawDedicatedStaticMesh(mat2, cubeMesh, mvp);
+	}
+
 	if (mat.isValid())
 	{
 		for (auto& r : allRectangles)
