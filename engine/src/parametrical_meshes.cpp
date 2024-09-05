@@ -44,11 +44,11 @@ mercury::Mesh mercury::parametrical_meshes::CreateCube(float size)
 
     std::vector<u16> indices = {
         0, 1, 2, 2, 3, 0,   // Front face
-        4, 5, 6, 6, 7, 4,   // Back face
+        4, 6, 5, 6, 4, 7,   // Back face
         8, 9, 10, 10, 11, 8, // Right face
-        12, 13, 14, 14, 15, 12, // Left face
+        12, 14, 13, 14, 12, 15, // Left face
         16, 17, 18, 18, 19, 16, // Top face
-        20, 21, 22, 22, 23, 20  // Bottom face
+        20, 22, 21, 22, 20, 23  // Bottom face
     };
 
     return Mesh::CreateFromExistsData(vertices.data(), indices.data(),

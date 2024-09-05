@@ -875,7 +875,7 @@ mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType
 		{
 			acinfo.flags |= VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT;
 
-			acinfo.memoryTypeBits = 8;
+			//acinfo.memoryTypeBits = 8;
 			//acinfo.requiredFlags = VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 		}
 		

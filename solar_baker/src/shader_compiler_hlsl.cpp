@@ -14,6 +14,7 @@
 #include <locale>
 #include <codecvt>
 #include <string>
+#include <charconv>
 
 IDxcUtils* gUtils = nullptr;
 IDxcCompiler3* gCompiler = nullptr;
@@ -42,7 +43,44 @@ std::wstring FromString(std::string str)
 	return converter.from_bytes(str);
 }
 
-bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
+void ParseErrors(std::vector<ShaderCompiler::ShaderCompilerErrorInfo>& errors, std::string_view str)
+{
+	int currentIndex = 0;
+
+	while (true)
+	{
+		auto nextIndex = str.find("hlsl.hlsl:", currentIndex);
+
+		if (nextIndex >= str.size())
+		{
+			break;
+		}
+
+		auto nextBeforeLine = nextIndex + 10;
+		auto nextAfterLine = str.find(':', nextBeforeLine+1)+1;
+		auto nextAfterColumn = str.find(':', nextAfterLine+1);
+		auto nextBeforeError = str.find(':', nextAfterColumn+1)+2;
+		auto nextAfterError = str.find('\n', nextBeforeError);
+
+		auto strLine = str.substr(nextBeforeLine, nextAfterLine - nextBeforeLine - 1);
+		auto strColumn = str.substr(nextAfterLine, nextAfterColumn - nextAfterLine);
+		auto strError = str.substr(nextBeforeError, nextAfterError - nextBeforeError);
+
+		ShaderCompiler::ShaderCompilerErrorInfo info = {};
+		info.error = strError;
+		std::from_chars(strColumn.data(), strColumn.data() + strColumn.size(), info.col);
+		std::from_chars(strLine.data(), strLine.data() + strLine.size(), info.line);
+		--info.col;
+		--info.line;
+		errors.emplace_back(info);
+		currentIndex = nextAfterError + 1;
+
+	}
+	
+	int a = 42;
+}
+
+bool ShaderCompiler::CompileShader(SBProjShaderSource* src, std::vector<ShaderCompilerErrorInfo>& errors)
 {
 	static const wchar_t* dxcTargets[] = {
 	L"vs_6_2"
@@ -118,9 +156,14 @@ bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
 
 	//int nameLen = outName->GetStringLength();
 	//auto nameStr = outName->GetStringPointer();
+	errors.clear();
 
 	int errLen = errorsBlob->GetStringLength();
 	auto errStr = errorsBlob->GetStringPointer();
+	if (errLen > 0)
+	{
+		ParseErrors(errors, std::string_view(errStr, errLen));
+	}
 
 	compileResult->GetOutput(DXC_OUT_OBJECT, IID_PPV_ARGS(&dxilBlob), &dxilName);
 	auto bsize = dxilBlob->GetBufferSize();
@@ -156,8 +199,6 @@ bool ShaderCompiler::CompileShader(SBProjShaderSource* src)
 	}
 
 	ImGui::SetClipboardText(output.c_str());
-
-	std::vector<ShaderCompilerErrorInfo> errors;
 
 	return true;
 }

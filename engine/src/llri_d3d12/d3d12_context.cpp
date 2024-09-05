@@ -49,6 +49,14 @@ void context::Draw(mercury::u32 count)
 	//cbuff->
 }
 
+void context::DrawIndexed(mercury::u16 count)
+{
+	ID3D12GraphicsCommandList* cbuff = static_cast<ID3D12GraphicsCommandList*>(impl);
+	cbuff->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	cbuff->DrawIndexedInstanced(count, 1, 0, 0, 0);
+}
+
 void context::SetConstantsData(const void* ptr, mercury::u8 size)
 {
 	ID3D12GraphicsCommandList* cbuff = static_cast<ID3D12GraphicsCommandList*>(impl);
