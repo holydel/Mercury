@@ -99,10 +99,10 @@ bool HelloCubesApplication::PreRender()
 		desc.fragmentShader = mercury::internal_shader::StaticDedicatedMeshPS();
 		desc.shaderInputs.numPushConstants = 16;
 		desc.topology = Topology::TriangleList;
-		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 0, 0, 0);
-		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 12, 1, 0);
-		desc.vertexInput.AddAttrib(Format::R32G32_SFLOAT, 24, 2, 0);
-		desc.vertexInput.AddAttrib(Format::R32G32B32A32_SFLOAT, 32, 3, 0);
+		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 0, 0, 0,"POSITION");
+		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 12, 1, 0, "NORMAL");
+		desc.vertexInput.AddAttrib(Format::R32G32_SFLOAT, 24, 2, 0, "TEXCOORD");
+		desc.vertexInput.AddAttrib(Format::R32G32B32A32_SFLOAT, 32, 3, 0, "COLOR");
 		mat2 = mercury::Material::Create(desc);
 	}
 

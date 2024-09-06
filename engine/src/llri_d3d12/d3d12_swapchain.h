@@ -5,4 +5,7 @@
 #include "../swapchain.h"
 extern IDXGISwapChain3* gSwapChain;
 extern DXGI_FORMAT gSwapChainFormat;
+
+extern ID3D12Resource* gIntermediateMSAATarget;
+extern ID3D12Resource* gIntermediateDSBuffer; //can be multisampled or not
 #endif

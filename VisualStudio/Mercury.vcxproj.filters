@@ -168,6 +168,12 @@
     <ClCompile Include="..\engine\src\parametrical_meshes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\third_party\D3D12MemoryAllocator\src\D3D12MemAlloc.cpp">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
+    </ClCompile>
+    <ClCompile Include="..\engine\src\llri_d3d12\d3d12_utils.cpp">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\engine\src\application.h">
@@ -274,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="..\engine\src\mesh_internal.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\engine\src\llri_d3d12\d3d12_utils.h">
+      <Filter>Source Files\llris\llri_d3d12</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

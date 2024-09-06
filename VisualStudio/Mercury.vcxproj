@@ -28,6 +28,7 @@
     <ClCompile Include="..\engine\src\llri_d3d12\d3d12_context.cpp" />
     <ClCompile Include="..\engine\src\llri_d3d12\d3d12_llri.cpp" />
     <ClCompile Include="..\engine\src\llri_d3d12\d3d12_swapchain.cpp" />
+    <ClCompile Include="..\engine\src\llri_d3d12\d3d12_utils.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\mercury_vulkan.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\vk_context.cpp" />
     <ClCompile Include="..\engine\src\llri_vulkan\vk_llri.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="..\engine\src\shader_bytecode_msl.cpp" />
     <ClCompile Include="..\engine\src\shader_bytecode_spirv.cpp" />
     <ClCompile Include="..\engine\src\windows\system_windows.cpp" />
+    <ClCompile Include="..\third_party\D3D12MemoryAllocator\src\D3D12MemAlloc.cpp" />
     <ClCompile Include="..\third_party\ImGuiColorTextEdit\TextEditor.cpp" />
     <ClCompile Include="..\third_party\imgui\imgui.cpp" />
     <ClCompile Include="..\third_party\imgui\imgui_demo.cpp" />
@@ -75,6 +77,7 @@
     <ClInclude Include="..\engine\src\llri.h" />
     <ClInclude Include="..\engine\src\llri_d3d12\d3d12_llri.h" />
     <ClInclude Include="..\engine\src\llri_d3d12\d3d12_swapchain.h" />
+    <ClInclude Include="..\engine\src\llri_d3d12\d3d12_utils.h" />
     <ClInclude Include="..\engine\src\llri_vulkan\mercury_vulkan.h" />
     <ClInclude Include="..\engine\src\llri_vulkan\vk_llri.h" />
     <ClInclude Include="..\engine\src\llri_vulkan\vk_swapchain.h" />

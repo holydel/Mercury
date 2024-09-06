@@ -49,13 +49,15 @@ namespace mercury
 					u8 offset;
 					u8 location;
 					u8 bindingPoint;
+
+					const char* semanticName = nullptr;
 				};
 
 				std::vector<VertexAttribInfo> inputs;
 
-				void AddAttrib(Format fmt, u8 offset, u8 location, u8 bindingPoint)
+				void AddAttrib(Format fmt, u8 offset, u8 location, u8 bindingPoint, const char* semanticName = nullptr)
 				{
-					inputs.emplace_back(VertexAttribInfo{ fmt , offset , location , bindingPoint });
+					inputs.emplace_back(VertexAttribInfo{ fmt , offset , location , bindingPoint, semanticName });
 				}
 			} vertexInput;
 			

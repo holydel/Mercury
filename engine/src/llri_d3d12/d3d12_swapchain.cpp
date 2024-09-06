@@ -30,6 +30,9 @@ u32 gNewHeight = 0;
 u32 gCurHeight = 0;
 u32 gDeltaFrameInBB = 0;
 
+ID3D12Resource* gIntermediateMSAATarget = nullptr;
+ID3D12Resource* gIntermediateDSBuffer = nullptr; //can be multisampled or not
+
 bool llri::swapchain::create(void* nativeWindowHandle)
 {
 	HWND hwnd = static_cast<HWND>(nativeWindowHandle);
