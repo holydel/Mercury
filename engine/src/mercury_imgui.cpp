@@ -128,9 +128,12 @@ bool IsBackendReady()
 	return true;
 }
 
+
 bool InitializeBackend()
 {
 #ifdef MERCURY_GRAPHICS_API_VULKAN
+	extern VkSampleCountFlagBits gNumSamplesMSAA;
+
 	ImGui_ImplVulkan_InitInfo init_info = {};
 	init_info.Instance = gInstance;
 	init_info.PhysicalDevice = gPhysicalDevice;
@@ -142,7 +145,7 @@ bool InitializeBackend()
 	init_info.MinImageCount = 3;
 	init_info.ImageCount = 3;
 	init_info.CheckVkResultFn = mercury_check_vk_result;
-	init_info.MSAASamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
+	init_info.MSAASamples = gNumSamplesMSAA;
 	init_info.RenderPass = gRenderPass;
 
 	VkDescriptorPoolSize pool_sizes[] =
@@ -181,7 +184,7 @@ bool InitializeBackend()
 
 	ImGui_ImplDX12_Init(gDevice, 3, gSwapChainFormat, gImgui_pd3dSrvDescHeap
 		, gImgui_pd3dSrvDescHeap->GetCPUDescriptorHandleForHeapStart()
-		, gImgui_pd3dSrvDescHeap->GetGPUDescriptorHandleForHeapStart());
+		, gImgui_pd3dSrvDescHeap->GetGPUDescriptorHandleForHeapStart(),8);
 
 	ImGui_ImplDX12_CreateDeviceObjects();
 	ImGui_ImplDX12_CreateFontsTexture();

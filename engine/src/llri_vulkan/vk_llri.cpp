@@ -8,6 +8,7 @@
 
 #include "../application.h"
 #include <string>
+using namespace mercury;
 
 //have extern interface in header
 VkInstance gInstance = nullptr;
@@ -28,6 +29,7 @@ std::vector<VkPipelineLayout> gAllLayouts;
 std::vector<VkBuffer> gAllBuffers;
 std::vector<BufferMeta> gAllBuffersMeta;
 
+u32 gEngineFrameIndex = 0;
 
 
 //local
@@ -453,7 +455,7 @@ static void CreateDevice()
 	device_extender.TryAddExtension(VK_NV_MEMORY_DECOMPRESSION_EXTENSION_NAME);
 	device_extender.TryAddExtension(VK_KHR_BUFFER_DEVICE_ADDRESS_EXTENSION_NAME);
 	device_extender.TryAddExtension(VK_KHR_DEDICATED_ALLOCATION_EXTENSION_NAME);
-	
+
 #ifdef MERCURY_PLATFORM_MACOS
 	device_extender.TryAddExtension(VK_KHR_PORTABILITY_SUBSET_EXTENSION_NAME);
 #endif
@@ -583,6 +585,9 @@ void llri::shutdown()
 
 bool llri::update()
 {
+	vmaSetCurrentFrameIndex(gVMAallocator, gEngineFrameIndex);
+
+	gEngineFrameIndex++;
 	return true;
 }
 
@@ -664,6 +669,7 @@ void FillShaderStageIfNeeded(std::vector<VkPipelineShaderStageCreateInfo>& allSt
 	}
 }
 
+extern VkSampleCountFlagBits gNumSamplesMSAA;
 mercury::Material llri::create_material(mercury::Material::Desc desc)
 {
 	VkPipelineLayout layout;
@@ -787,12 +793,18 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 	pipViewportState.scissorCount = 1;
 	pipViewportState.pScissors = &viewrect;
 
-	pipMultisamplingState.rasterizationSamples = VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT;
+
+	pipMultisamplingState.rasterizationSamples = gNumSamplesMSAA;
 
 	std::vector<VkDynamicState> all_dinamic_states;
 
 	all_dinamic_states.push_back(VK_DYNAMIC_STATE_VIEWPORT);
 	all_dinamic_states.push_back(VK_DYNAMIC_STATE_SCISSOR);
+
+
+	pipDepthStencilState.depthWriteEnable = desc.writeDepth;
+	pipDepthStencilState.depthTestEnable = desc.writeDepth;
+	pipDepthStencilState.depthCompareOp = VkCompareOp::VK_COMPARE_OP_LESS;
 
 	pipDynamicState.pDynamicStates = all_dinamic_states.data();
 	pipDynamicState.dynamicStateCount = (u32)all_dinamic_states.size();
@@ -870,7 +882,7 @@ mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType
 		acinfo.usage = VmaMemoryUsage::VMA_MEMORY_USAGE_AUTO;
 
 		acinfo.flags = 0;
-		
+
 		if (heapType == mercury::Buffer::HeapType::UPLOAD)
 		{
 			acinfo.flags |= VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT;
@@ -878,13 +890,13 @@ mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType
 			//acinfo.memoryTypeBits = 8;
 			//acinfo.requiredFlags = VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 		}
-		
+
 
 		if (heapType != mercury::Buffer::HeapType::DEFAULT)
 		{
 			acinfo.flags |= VMA_ALLOCATION_CREATE_MAPPED_BIT;
 		}
-			
+
 		VK_CALL(vmaCreateBuffer(gVMAallocator, &cinfo, &acinfo, &buffer, &meta.allocation, &meta.allocInfo));
 
 		meta.mappedPointer = meta.allocInfo.pMappedData;

@@ -302,7 +302,7 @@ const char* platform::getApplicationDataPath()
 {
 	GUID guid;
 
-	char appPath[MAX_PATH];
+	static char appPath[MAX_PATH] = {};
 
 	PWSTR path;
 	SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path);

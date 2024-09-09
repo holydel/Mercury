@@ -4,7 +4,10 @@
 #include <mercury.h>
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <gtc/quaternion.hpp>
+
 #include <thread>
+#include <random>
 
 using namespace mercury;
 
@@ -20,7 +23,15 @@ class HelloCubesApplication : public mercury::Application
 		glm::vec4 color;
 	};
 
-	std::vector< Rectangle> allRectangles;
+	struct Cube
+	{
+		glm::vec3 position;
+		glm::quat orientation;
+
+		glm::quat angular;
+	};
+	std::vector<Rectangle> allRectangles;
+	std::vector<Cube> allCubes;
 	Mesh cubeMesh;
 
 public:
@@ -42,6 +53,7 @@ HelloCubesApplication::HelloCubesApplication()
 {
 	config.appName = "HelloCubesApplication";
 	config.render.adapterID = 0;
+	config.engine.GraphicsValidation = true;
 }
 
 HelloCubesApplication::~HelloCubesApplication()
@@ -71,6 +83,23 @@ bool HelloCubesApplication::Initialize()
 	}
 
 	cubeMesh = parametrical_meshes::CreateCube(1.0f);
+
+	int numCubes = 1500;
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> posDist(-15.0f, 15.0f);
+	std::uniform_real_distribution<float> angleDist(-0.01f, 0.01f);
+
+	for (int i = 0; i < numCubes; ++i)
+	{
+		Cube& c = allCubes.emplace_back();
+
+		c.position = glm::vec3(posDist(gen), posDist(gen), posDist(gen));
+		c.orientation = glm::quat(200.0f * glm::vec3(angleDist(gen), angleDist(gen), angleDist(gen)));
+		c.angular = glm::quat(glm::vec3(angleDist(gen), angleDist(gen), angleDist(gen)));
+	}
+
 	return true;
 }
 
@@ -99,10 +128,13 @@ bool HelloCubesApplication::PreRender()
 		desc.fragmentShader = mercury::internal_shader::StaticDedicatedMeshPS();
 		desc.shaderInputs.numPushConstants = 16;
 		desc.topology = Topology::TriangleList;
-		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 0, 0, 0,"POSITION");
+		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 0, 0, 0, "POSITION");
 		desc.vertexInput.AddAttrib(Format::R32G32B32_SFLOAT, 12, 1, 0, "NORMAL");
 		desc.vertexInput.AddAttrib(Format::R32G32_SFLOAT, 24, 2, 0, "TEXCOORD");
 		desc.vertexInput.AddAttrib(Format::R32G32B32A32_SFLOAT, 32, 3, 0, "COLOR");
+		desc.writeDepth = true;
+		desc.testDepth = true;
+
 		mat2 = mercury::Material::Create(desc);
 	}
 
@@ -118,15 +150,26 @@ bool HelloCubesApplication::Render()
 		float cameraZ = 4.0f * sin(angle);
 		angle += 0.01f;
 
-		// Define your model, view, and projection matrices
-		glm::mat4 model = glm::mat4(1.0f); // Identity matrix for the model
-		glm::mat4 view = glm::lookAt(glm::vec3(cameraX, 0.0f, cameraZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f); // Adjust aspectRatio as needed
+		for (auto const& c : allCubes)
+		{
+			// Define your model, view, and projection matrices
+			glm::mat4 modelMatrix = glm::mat4(1.0f); // Identity matrix
 
-		// Calculate the Model-View-Projection matrix
-		glm::mat4 mvp = projection * view * model;
+			// Translate the cube to its position
+			modelMatrix = glm::translate(modelMatrix, c.position);
 
-		canvas::DrawDedicatedStaticMesh(mat2, cubeMesh, mvp);
+			// Rotate the cube based on its orientation quaternion
+			glm::mat4 rotationMatrix = glm::mat4_cast(c.orientation);
+			modelMatrix = modelMatrix * rotationMatrix;
+
+			glm::mat4 view = glm::lookAt(glm::vec3(cameraX, 0.0f, cameraZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glm::mat4 projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 0.1f, 100.0f); // Adjust aspectRatio as needed
+
+			// Calculate the Model-View-Projection matrix
+			glm::mat4 mvp = projection * view * modelMatrix;
+
+			canvas::DrawDedicatedStaticMesh(mat2, cubeMesh, mvp);
+		}
 	}
 
 	if (mat.isValid())

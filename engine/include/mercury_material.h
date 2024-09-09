@@ -5,6 +5,15 @@
 
 namespace mercury
 {
+	enum class Multisample
+	{
+		SAMPLES_1
+		, SAMPLES_2
+		, SAMPLES_4
+		, SAMPLES_8
+		, SAMPLES_16
+	};
+
 	enum class Format
 	{
 		R32G32B32A32_SFLOAT
@@ -13,6 +22,7 @@ namespace mercury
 		, R16G16B16_SFLOAT
 		,R5G6B5_UNORM_PACK16
 		, R32G32_SFLOAT
+		, R8G8B8A8_UNORM
 	};
 
 	enum class BlendMode
@@ -75,6 +85,9 @@ namespace mercury
 			}
 
 			Topology topology = Topology::TriangleList;
+
+			bool writeDepth = false;
+			bool testDepth = false;
 		};
 
 		static Material Create(Desc desc);

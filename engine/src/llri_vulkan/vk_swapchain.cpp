@@ -20,7 +20,15 @@ VkRenderPass gRenderPass = nullptr;
 static u32 gNumberOfSwapChainFrames = 0;
 static std::vector<VkImage> gSwapChainImages;
 
-static VkFormat outputFormat = VK_FORMAT_R8G8B8A8_SRGB;
+VkImage gDepthImage;
+VkImageView gDepthImageView;
+VmaAllocation gDepthImageAllocation;
+
+VkImage gMSAAImage;
+VkImageView gMSAAImageView;
+VmaAllocation gMSAAImageAllocation;
+
+static VkFormat outputFormat = VK_FORMAT_R8G8B8A8_UNORM;
 
 static float backColorR=0.1f, backColorG=0.15, backColorB=0.22f, backColorA=1.0f;
 
@@ -41,12 +49,88 @@ static std::vector<FrameObject>			gFrameObjects;
 
 extern glm::vec4 gCurrentViewport;
 
+bool gUseDepth = true;
+bool gUseStencil = false;
+VkSampleCountFlagBits gNumSamplesMSAA = VkSampleCountFlagBits::VK_SAMPLE_COUNT_8_BIT;
+
 void _obtainImages()
 {
 	VK_CALL(vkGetSwapchainImagesKHR(gDevice, gSwapChain, &gNumberOfSwapChainFrames, nullptr));
 
 	gSwapChainImages.resize(gNumberOfSwapChainFrames);
 	VK_CALL(vkGetSwapchainImagesKHR(gDevice, gSwapChain, &gNumberOfSwapChainFrames, gSwapChainImages.data()));
+
+	if (gUseDepth)
+	{
+		VkImageCreateInfo imageInfo = {};
+		imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+		imageInfo.imageType = VK_IMAGE_TYPE_2D;
+		imageInfo.extent.width = gNativeExtent.width;
+		imageInfo.extent.height = gNativeExtent.height;
+		imageInfo.extent.depth = 1;
+		imageInfo.mipLevels = 1;
+		imageInfo.arrayLayers = 1;
+		imageInfo.format = VK_FORMAT_D32_SFLOAT;
+		imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+		imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		imageInfo.usage = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+		imageInfo.samples = gNumSamplesMSAA;
+		imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		VmaAllocationCreateInfo allocInfo = {};
+		allocInfo.usage = VMA_MEMORY_USAGE_GPU_ONLY;
+
+		vmaCreateImage(gVMAallocator, &imageInfo, &allocInfo, &gDepthImage, &gDepthImageAllocation, nullptr);
+
+		VkImageViewCreateInfo viewInfo = {};
+		viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		viewInfo.image = gDepthImage;
+		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		viewInfo.format = VK_FORMAT_D32_SFLOAT;
+		viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_DEPTH_BIT;
+		viewInfo.subresourceRange.baseMipLevel = 0;
+		viewInfo.subresourceRange.levelCount = 1;
+		viewInfo.subresourceRange.baseArrayLayer = 0;
+		viewInfo.subresourceRange.layerCount = 1;
+
+		vkCreateImageView(gDevice, &viewInfo, gGlobalAllocationsCallbacks, &gDepthImageView);
+	}
+
+	if (gNumSamplesMSAA != VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT)
+	{
+		VkImageCreateInfo imageInfo = {};
+		imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+		imageInfo.imageType = VK_IMAGE_TYPE_2D;
+		imageInfo.extent.width = gNativeExtent.width;
+		imageInfo.extent.height = gNativeExtent.height;
+		imageInfo.extent.depth = 1;
+		imageInfo.mipLevels = 1;
+		imageInfo.arrayLayers = 1;
+		imageInfo.format = outputFormat;
+		imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+		imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		imageInfo.usage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+		imageInfo.samples = gNumSamplesMSAA;
+		imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+		VmaAllocationCreateInfo allocInfo = {};
+		allocInfo.usage = VMA_MEMORY_USAGE_GPU_ONLY;
+
+		vmaCreateImage(gVMAallocator, &imageInfo, &allocInfo, &gMSAAImage, &gMSAAImageAllocation, nullptr);
+
+		VkImageViewCreateInfo viewInfo = {};
+		viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		viewInfo.image = gMSAAImage;
+		viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		viewInfo.format = outputFormat;
+		viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		viewInfo.subresourceRange.baseMipLevel = 0;
+		viewInfo.subresourceRange.levelCount = 1;
+		viewInfo.subresourceRange.baseArrayLayer = 0;
+		viewInfo.subresourceRange.layerCount = 1;
+
+		vkCreateImageView(gDevice, &viewInfo, gGlobalAllocationsCallbacks, &gMSAAImageView);
+	}
 }
 
 void _createFramebuffer()
@@ -72,32 +156,70 @@ void _createFramebuffer()
 
 	VkAttachmentDescription colorAttachment{};
 	colorAttachment.format = outputFormat;
-	colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+	colorAttachment.samples = gNumSamplesMSAA;
 	colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 	colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 	colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 	colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
 	colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
-	colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+	colorAttachment.finalLayout = gNumSamplesMSAA == VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT ? VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+		: VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 	VkAttachmentReference colorAttachmentRef{};
 	colorAttachmentRef.attachment = 0;
 	colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
+	VkAttachmentDescription depthAttachment = {};
+	depthAttachment.format = VK_FORMAT_D32_SFLOAT;
+	depthAttachment.samples = gNumSamplesMSAA;
+	depthAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+	depthAttachment.storeOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+	depthAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+	depthAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+	depthAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	depthAttachment.finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+	VkAttachmentReference depthAttachmentRef = {};
+	depthAttachmentRef.attachment = 1;
+	depthAttachmentRef.layout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+
+	VkAttachmentDescription colorAttachmentResolve{};
+	colorAttachmentResolve.format = outputFormat;
+	colorAttachmentResolve.samples = VK_SAMPLE_COUNT_1_BIT;
+	colorAttachmentResolve.loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+	colorAttachmentResolve.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+	colorAttachmentResolve.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+	colorAttachmentResolve.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+	colorAttachmentResolve.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+	colorAttachmentResolve.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+	VkAttachmentReference colorAttachmentResolveRef{};
+	colorAttachmentResolveRef.attachment = 2;
+	colorAttachmentResolveRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
 	VkSubpassDescription subpass{};
 	subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
-	subpass.colorAttachmentCount = 1;
+	subpass.colorAttachmentCount = 1;	
 	subpass.pColorAttachments = &colorAttachmentRef;
-	subpass.pDepthStencilAttachment = nullptr;
-	subpass.pResolveAttachments = nullptr;
+	subpass.pDepthStencilAttachment = gUseDepth? &depthAttachmentRef : nullptr;
+	subpass.pResolveAttachments = gNumSamplesMSAA != VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT ? &colorAttachmentResolveRef : nullptr;
 
-	VkAttachmentDescription attachments[] = { colorAttachment};
+	std::vector<VkAttachmentDescription> attachments;
+
+	attachments.push_back(colorAttachment);
+	if (gUseDepth)
+	{
+		attachments.push_back(depthAttachment);
+	}
+	if (gNumSamplesMSAA != VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT)
+	{
+		attachments.push_back(colorAttachmentResolve);
+	}
 
 	VkRenderPassCreateInfo renderPassInfo{};
 	renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-	renderPassInfo.attachmentCount = 1;
-	renderPassInfo.pAttachments = attachments;
+	renderPassInfo.attachmentCount = attachments.size();
+	renderPassInfo.pAttachments = attachments.data();
 	renderPassInfo.subpassCount = 1;
 	renderPassInfo.pSubpasses = &subpass;
 
@@ -119,15 +241,34 @@ void _createFramebuffer()
 
 	for (size_t i = 0; i < gNumberOfSwapChainFrames; i++) {
 
-		VkImageView attachments[] = {
-			gFrameObjects[i].imageView
-		};
+		std::vector< VkImageView> attachments;
+
+		
+
+		if (gNumSamplesMSAA == VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT)
+		{
+			attachments.push_back(gFrameObjects[i].imageView);
+		}
+		else
+		{
+			attachments.push_back(gMSAAImageView);
+		}
+
+		if (gUseDepth)
+		{
+			attachments.push_back(gDepthImageView);
+		}
+
+		if (gNumSamplesMSAA != VkSampleCountFlagBits::VK_SAMPLE_COUNT_1_BIT)
+		{
+			attachments.push_back(gFrameObjects[i].imageView);
+		}
 
 		VkFramebufferCreateInfo framebufferInfo{};
 		framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 		framebufferInfo.renderPass = gRenderPass;
-		framebufferInfo.attachmentCount = 1;
-		framebufferInfo.pAttachments = attachments;
+		framebufferInfo.attachmentCount = attachments.size();
+		framebufferInfo.pAttachments = attachments.data();
 		framebufferInfo.width = gNativeExtent.width;
 		framebufferInfo.height = gNativeExtent.height;
 		framebufferInfo.layers = 1;
@@ -350,17 +491,20 @@ bool llri::swapchain::update()
 	VkRenderPassBeginInfo renderPassInfo{};
 	renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
 	renderPassInfo.renderPass = gRenderPass;
-	renderPassInfo.framebuffer = frame.frameBuffer;
+	renderPassInfo.framebuffer = gFrameObjects[presentedImageIndex].frameBuffer;
 	renderPassInfo.renderArea.offset = { 0, 0 };
 	renderPassInfo.renderArea.extent = gNativeExtent;
 
-	VkClearValue clearColor[1];
+	VkClearValue clearColor[2];
 	clearColor[0].color.float32[0] = backColorR;
 	clearColor[0].color.float32[1] = backColorG;
 	clearColor[0].color.float32[2] = backColorB;
 	clearColor[0].color.float32[3] = backColorA;
 
-	renderPassInfo.clearValueCount = 1;
+	clearColor[1].depthStencil.depth = 1.0f;
+	clearColor[1].depthStencil.stencil = 0;
+
+	renderPassInfo.clearValueCount = gUseDepth ? 2 : 1;
 	renderPassInfo.pClearValues = clearColor;
 
 	vkCmdBeginRenderPass(frame.cmdBuffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);

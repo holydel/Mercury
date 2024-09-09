@@ -153,6 +153,7 @@ void llri::shutdown()
 
 bool llri::update()
 {
+
 	return true;
 }
 
@@ -241,20 +242,27 @@ mercury::Material llri::create_material(mercury::Material::Desc desc)
 	psoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;
 	psoDesc.RasterizerState.FrontCounterClockwise = true;
 
+	psoDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	psoDesc.DepthStencilState.DepthEnable = true;
+	psoDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+
 	psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
-	psoDesc.DepthStencilState.DepthEnable = FALSE;
-	psoDesc.DepthStencilState.StencilEnable = FALSE;
+	//psoDesc.DepthStencilState.DepthEnable = FALSE;
+	//psoDesc.DepthStencilState.StencilEnable = FALSE;
 	psoDesc.SampleMask = UINT_MAX;
 	psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	psoDesc.NumRenderTargets = 1;
 	psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
-	psoDesc.SampleDesc.Count = 1;
+	psoDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	psoDesc.SampleDesc.Count = 8;
 	D3D_CALL(gDevice->CreateGraphicsPipelineState(&psoDesc, IID_PPV_ARGS(&gAllPSOs[curSignatureID])));
 
 	meta.topology = d3d12_utils::GetTopologyFromMercuryTopology(desc.topology);
 	meta.stride = vertexStride;
 	return mercury::Material{ curSignatureID };
 }
+
+#pragma optimize ("",off)
 
 mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType heapType, mercury::Buffer::BufferType btype)
 {
@@ -291,7 +299,8 @@ mercury::Buffer llri::create_buffer(mercury::u64 size, mercury::Buffer::HeapType
 		break;
 	}
 
-	D3D12_RESOURCE_STATES bufferState = D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER;
+	D3D12_RESOURCE_STATES bufferState = D3D12_RESOURCE_STATES::D3D12_RESOURCE_STATE_GENERIC_READ;
+	//D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER;
 
 	HRESULT hr = gAllocator->CreateResource(
 		&allocationDesc,

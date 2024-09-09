@@ -284,5 +284,8 @@
     <ClInclude Include="..\engine\src\llri_d3d12\d3d12_utils.h">
       <Filter>Source Files\llris\llri_d3d12</Filter>
     </ClInclude>
+    <ClInclude Include="..\engine\include\mercury_framegraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
