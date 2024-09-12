@@ -385,6 +385,81 @@ const OpenXRRuntimeInfo& platform::getOpenXRRuntimeInfo()
 
 	return runtimeInfo;
 }
+
+void PopulateLayerInfo(std::vector<OpenXRLayerInfo>& layers, const char* jsonFilePath)
+{
+	OpenXRLayerInfo& layer = layers.emplace_back();
+
+	using namespace nlohmann;
+
+	std::ifstream f(jsonFilePath);
+	json dataJson = json::parse(f);
+
+	auto api_layer = dataJson["api_layer"];
+	
+	layer.name = api_layer["name"].template get<std::string>();
+	layer.description = api_layer["description"].template get<std::string>();
+	layer.library_path = api_layer["library_path"].template get<std::string>();
+
+	auto functions = api_layer["functions"];
+	if (functions.is_object())
+	{
+		if (functions["xrGetInstanceProcAddr"].is_string())
+		{
+			layer.xrGetInstanceProcAddrFuncName = functions["xrGetInstanceProcAddr"].template get<std::string>();
+		}
+
+		if (functions["xrNegotiateLoaderApiLayerInterface"].is_string())
+		{
+			layer.xrNegotiateLoaderApiLayerInterfaceFuncName = functions["xrNegotiateLoaderApiLayerInterface"].template get<std::string>();
+		}
+	}
+	
+	std::filesystem::path jsonPath = jsonFilePath;
+	layer.library_fullpath = std::filesystem::weakly_canonical(jsonPath.remove_filename() / std::filesystem::path(layer.library_path)).u8string();
+
+
+	int a = 42;
+}
+
+void PopulateLayersInfo(std::vector<OpenXRLayerInfo> &layers, const char* path)
+{
+	layers.clear();
+
+	HKEY key = nullptr;
+
+	RegOpenKeyExA(HKEY_LOCAL_MACHINE, path, 0, KEY_READ, &key);
+
+	if (key == nullptr)
+		return;
+
+	DWORD index = 0;
+	char valueName[256] = {0};
+	DWORD valueNameSize = sizeof(valueName);
+
+	while (RegEnumValueA(key, index, valueName, &valueNameSize, NULL, NULL, NULL, NULL) == ERROR_SUCCESS) {
+		// Check if the value is a DWORD value
+		DWORD dataType;
+		DWORD dataSize;
+		RegQueryValueExA(key, valueName, NULL, &dataType, NULL, &dataSize);
+		PopulateLayerInfo(layers, valueName);
+		index++;
+		valueNameSize = sizeof(valueName);
+	}
+
+	RegCloseKey(key);
+}
+
+const OpenXRLayersInfo& platform::getOpenXRLayersInfo()
+{
+	static OpenXRLayersInfo layersInfo;
+
+	PopulateLayersInfo(layersInfo.explicitLayers, "SOFTWARE\\Khronos\\OpenXR\\1\\ApiLayers\\Explicit");
+	PopulateLayersInfo(layersInfo.implicitLayers, "SOFTWARE\\Khronos\\OpenXR\\1\\ApiLayers\\Implicit");
+
+	return layersInfo;
+}
+
 #endif
 
 #endif

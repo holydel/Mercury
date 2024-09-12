@@ -24,7 +24,10 @@ bool engine::initialize()
 		llvri::initialize();
 #endif
 	llri::initialize();
-
+#ifdef MERCURY_USE_XR
+	if (gApplication->config.engine.EnableXR)
+		llvri::createSession();
+#endif
 	return true;
 }
 

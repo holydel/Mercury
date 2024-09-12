@@ -18,6 +18,22 @@ namespace mercury
 
 		bool isValveRuntime = false;
 	};
+
+	struct OpenXRLayerInfo
+	{
+		std::string name;
+		std::string library_path = "";
+		std::string library_fullpath = "";
+		std::string description = "";
+		std::string xrGetInstanceProcAddrFuncName = "xrGetInstanceProcAddr";
+		std::string xrNegotiateLoaderApiLayerInterfaceFuncName = "xrNegotiateLoaderApiLayerInterface";
+	};
+
+	struct OpenXRLayersInfo
+	{
+		std::vector<OpenXRLayerInfo> implicitLayers;
+		std::vector<OpenXRLayerInfo> explicitLayers;
+	};
 #endif
 
 	namespace platform
@@ -94,11 +110,13 @@ namespace mercury
 #endif
 #ifdef MERCURY_XR_API_OPENXR
 		const OpenXRRuntimeInfo& getOpenXRRuntimeInfo();
+		const OpenXRLayersInfo& getOpenXRLayersInfo();
 #endif
 	}
 }
 
+#define LOAD_FUNC_BY_NAME(libHandle,funcPtrOut,funcName) funcPtrOut = mercury::platform::getFuncPtr<decltype(funcPtrOut)>(libHandle,funcName);
 
-#define LOAD_FUNC_PTR(libHandle,funcPtrOut) funcPtrOut = mercury::platform::getFuncPtr<decltype(funcPtrOut)>(libHandle,#funcPtrOut);
+#define LOAD_FUNC_PTR(libHandle,funcPtrOut) LOAD_FUNC_BY_NAME(libHandle,funcPtrOut,#funcPtrOut)
 
 #define M_ASSERT(assert) if(!(assert)) {mercury::platform::fatalFail(#assert);}

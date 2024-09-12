@@ -5,6 +5,8 @@
 namespace llvri
 {
 	bool initialize();
+	bool createSession();
+
 	void shutdown();
 
 	bool update();

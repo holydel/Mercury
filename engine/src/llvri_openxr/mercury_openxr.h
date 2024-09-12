@@ -4,7 +4,7 @@
 #ifdef MERCURY_XR_API_OPENXR
 #include "../platform.h"
 
-//#define XR_NO_PROTOTYPES 1
+#define XR_NO_PROTOTYPES 1
 
 #ifdef MERCURY_PLATFORM_WINDOWS
 #define XR_USE_PLATFORM_WIN32 1
@@ -36,82 +36,102 @@
 #include <openxr/openxr_loader_negotiation.h>
 
 void LoadOpenXR_Library();
-void LoadXRInstanceLevelFuncs(XrInstance instance);
+void LoadXRGlobalLevelFuncs();
+void LoadXRInstanceLevelFuncs();
 void ShutdownOpenXR_Library();
 
 extern XrSystemId gXRSystemID;
 extern XrSession gXRSession;
 
-const char* HexcellXrResultToString(XrResult res);
+const char* MercuryXrResultToString(XrResult res);
 
-#define XR_CALL(func) {XrResult res = func; if(XR_FAILED(res)){ xc_platform::FatalFail(HexcellXrResultToString(res));}}
+#define XR_CALL(func) {XrResult res = func; if(XR_FAILED(res)){ mercury::platform::fatalFail(MercuryXrResultToString(res));}}
 
 #define XR_DECLARE_FUNCTION( fun ) extern PFN_##fun fun;
 
+struct OpenXRLayer
+{
+	PFN_xrGetInstanceProcAddr xrGetInstanceProcAddr;
+	PFN_xrNegotiateLoaderApiLayerInterface xrNegotiateLoaderApiLayerInterface;
+	PFN_xrCreateApiLayerInstance xrCreateApiLayerInstance;
+	mercury::OpenXRLayerInfo info;
+	void* libHandle = nullptr;
+};
+
+extern std::vector<OpenXRLayer> gImplicitLayers;
+extern std::vector<OpenXRLayer> gExplicitLayers;
+
 extern XrInstance gXRInstance;
 //
-//XR_DECLARE_FUNCTION(xrNegotiateLoaderRuntimeInterface);
-//XR_DECLARE_FUNCTION(xrGetInstanceProcAddr);
-//
-//XR_DECLARE_FUNCTION(xrInitializeLoaderKHR);
-//XR_DECLARE_FUNCTION(xrEnumerateApiLayerProperties);
-//XR_DECLARE_FUNCTION(xrEnumerateInstanceExtensionProperties);
-//XR_DECLARE_FUNCTION(xrCreateInstance);
-//
-//XR_DECLARE_FUNCTION(xrDestroyInstance);
-//XR_DECLARE_FUNCTION(xrGetSystem);
-//XR_DECLARE_FUNCTION(xrGetSystemProperties);
-//XR_DECLARE_FUNCTION(xrResultToString);
-//XR_DECLARE_FUNCTION(xrGetInstanceProperties);
-//XR_DECLARE_FUNCTION(xrGetVulkanGraphicsRequirements2KHR);
-//XR_DECLARE_FUNCTION(xrCreateVulkanInstanceKHR);
-//XR_DECLARE_FUNCTION(xrGetVulkanGraphicsDevice2KHR);
-//XR_DECLARE_FUNCTION(xrCreateVulkanDeviceKHR);
-//XR_DECLARE_FUNCTION(xrEnumerateViewConfigurations);
-//XR_DECLARE_FUNCTION(xrGetViewConfigurationProperties);
-//XR_DECLARE_FUNCTION(xrEnumerateViewConfigurationViews);
-//XR_DECLARE_FUNCTION(xrBeginSession);
-//XR_DECLARE_FUNCTION(xrWaitFrame);
-//XR_DECLARE_FUNCTION(xrBeginFrame);
-//XR_DECLARE_FUNCTION(xrLocateViews);
-//XR_DECLARE_FUNCTION(xrEndFrame);
-//XR_DECLARE_FUNCTION(xrEndSession);
-//XR_DECLARE_FUNCTION(xrCreateSession);
-//XR_DECLARE_FUNCTION(xrPollEvent);
-//XR_DECLARE_FUNCTION(xrEnumerateSwapchainFormats);
-//XR_DECLARE_FUNCTION(xrCreateSwapchain);
-//XR_DECLARE_FUNCTION(xrEnumerateSwapchainImages);
-//XR_DECLARE_FUNCTION(xrAcquireSwapchainImage);
-//XR_DECLARE_FUNCTION(xrWaitSwapchainImage);
-//XR_DECLARE_FUNCTION(xrReleaseSwapchainImage);
-//XR_DECLARE_FUNCTION(xrCreateReferenceSpace);
-//XR_DECLARE_FUNCTION(xrEnumerateEnvironmentBlendModes);
-//XR_DECLARE_FUNCTION(xrEnumerateDisplayRefreshRatesFB);
-//XR_DECLARE_FUNCTION(xrGetDisplayRefreshRateFB);
-//XR_DECLARE_FUNCTION(xrRequestDisplayRefreshRateFB);
-//XR_DECLARE_FUNCTION(xrCreateActionSpace);
-//XR_DECLARE_FUNCTION(xrSyncActions);
-//XR_DECLARE_FUNCTION(xrStringToPath);
-//XR_DECLARE_FUNCTION(xrCreateActionSet);
-//XR_DECLARE_FUNCTION(xrCreateAction);
-//XR_DECLARE_FUNCTION(xrLocateSpace);
-//XR_DECLARE_FUNCTION(xrAttachSessionActionSets);
-//XR_DECLARE_FUNCTION(xrGetActionStatePose);
-//XR_DECLARE_FUNCTION(xrSuggestInteractionProfileBindings);
-//XR_DECLARE_FUNCTION(xrGetCurrentInteractionProfile);
-//XR_DECLARE_FUNCTION(xrGetActionStateBoolean);
-//
-//XR_DECLARE_FUNCTION(xrGetVisibilityMaskKHR);
-//XR_DECLARE_FUNCTION(xrGetRenderModelPropertiesFB);
-//XR_DECLARE_FUNCTION(xrLoadRenderModelFB);
-//XR_DECLARE_FUNCTION(xrEnumerateRenderModelPathsFB);
+XR_DECLARE_FUNCTION(xrNegotiateLoaderRuntimeInterface);
+XR_DECLARE_FUNCTION(xrGetInstanceProcAddr);
 
+XR_DECLARE_FUNCTION(xrInitializeLoaderKHR);
+XR_DECLARE_FUNCTION(xrEnumerateApiLayerProperties);
+XR_DECLARE_FUNCTION(xrEnumerateInstanceExtensionProperties);
+XR_DECLARE_FUNCTION(xrCreateInstance);
+//
+XR_DECLARE_FUNCTION(xrDestroyInstance);
+XR_DECLARE_FUNCTION(xrGetSystem);
+XR_DECLARE_FUNCTION(xrGetSystemProperties);
+XR_DECLARE_FUNCTION(xrResultToString);
+XR_DECLARE_FUNCTION(xrGetInstanceProperties);
+XR_DECLARE_FUNCTION(xrEnumerateViewConfigurations);
+XR_DECLARE_FUNCTION(xrGetViewConfigurationProperties);
+XR_DECLARE_FUNCTION(xrEnumerateViewConfigurationViews);
+XR_DECLARE_FUNCTION(xrBeginSession);
+XR_DECLARE_FUNCTION(xrWaitFrame);
+XR_DECLARE_FUNCTION(xrBeginFrame);
+XR_DECLARE_FUNCTION(xrLocateViews);
+XR_DECLARE_FUNCTION(xrEndFrame);
+XR_DECLARE_FUNCTION(xrEndSession);
+XR_DECLARE_FUNCTION(xrCreateSession);
+XR_DECLARE_FUNCTION(xrPollEvent);
+XR_DECLARE_FUNCTION(xrEnumerateSwapchainFormats);
+XR_DECLARE_FUNCTION(xrCreateSwapchain);
+XR_DECLARE_FUNCTION(xrEnumerateSwapchainImages);
+XR_DECLARE_FUNCTION(xrAcquireSwapchainImage);
+XR_DECLARE_FUNCTION(xrWaitSwapchainImage);
+XR_DECLARE_FUNCTION(xrReleaseSwapchainImage);
+XR_DECLARE_FUNCTION(xrCreateReferenceSpace);
+XR_DECLARE_FUNCTION(xrEnumerateEnvironmentBlendModes);
+XR_DECLARE_FUNCTION(xrEnumerateDisplayRefreshRatesFB);
+XR_DECLARE_FUNCTION(xrGetDisplayRefreshRateFB);
+XR_DECLARE_FUNCTION(xrRequestDisplayRefreshRateFB);
+XR_DECLARE_FUNCTION(xrCreateActionSpace);
+XR_DECLARE_FUNCTION(xrSyncActions);
+XR_DECLARE_FUNCTION(xrStringToPath);
+XR_DECLARE_FUNCTION(xrCreateActionSet);
+XR_DECLARE_FUNCTION(xrCreateAction);
+XR_DECLARE_FUNCTION(xrLocateSpace);
+XR_DECLARE_FUNCTION(xrAttachSessionActionSets);
+XR_DECLARE_FUNCTION(xrGetActionStatePose);
+XR_DECLARE_FUNCTION(xrSuggestInteractionProfileBindings);
+XR_DECLARE_FUNCTION(xrGetCurrentInteractionProfile);
+XR_DECLARE_FUNCTION(xrGetActionStateBoolean);
+
+XR_DECLARE_FUNCTION(xrGetVisibilityMaskKHR);
+XR_DECLARE_FUNCTION(xrGetRenderModelPropertiesFB);
+XR_DECLARE_FUNCTION(xrLoadRenderModelFB);
+XR_DECLARE_FUNCTION(xrEnumerateRenderModelPathsFB);
+
+XR_DECLARE_FUNCTION(xrResultToString);
+XR_DECLARE_FUNCTION(xrCreateDebugUtilsMessengerEXT);
 #ifdef HEXCELL_PLATFORM_ANDROID
 XR_DECLARE_FUNCTION(xrCreateSwapchainAndroidSurfaceKHR);
 #endif
-//XR_DECLARE_FUNCTION(xrGetVulkanGraphicsRequirements2KHR);
 
+#ifdef MERCURY_GRAPHICS_API_VULKAN
+XR_DECLARE_FUNCTION(xrGetVulkanGraphicsRequirements2KHR);
+XR_DECLARE_FUNCTION(xrCreateVulkanInstanceKHR);
+XR_DECLARE_FUNCTION(xrGetVulkanGraphicsDevice2KHR);
+XR_DECLARE_FUNCTION(xrCreateVulkanDeviceKHR);
+XR_DECLARE_FUNCTION(xrGetVulkanGraphicsRequirements2KHR);
+#endif
 
+#ifdef MERCURY_GRAPHICS_API_D3D12
+XR_DECLARE_FUNCTION(xrGetD3D12GraphicsRequirementsKHR);
+#endif
 template <typename T>
 std::vector<T> EnumerateOpenXRObjects(XrResult(XRAPI_CALL* pfunc) (uint32_t initialCnt, uint32_t* cnt, T* objs), XrStructureType stype)
 {
