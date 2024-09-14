@@ -49,5 +49,7 @@ namespace mercury
 		Shader ColoredSpritePS();
 		Shader StaticDedicatedMeshVS();
 		Shader StaticDedicatedMeshPS();
+
+		Shader StaticDedicatedMeshVS_Stereo();
 	}
 }

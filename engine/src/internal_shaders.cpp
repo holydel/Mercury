@@ -50,3 +50,9 @@ Shader internal_shader::StaticDedicatedMeshPS()
 	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::StaticDedicatedMeshPS());
 	return result;
 }
+
+Shader internal_shader::StaticDedicatedMeshVS_Stereo()
+{
+	static Shader result = Shader::CreateFromByteCode(internal_shader_bytecode::StaticDedicatedMeshVS_Stereo());
+	return result;
+}
